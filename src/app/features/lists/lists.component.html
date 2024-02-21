@@ -3,11 +3,11 @@
   <div class="main">
     <!-- list toggle bar -->
     <div class="toggle-bar">
-      <input name="nav" type="radio" class="nav user-lists-radio" id="user-lists" checked="checked" />
+      <input #user_toggle name="nav" type="radio" class="nav user-lists-radio" id="user-lists" value="user" (change)="onToggle(user_toggle.value)" checked="checked" />
       <label class="nav" for="user-lists">
         <span>User Lists</span>
       </label>
-      <input name="nav" type="radio" class="all-lists-radio" id="all-lists" />
+      <input #all_toggle name="nav" type="radio" class="all-lists-radio" id="all-lists" value="all" (change)="onToggle(all_toggle.value)"/>
       <label class="nav" for="all-lists">
         <span>All Lists</span>
         </label>
@@ -15,64 +15,26 @@
     <!-- end list toggle bar -->
     <div class="list-grid">
       <!-- list -->
-      <div class="list-container">
-        <div class="list-title">List Title</div>
-        <div class="list-username">username</div>
-        <div class="list-image">
-          <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
-          <div class="list-title-count">30 Titles</div>
+      @for (list of lists; track list.id) {
+        <div class="list-container">
+          <div class="list-title">{{ list.title }}</div>
+          <div class="list-username">username</div>
+          <div class="list-image">
+            <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
+            <div class="list-title-count">30 Titles</div>
+          </div>
         </div>
-      </div>
+      }
       <!-- end list -->
       <!-- list -->
-      <div class="list-container">
+      <!-- <div class="list-container">
         <div class="list-title">List Title</div>
         <div class="list-username">username</div>
         <div class="list-image">
           <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
           <div class="list-title-count">30 Titles</div>
         </div>
-      </div>
-      <!-- end list -->
-      <!-- list -->
-      <div class="list-container">
-        <div class="list-title">List Title</div>
-        <div class="list-username">username</div>
-        <div class="list-image">
-          <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
-          <div class="list-title-count">30 Titles</div>
-        </div>
-      </div>
-      <!-- end list -->
-      <!-- list -->
-      <div class="list-container">
-        <div class="list-title">List Title</div>
-        <div class="list-username">username</div>
-        <div class="list-image">
-          <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
-          <div class="list-title-count">30 Titles</div>
-        </div>
-      </div>
-      <!-- end list -->
-      <!-- list -->
-      <div class="list-container">
-        <div class="list-title">List Title</div>
-        <div class="list-username">username</div>
-        <div class="list-image">
-          <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
-          <div class="list-title-count">30 Titles</div>
-        </div>
-      </div>
-      <!-- end list -->
-      <!-- list -->
-      <div class="list-container">
-        <div class="list-title">List Title</div>
-        <div class="list-username">username</div>
-        <div class="list-image">
-          <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
-          <div class="list-title-count">30 Titles</div>
-        </div>
-      </div>
+      </div> -->
       <!-- end list -->
     </div>
   </div>
