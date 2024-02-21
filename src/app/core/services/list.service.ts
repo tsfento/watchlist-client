@@ -16,6 +16,6 @@ export class ListService {
   }
 
   getUserLists(): Observable<List[]>{
-    return this.http.get<List[]>(`${environment.apiUrl}/users/testing/lists`);
+    return this.http.get<List[]>(`${environment.apiUrl}/users/follower/lists`);
   }
 }

@@ -15,7 +15,7 @@ export class ListsComponent implements OnInit{
   constructor(private listService:ListService) {}
 
   ngOnInit(): void {
-    this.listService.getAllLists().subscribe({
+    this.listService.getUserLists().subscribe({
       next: (lists:List[]) => {
         this.lists = lists;
         // console.log(this.lists);
