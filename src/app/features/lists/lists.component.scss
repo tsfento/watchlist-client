@@ -1,0 +1,136 @@
+.container {
+  // background-color: #252e42;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  // height: 100vh;
+}
+
+.gutter {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main {
+  width: 60%;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // min-height: 40vh;
+}
+
+.toggle-bar {
+  background-color: green;
+  min-height: 40px;
+  display: grid;
+  width: 100%;
+  overflow: hidden;
+  grid-template-rows: 50px 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+label, a{
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+  transition: border 0.2s;
+  border-bottom: 5px solid rgba(#8e44ad, 0.2);
+  padding: 3px 2px;
+  &:hover{
+    border-bottom-color: #9b59b6;
+  }
+}
+
+input[type="radio"]{
+  display: none;
+}
+
+label.nav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-bottom: 2px solid #4a5369;
+  background: #252e42;
+  user-select: none;
+  padding-left: 0;
+  color: #ffffff;
+  font-size: 20px;
+  span {
+    transform: scale(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  input[type="radio"]:checked + &{
+    border-bottom-color: #3c91f9;
+    span {
+      transform: scale(115%);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+}
+
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+// list component css
+.list-container {
+  background-color: #4a5369;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // min-width: 100%;
+  transition: scale 0.3s ease-in-out;
+}
+
+.list-container:hover {
+  scale: 105%;
+  transition: scale 0.3s ease-in-out;
+}
+
+.list-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f5f5f5;
+  margin-top: 10px;
+}
+
+.list-username {
+  font-size: 15px;
+  font-weight: bold;
+  color: #f5f5f5;
+}
+
+.list-image {
+  position: relative;
+}
+
+.list-image img {
+  width: 150px;
+  object-fit: cover;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.list-image img:hover {
+}
+
+.list-title-count {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #f5f5f5;
+  font-size: 20px;
+  font-weight: bold;
+}
+// end list component css
