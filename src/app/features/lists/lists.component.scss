@@ -29,7 +29,7 @@
   width: 100%;
   overflow: hidden;
   grid-template-rows: 50px 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 label, a{
@@ -84,6 +84,7 @@ label.nav{
 
 // list component css
 .list-container {
+  cursor: pointer;
   background-color: #4a5369;
   border-radius: 10px;
   display: flex;

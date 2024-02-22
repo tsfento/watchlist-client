@@ -18,4 +18,8 @@ export class ListService {
   getUserLists(): Observable<List[]>{
     return this.http.get<List[]>(`${environment.apiUrl}/users/follower/lists`);
   }
+
+  getFollowedLists(): Observable<List[]>{
+    return this.http.get<List[]>(`${environment.apiUrl}/users/follower/followed_lists`);
+  }
 }
