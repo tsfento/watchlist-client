@@ -18,7 +18,6 @@ export class ListsComponent implements OnInit{
     this.listService.getUserLists().subscribe({
       next: (lists:List[]) => {
         this.lists = lists;
-        // console.log(this.lists);
       },
       error: (error:any) => {
         console.error('Error fetching lists', error);
@@ -42,7 +41,6 @@ export class ListsComponent implements OnInit{
       this.listService.getAllLists().subscribe({
         next: (lists:List[]) => {
           this.lists = lists;
-          console.log(lists);
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);
