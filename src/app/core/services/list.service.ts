@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { List } from '../../shared/models/list';
+import { WatchList } from '../../shared/models/watchlist';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,15 @@ export class ListService {
 
   constructor(private http:HttpClient) { }
 
-  getAllLists(): Observable<List[]>{
-    return this.http.get<List[]>(`${environment.apiUrl}/lists`);
+  getAllLists(): Observable<WatchList[]>{
+    return this.http.get<WatchList[]>(`${environment.apiUrl}/lists`);
   }
 
-  getUserLists(): Observable<List[]>{
-    return this.http.get<List[]>(`${environment.apiUrl}/users/follower/lists`);
+  getUserLists(): Observable<WatchList[]>{
+    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/follower/lists`);
   }
 
-  getFollowedLists(): Observable<List[]>{
-    return this.http.get<List[]>(`${environment.apiUrl}/users/follower/followed_lists`);
+  getFollowedLists(): Observable<WatchList[]>{
+    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/follower/followed_lists`);
   }
 }

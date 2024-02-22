@@ -22,7 +22,7 @@
       <div class="list-grid">
         <!-- list -->
         @for (list of lists; track list.id) {
-          <div class="list-container" (click)="showTitles(list.id)">
+          <div class="list-container" (click)="showTitles(list.id, list.user.username)">
             <div class="list-title">{{ list.title }}</div>
             <div class="list-username">&#64;{{ list.user.username }}</div>
             <div class="list-image">
@@ -35,6 +35,12 @@
         <!-- end list -->
       </div>
     } @else {
+      <div class="titles-grid">
+        <!-- titles -->
+        @for (title of titles; track title.id) {
+        }
+        <!-- end titles -->
+      </div>
     }
   </div>
   <!-- end main area -->

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ListService } from '../../core/services/list.service';
-import { List } from '../../shared/models/list';
+import { WatchList } from '../../shared/models/watchlist';
+import { WatchTitle } from '../../shared/models/watchtitle';
+import { TitleService } from '../../core/services/title.service';
 
 @Component({
   selector: 'app-lists',
@@ -12,13 +14,14 @@ import { List } from '../../shared/models/list';
 export class ListsComponent implements OnInit{
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   viewingTitles:boolean = false;
-  lists:List[] = [];
+  lists:WatchList[] = [];
+  titles:WatchTitle[] = [];
 
-  constructor(private listService:ListService) {}
+  constructor(private listService:ListService, private titleService:TitleService) {}
 
   ngOnInit(): void {
     this.listService.getUserLists().subscribe({
-      next: (lists:List[]) => {
+      next: (lists:WatchList[]) => {
         this.lists = lists;
       },
       error: (error:any) => {
@@ -28,12 +31,11 @@ export class ListsComponent implements OnInit{
   }
 
   onToggle(input:string) {
-    this.viewingTitles = false;
-
     if (input === 'user') {
       this.listService.getUserLists().subscribe({
-        next: (lists:List[]) => {
+        next: (lists:WatchList[]) => {
           this.lists = lists;
+          this.viewingTitles = false;
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);
@@ -43,8 +45,9 @@ export class ListsComponent implements OnInit{
 
     if (input === 'follow') {
       this.listService.getFollowedLists().subscribe({
-        next: (lists:List[]) => {
+        next: (lists:WatchList[]) => {
           this.lists = lists;
+          this.viewingTitles = false;
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);
@@ -54,8 +57,9 @@ export class ListsComponent implements OnInit{
 
     if (input === 'all') {
       this.listService.getAllLists().subscribe({
-        next: (lists:List[]) => {
+        next: (lists:WatchList[]) => {
           this.lists = lists;
+          this.viewingTitles = false;
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);
@@ -64,8 +68,17 @@ export class ListsComponent implements OnInit{
     }
   }
 
-  showTitles(id:number) {
-    console.log(id);
+  showTitles(id:number, username:string) {
+    this.titleService.getTitles(id, username).subscribe({
+      next: (titles:WatchTitle[]) => {
+        this.titles = titles;
+        // console.log(this.titles);
+      },
+      error: (error:any) => {
+        console.error('Error fetching titles', error);
+      }
+    });
+
     this.viewingTitles = true;
   }
 
