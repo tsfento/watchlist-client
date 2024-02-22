@@ -20,7 +20,8 @@
           <div class="list-title">{{ list.title }}</div>
           <div class="list-username">&#64;{{ list.user.username }}</div>
           <div class="list-image">
-            <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt="">
+            <!-- <img src="https://image.tmdb.org/t/p/w154/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt=""> -->
+            <img src="{{ list.poster_img === 'empty' ? 'https://image.tmdb.org/t/p/w154/un2myByLaRSMbK3W54RuhOIZN2K.jpg' : poster_url + list.poster_img }}" alt="">
             <div class="list-title-count">{{ list.watch_titles_count }} {{ list.watch_titles_count === 1 ? 'Title' : 'Titles'}}</div>
           </div>
         </div>

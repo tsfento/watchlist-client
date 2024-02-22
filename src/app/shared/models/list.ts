@@ -6,6 +6,7 @@ export class List {
   title:string;
   user:User;
   watch_titles_count:number;
+  poster_img:string;
 
   constructor(list:any) {
     this.id = list.id || 0;
@@ -13,5 +14,6 @@ export class List {
     this.title = list.title || '';
     this.user = list.user || '';
     this.watch_titles_count = list.watch_titles_count || 0;
+    this.poster_img = list.poster_img || '';
   }
 }

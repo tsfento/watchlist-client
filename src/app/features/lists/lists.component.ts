@@ -10,6 +10,7 @@ import { List } from '../../shared/models/list';
   styleUrl: './lists.component.scss'
 })
 export class ListsComponent implements OnInit{
+  poster_url:string = 'https://image.tmdb.org/t/p/w154'
   lists:List[] = [];
 
   constructor(private listService:ListService) {}
