@@ -1,48 +1,55 @@
-<div class="container">
-  <div class="gutter"></div>
-  <!-- main area -->
-  <div class="main">
-    <!-- list toggle bar -->
-    <div class="toggle-bar">
-      <input #user_toggle name="nav" type="radio" class="nav user-lists-radio" id="user-lists" value="user" (change)="onToggle(user_toggle.value)" checked="checked" />
-      <label class="nav" for="user-lists">
-        <span>User Lists</span>
-      </label>
-      <input #follow_toggle name="nav" type="radio" class="follow-lists-radio" id="follow-lists" value="follow" (change)="onToggle(follow_toggle.value)"/>
-      <label class="nav" for="follow-lists">
-        <span>Followed Lists</span>
-      </label>
-      <input #all_toggle name="nav" type="radio" class="all-lists-radio" id="all-lists" value="all" (change)="onToggle(all_toggle.value)"/>
-      <label class="nav" for="all-lists">
-        <span>All Lists</span>
-        </label>
-    </div>
-    <!-- end list toggle bar -->
-    @if (!viewingTitles) {
-      <div class="list-grid">
-        <!-- list -->
-        @for (list of lists; track list.id) {
-          <div class="list-container" (click)="showTitles(list.id, list.user.username)">
-            <div class="list-title">{{ list.title }}</div>
-            <div class="list-username">&#64;{{ list.user.username }}</div>
-            <div class="list-image">
-              <!-- <img src="https://image.tmdb.org/t/p/w154/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt=""> -->
-              <img src="{{ list.poster_img === 'empty' ? 'https://image.tmdb.org/t/p/w154/un2myByLaRSMbK3W54RuhOIZN2K.jpg' : poster_url + list.poster_img }}" alt="">
-              <div class="list-title-count">{{ list.watch_titles_count }} {{ list.watch_titles_count === 1 ? 'Title' : 'Titles'}}</div>
-            </div>
-          </div>
-        }
-        <!-- end list -->
-      </div>
-    } @else {
-      <div class="titles-grid">
-        <!-- titles -->
-        @for (title of titles; track title.id) {
-        }
-        <!-- end titles -->
+<!-- add @if !isViewingTitles -->
+<!-- list toggle bar -->
+<div class="toggle-bar" [class.active]="!isViewingTitles">
+  <input #user_toggle name="nav" type="radio" class="nav user-lists-radio" id="user-lists" value="user" (change)="onToggle(user_toggle.value)" checked="checked" />
+  <label class="nav" for="user-lists">
+    <span>User Lists</span>
+  </label>
+  <input #follow_toggle name="nav" type="radio" class="follow-lists-radio" id="follow-lists" value="follow" (change)="onToggle(follow_toggle.value)"/>
+  <label class="nav" for="follow-lists">
+    <span>Followed Lists</span>
+  </label>
+  <input #all_toggle name="nav" type="radio" class="all-lists-radio" id="all-lists" value="all" (change)="onToggle(all_toggle.value)"/>
+  <label class="nav" for="all-lists">
+    <span>All Lists</span>
+    </label>
+</div>
+<div class="search-bar" [class.active]="isViewingTitles">
+  <input class="form-control" type="text">
+  <button class="random-title">⚄</button>
+  <button class="close-titles" (click)="closeTitles()">X</button>
+</div>
+<!-- end list toggle bar -->
+@if (!isViewingTitles) {
+  <div class="list-grid">
+    <!-- list -->
+    @for (list of lists; track list.id) {
+      <div class="list-container" (click)="showTitles(list.id, list.user.username)">
+        <div class="list-title">{{ list.title }}</div>
+        <div class="list-username">&#64;{{ list.user.username }}</div>
+        <div class="list-image">
+          <!-- <img src="https://image.tmdb.org/t/p/w154/un2myByLaRSMbK3W54RuhOIZN2K.jpg" alt=""> -->
+          <img src="{{ list.poster_img === 'empty' ? 'https://image.tmdb.org/t/p/w154/un2myByLaRSMbK3W54RuhOIZN2K.jpg' : poster_url + list.poster_img }}" alt="">
+          <div class="list-title-count">{{ list.watch_titles_count }} {{ list.watch_titles_count === 1 ? 'Title' : 'Titles'}}</div>
+        </div>
       </div>
     }
+    <!-- end list -->
   </div>
-  <!-- end main area -->
-  <div class="gutter"></div>
-</div>
+} @else {
+  <div class="titles-grid">
+    <!-- titles -->
+    @for (title of titles; track title.id) {
+      <div class="title-container">
+        <div class="title-poster">
+          <img src="{{ poster_url + title.poster_path }}" alt="">
+        </div>
+        <div class="title-title">{{ title.title }}</div>
+        <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
+        <div class="title-runtime">{{ title.runtime }} minutes</div>
+        <div class="title-overview">{{ title.overview }}</div>
+      </div>
+    }
+    <!-- end titles -->
+  </div>
+}

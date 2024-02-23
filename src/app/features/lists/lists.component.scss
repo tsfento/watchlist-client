@@ -1,35 +1,46 @@
-.container {
-  // background-color: #252e42;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  // height: 100vh;
-}
+// moved to app.component
+// .container {
+//   // background-color: #252e42;
+//   display: flex;
+//   justify-content: space-between;
+//   width: 100%;
+//   // height: 100vh;
+// }
 
-.gutter {
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+// .gutter {
+//   width: 20%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }
 
-.main {
-  width: 60%;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // min-height: 40vh;
-}
+// .main {
+//   width: 60%;
+//   // display: flex;
+//   // flex-direction: column;
+//   // align-items: center;
+//   // justify-content: center;
+//   // min-height: 40vh;
+// }
+// end moved
 
+// toggle bar
 .toggle-bar {
   background-color: green;
   min-height: 40px;
   display: grid;
-  width: 100%;
+  width: 60%;
   overflow: hidden;
   grid-template-rows: 50px 1fr;
   grid-template-columns: 1fr 1fr 1fr;
+  position: fixed;
+  top: -55px;
+  transition: top 0.5s ease;
+}
+
+.toggle-bar.active {
+  // position: sticky;
+  top: 55px;
 }
 
 label, a{
@@ -73,8 +84,67 @@ label.nav{
     }
   }
 }
+// end toggle bar
+
+// search bar
+.search-bar {
+  min-height: 40px;
+  display: grid;
+  width: 60%;
+  overflow: hidden;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 50px 40px;
+  align-items: center;
+  position: fixed;
+  top: -55px;
+  transition: top 0.5s ease;
+}
+
+.search-bar.active {
+  top: 55px;
+}
+
+.search-bar input {
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 20px;
+  padding: 15px;
+  font-size: 20px;
+  width: 100%;
+}
+
+.search-bar input:focus {
+  outline: none;
+}
+
+.close-titles {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  margin-top: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+.close-titles:hover, .random-title:hover {
+  color: #3c91f9;
+}
+
+.random-title {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  margin-top: 5px;
+  transition: color 0.3s ease-in-out;
+}
+
+// end search bar
 
 .list-grid {
+  margin-top: 55px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center;
@@ -125,9 +195,6 @@ label.nav{
   border-radius: 5px;
 }
 
-.list-image img:hover {
-}
-
 .list-title-count {
   position: absolute;
   bottom: 20px;
@@ -141,5 +208,31 @@ label.nav{
 
 // titles css
 .titles-grid {
+  // background-color: green;
+
+  margin-top: 55px;
+  display: grid;
+  grid-template-columns: 1;
+  justify-items: start;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.title-container {
+  cursor: pointer;
+  background-color: #4a5369;
+  border-radius: 10px;
+  width: 75%;
+  justify-self: center;
+  color: #f9f9f9;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  // max-width: 200px;
+}
+
+.title-poster {
+  margin: 15px;
 }
 // end titles css

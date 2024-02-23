@@ -1,0 +1,23 @@
+.container {
+  // background-color: #252e42;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  // height: 100vh;
+}
+
+.gutter {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main {
+  width: 60%;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // min-height: 40vh;
+}
