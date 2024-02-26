@@ -1,7 +1,11 @@
-<div class="navbar">
+<div class="navbar" [class.active]="!onRoute('login')">
   <div class="branding">WeWatch</div>
 
   <div class="burger-container">
-    <button class="burger">☰</button>
+    <button class="burger">
+      <span class="material-symbols-outlined">
+      menu
+      </span>
+    </button>
   </div>
 </div>

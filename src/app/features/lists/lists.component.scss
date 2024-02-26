@@ -34,13 +34,13 @@
   grid-template-rows: 50px 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   position: fixed;
-  top: -55px;
+  top: -56px;
   transition: top 0.5s ease;
 }
 
 .toggle-bar.active {
   // position: sticky;
-  top: 55px;
+  top: 56px;
 }
 
 label, a{
@@ -121,9 +121,10 @@ label.nav{
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  // font-size: 1.5rem;
+  scale: 150%;
   color: white;
-  margin-top: 10px;
+  margin-top: 14px;
   transition: color 0.3s ease-in-out;
 }
 
@@ -144,7 +145,7 @@ label.nav{
 // end search bar
 
 .list-grid {
-  margin-top: 55px;
+  margin-top: 111px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center;
