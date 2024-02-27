@@ -1,3 +1,35 @@
 <div class="home-container">
-  <p>home works!</p>
+  <div class="movies-container">
+    <div class="now-playing-movies">
+      <div class="box-header">Now Playing</div>
+      <div class="shelf">
+        <!-- <p>{{ displayNowPlayingMovie.title }}</p> -->
+        <img src="{{ 'https://image.tmdb.org/t/p/w300' + nowPlayingMovies[nowPlayingMovieIndex].poster_path }}" alt="{{ nowPlayingMovies[nowPlayingMovieIndex].title + ' poster'}}">
+        <div class="now-playing-details">
+          <div class="details-title">
+            {{ nowPlayingMovies[nowPlayingMovieIndex].title }}
+          </div>
+          <div class="details-overview">
+            {{ nowPlayingMovies[nowPlayingMovieIndex].overview }}
+          </div>
+        </div>
+      </div>
+      <!-- onWheel="this.scrollLeft+=event.deltaY>0?75:-75" -->
+      <div class="drawer-container">
+        <div class="drawer" onWheel="this.scrollLeft+=event.deltaY>0?75:-75">
+          @for (nowPlayingMovie of nowPlayingMovies; track $index) {
+            <a (click)="changeNowPlayingMovieIndex($index)">
+              <!-- <p>{{ nowPlayingMovie.title }}</p> -->
+              <img src="{{ poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}">
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="popular-movies">Popular Movies</div>
+  </div>
+  <div class="tv-container">
+    <div class="popular-tv">Popular TV</div>
+    <div class="top-rated-tv">Top Rated TV</div>
+  </div>
 </div>

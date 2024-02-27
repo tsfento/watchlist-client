@@ -1,3 +1,77 @@
 .home-container {
   margin-top: 56px;
+  // display: flex;
+  // flex-direction: column;
+  color: #f9f9f9;
+}
+
+.movies-container {
+  margin-top: 76px;
+}
+
+.tv-container {
+  margin-top: 20px;
+}
+
+.now-playing-movies {
+  background-color: #4a5369;
+}
+
+.box-header {
+  padding: 10px;
+  font-size: 40px;
+  font-weight: bold;
+  border-bottom: 3px solid #3c91f9;
+}
+
+.shelf {
+  max-height: 443px;
+  display: flex;
+  flex-direction: row;
+}
+
+.shelf img {
+  max-height: 443px;
+  object-fit: cover;
+}
+
+.now-playing-details {
+  background-color: #a5abbd;
+  color: black;
+  width: 100%;
+}
+
+.drawer-container {
+  max-height: 227px;
+}
+
+.drawer {
+  overflow: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.drawer a {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.drawer::-webkit-scrollbar {
+  height: 0px;
+  background-color: transparent;
+}
+
+a img {
+  max-height: 227px;
+  object-fit: cover;
+}
+
+.popular-movies {
+}
+
+.popular-tv {
+}
+
+.top-rated-tv {
 }
