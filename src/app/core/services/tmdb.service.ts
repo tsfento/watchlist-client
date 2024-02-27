@@ -9,7 +9,11 @@ export class TmdbService {
 
   constructor(private http:HttpClient) { }
 
-  getMoviesNowPlaying() {
+  getNowPlayingMovies() {
     return this.http.get<any>(`${environment.apiUrl}/tmdb/now_playing`);
+  }
+
+  getPopularMovies() {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/popular`);
   }
 }

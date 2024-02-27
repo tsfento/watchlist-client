@@ -13,9 +13,18 @@ export class HomeComponent implements OnInit {
   constructor(private tmdbService:TmdbService) {}
 
   ngOnInit(): void {
-    this.tmdbService.getMoviesNowPlaying().subscribe({
+    this.tmdbService.getNowPlayingMovies().subscribe({
       next: (response:any) => {
-        console.log(response);
+        console.log('Now Playing:', response);
+      },
+      error: (error:any) => {
+        console.error(error);
+      }
+    });
+
+    this.tmdbService.getPopularMovies().subscribe({
+      next: (response:any) => {
+        console.log('Popular:', response);
       },
       error: (error:any) => {
         console.error(error);
