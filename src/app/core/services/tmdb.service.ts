@@ -10,10 +10,18 @@ export class TmdbService {
   constructor(private http:HttpClient) { }
 
   getNowPlayingMovies() {
-    return this.http.get<any>(`${environment.apiUrl}/tmdb/now_playing`);
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/now_playing_movies`);
   }
 
   getPopularMovies() {
-    return this.http.get<any>(`${environment.apiUrl}/tmdb/popular`);
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/popular_movies`);
+  }
+
+  getPopularTV() {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/popular_tv`);
+  }
+
+  getTopRatedTV() {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/top_rated_tv`);
   }
 }

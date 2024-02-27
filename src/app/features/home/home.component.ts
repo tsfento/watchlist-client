@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.tmdbService.getNowPlayingMovies().subscribe({
       next: (response:any) => {
-        console.log('Now Playing:', response);
+        console.log('Now Playing Movies:', response);
       },
       error: (error:any) => {
         console.error(error);
@@ -24,7 +24,25 @@ export class HomeComponent implements OnInit {
 
     this.tmdbService.getPopularMovies().subscribe({
       next: (response:any) => {
-        console.log('Popular:', response);
+        console.log('Popular Movies:', response);
+      },
+      error: (error:any) => {
+        console.error(error);
+      }
+    });
+
+    this.tmdbService.getPopularTV().subscribe({
+      next: (response:any) => {
+        console.log('Popular TV:', response);
+      },
+      error: (error:any) => {
+        console.error(error);
+      }
+    });
+
+    this.tmdbService.getTopRatedTV().subscribe({
+      next: (response:any) => {
+        console.log('Top Rated TV:', response);
       },
       error: (error:any) => {
         console.error(error);
