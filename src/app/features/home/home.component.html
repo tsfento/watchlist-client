@@ -20,7 +20,7 @@
           @for (nowPlayingMovie of nowPlayingMovies; track $index) {
             <a (click)="changeNowPlayingMovieIndex($index)">
               <!-- <p>{{ nowPlayingMovie.title }}</p> -->
-              <img src="{{ poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}">
+              <img src="{{ poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
             </a>
           }
         </div>
