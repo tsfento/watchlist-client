@@ -65,4 +65,10 @@ export class HomeComponent implements OnInit {
   changeNowPlayingMovieIndex(index:number) {
     this.nowPlayingMovieIndex = index;
   }
+
+  onWheel(event:WheelEvent, drawer:HTMLElement) {
+    // console.log((<Element>event.target).parentElement);
+    event.preventDefault();
+    drawer.scrollLeft += event.deltaY;
+  }
 }

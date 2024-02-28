@@ -2,8 +2,8 @@
   <div class="movies-container">
     <div class="now-playing-movies">
       <div class="box-header">Now Playing</div>
-      <div class="shelf">
-        <!-- <p>{{ displayNowPlayingMovie.title }}</p> -->
+      <!-- old shelf -->
+      <!-- <div class="shelf">
         <img src="{{ 'https://image.tmdb.org/t/p/w300' + nowPlayingMovies[nowPlayingMovieIndex].poster_path }}" alt="{{ nowPlayingMovies[nowPlayingMovieIndex].title + ' poster'}}">
         <div class="now-playing-details">
           <div class="details-title">
@@ -13,18 +13,53 @@
             {{ nowPlayingMovies[nowPlayingMovieIndex].overview }}
           </div>
         </div>
-      </div>
-      <!-- onWheel="this.scrollLeft+=event.deltaY>0?75:-75" -->
-      <div class="drawer-container">
+      </div> -->
+      <!-- end old shelf -->
+
+      <!-- drawer -->
+      <!-- <div class="drawer-container">
         <div class="drawer" onWheel="this.scrollLeft+=event.deltaY>0?75:-75">
           @for (nowPlayingMovie of nowPlayingMovies; track $index) {
             <a (click)="changeNowPlayingMovieIndex($index)">
-              <!-- <p>{{ nowPlayingMovie.title }}</p> -->
+              <img src="{{ poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
+            </a>
+          }
+        </div>
+      </div> -->
+      <!-- end drawer -->
+
+      <div class="slider">
+        <div class="slides">
+          @for (nPMovie of nowPlayingMovies; track $index) {
+            <div id="slide-{{ $index + 1 }}">
+              <img src="{{ 'https://image.tmdb.org/t/p/w300' + nPMovie.poster_path }}" alt="{{ nPMovie.title + ' poster'}}">
+              <div class="now-playing-details">
+                <div class="details-title">
+                  {{ nPMovie.title }}
+                </div>
+                <div class="details-overview">
+                  {{ nPMovie.overview }}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <!-- @for (nPMovie of nowPlayingMovies; track $index) {
+          <a href="#slide-{{ $index + 1 }}" (click)="changeNowPlayingMovieIndex($index)">
+            <img src="{{ poster_url + nPMovie.poster_path }}" alt="{{ nPMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
+          </a>
+        } -->
+      </div>
+      <div class="drawer-container">
+        <div #drawer class="drawer" (wheel)="onWheel($event, drawer)">
+          @for (nowPlayingMovie of nowPlayingMovies; track $index) {
+            <a href="#slide-{{ $index + 1 }}" (click)="changeNowPlayingMovieIndex($index)">
               <img src="{{ poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
             </a>
           }
         </div>
       </div>
+
     </div>
     <div class="popular-movies">Popular Movies</div>
   </div>

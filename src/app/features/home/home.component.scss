@@ -13,8 +13,12 @@
   margin-top: 20px;
 }
 
-.now-playing-movies {
+.now-playing-movies,
+.popular-movies,
+.popular-tv,
+.top-rated-tv {
   background-color: #4a5369;
+  margin-bottom: 20px;
 }
 
 .box-header {
@@ -24,8 +28,10 @@
   border-bottom: 3px solid #3c91f9;
 }
 
+// shelf
 .shelf {
   max-height: 443px;
+  // position: relative;
   display: flex;
   flex-direction: row;
 }
@@ -40,7 +46,9 @@
   color: black;
   width: 100%;
 }
+// end shelf
 
+// drawer
 .drawer-container {
   max-height: 227px;
 }
@@ -63,27 +71,54 @@
   background-color: transparent;
 }
 
-a img {
+.drawer a img {
   max-height: 227px;
   object-fit: cover;
   opacity: 50%;
   transition: opacity 0.2s ease-in-out;
 }
 
-a img:hover {
+.drawer a img:hover {
   opacity: 100%;
 }
 
-a img.active {
+.drawer a img.active {
   opacity: 100%;
+  z-index: 5;
   // border: 1px solid #3c91f9;
+  // -moz-box-shadow: 0 0 5px 5px #3c91f9;
+  // -webkit-box-shadow: 0 0 5px 5px#3c91f9;
+  // box-shadow: 0 0 5px 5px #3c91f9;
+}
+// end drawer
+
+// slider
+.slider {
+  width: 100%;
+  overflow: hidden;
 }
 
-.popular-movies {
+.slides {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
-.popular-tv {
+.slides::-webkit-scrollbar {
+  height: 0;
+  background-color: transparent;
 }
 
-.top-rated-tv {
+.slides > div {
+  display: flex;
+  scroll-snap-align: start;
+  // flex-shrink: 0;
+  flex: 1 0 100%;
+  // width: 100%;
+  // margin-right: 50px;
+  // transform-origin: center center;
+  // transform: scale(1);
+  // transition: transform 0.5s;
 }
