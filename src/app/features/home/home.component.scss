@@ -66,6 +66,7 @@
   text-decoration: none;
 }
 
+// chrome scrollbar
 .drawer::-webkit-scrollbar {
   height: 0px;
   background-color: transparent;
@@ -96,6 +97,11 @@
 .slider {
   width: 100%;
   overflow: hidden;
+
+  // firefox scrollbar
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+  margin-bottom: -17px;
 }
 
 .slides {

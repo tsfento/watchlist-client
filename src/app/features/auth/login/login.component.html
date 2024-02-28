@@ -1,4 +1,5 @@
 <div class="container">
+
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="form-group">
       <label for="username">Username</label>
@@ -9,5 +10,25 @@
       <input type="password" formControlName="password">
     </div>
     <button type="submit" [disabled]="!loginForm.valid">Login</button>
+  </form>
+
+  <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" formControlName="email">
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" formControlName="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" formControlName="password">
+    </div>
+    <div class="form-group">
+      <label for="password_confirmation">Confirm Password</label>
+      <input type="password" formControlName="password_confirmation">
+    </div>
+    <button type="submit" [disabled]="!signUpForm.valid">Login</button>
   </form>
 </div>

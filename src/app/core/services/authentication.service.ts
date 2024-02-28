@@ -18,6 +18,15 @@ export class AuthenticationService {
     });
   }
 
+  signUp(email:string, username:string, password:string, password_confirmation:string) {
+    return this.http.post(`${environment.apiUrl}/users/sign_up`, {
+      email,
+      username,
+      password,
+      password_confirmation
+    });
+  }
+
   setToken(token:string) {
     localStorage.setItem('token', token);
   }

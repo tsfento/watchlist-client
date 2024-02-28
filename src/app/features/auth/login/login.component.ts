@@ -15,6 +15,12 @@ export class LoginComponent {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   });
+  signUpForm:FormGroup = new FormGroup({
+    email: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    password_confirmation: new FormControl('', Validators.required)
+  });
 
   constructor(private authService:AuthenticationService, private router:Router) {}
 
@@ -31,6 +37,25 @@ export class LoginComponent {
         },
         error: (error:any) => {
           console.log('Error logging in', error);
+        }
+      });
+    }
+  }
+
+  signUp() {
+    if (this.signUpForm.valid) {
+      const email = this.signUpForm.value.email;
+      const username = this.signUpForm.value.username;
+      const password = this.signUpForm.value.password;
+      const password_confirmation = this.signUpForm.value.password_confirmation;
+
+      this.authService.signUp(email, username, password, password_confirmation).subscribe({
+        next: (response:any) => {
+          console.log(response);
+          // this.router.navigateByUrl('/#slide-5');
+        },
+        error: (error:any) => {
+          console.log('Error signing up', error);
         }
       });
     }
