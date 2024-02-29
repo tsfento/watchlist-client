@@ -1,27 +1,22 @@
-# WatchlistClient
+# Watchlist Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.3.
+The watchlist client is the frontend of my full stack project for CodeLabs. It is an interace for interacting with the backend API, as well as themoviedb.org API. It is not comprehensive. The basic features are browsing categories of titles from themovideb.org, adding those titles to lists, and marking those titles watched with the optional ability to rate and review.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# Architecture
 
-## Code scaffolding
+The main components are **Home** and **Lists**. **Home** is the starting point where a user can browse titles pulled from themoviedb.org. Once past the main categories, the user will be provided with recommendations based on titles they have rated positively. If no titles have been rated or all rated titles have had recommendations, the user will be notified to rate more titles for more recommendations.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+**Lists** is where the user can view their lists of titles. They are also able to view lists they are following, as well as all available lists that are not private.
 
-## Build
+# Setup
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+TODO
 
-## Running unit tests
+# Packages Used
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The client utilizes no additional packages at this time.
 
-## Running end-to-end tests
+# Backend API
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The backend API repository is located at: https://github.com/tsfento/watchlist-api
