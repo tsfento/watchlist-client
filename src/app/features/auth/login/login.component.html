@@ -1,5 +1,18 @@
 <div class="login-container">
 
+  <!-- login/signup toggle -->
+  <div class="toggle-bar" [class.active]="!isLoggingIn">
+    <input #login_toggle name="nav" type="radio" class="nav login-radio" id="login" value="login" (change)="switchLoginOrSignUp(login_toggle.value)" checked="checked" />
+    <label class="nav" for="login">
+      <span>Login</span>
+    </label>
+    <input #signup_toggle name="nav" type="radio" class="login-radio" id="signup" value="signup" (change)="switchLoginOrSignUp(signup_toggle.value)"/>
+    <label class="nav" for="signup">
+      <span>Sign Up</span>
+    </label>
+  </div>
+  <!-- end login/signup toggle -->
+
   @if (isLoggingIn) {
     <!-- login -->
     <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -35,7 +48,7 @@
         <label for="password_confirmation">Confirm Password</label>
         <input type="password" formControlName="password_confirmation">
       </div>
-      <button type="submit" [disabled]="!signUpForm.valid">Login</button>
+      <button type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
     </form>
     <!-- end sign up -->
   }

@@ -67,7 +67,7 @@ export class LoginComponent {
       case 'login':
         this.isLoggingIn = true;
         break;
-      case 'sign-up':
+      case 'signup':
         this.isLoggingIn = false;
         break;
     }
