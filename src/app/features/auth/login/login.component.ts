@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  isLoggingIn:boolean = true;
   loginForm:FormGroup = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
@@ -52,12 +53,23 @@ export class LoginComponent {
       this.authService.signUp(email, username, password, password_confirmation).subscribe({
         next: (response:any) => {
           console.log(response);
-          // this.router.navigateByUrl('/#slide-5');
+          this.isLoggingIn = true;
         },
         error: (error:any) => {
           console.log('Error signing up', error);
         }
       });
+    }
+  }
+
+  switchLoginOrSignUp(option:string) {
+    switch (option) {
+      case 'login':
+        this.isLoggingIn = true;
+        break;
+      case 'sign-up':
+        this.isLoggingIn = false;
+        break;
     }
   }
 }

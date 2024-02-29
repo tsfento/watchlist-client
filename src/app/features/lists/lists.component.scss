@@ -34,13 +34,13 @@
   grid-template-rows: 50px 1fr;
   grid-template-columns: 1fr 1fr 1fr;
   position: fixed;
-  top: -56px;
+  top: -66px;
   transition: top 0.5s ease;
 }
 
 .toggle-bar.active {
   // position: sticky;
-  top: 56px;
+  top: 66px;
 }
 
 label, a{
@@ -50,11 +50,7 @@ label, a{
   display: inline-block;
   color: inherit;
   transition: border 0.2s;
-  border-bottom: 5px solid rgba(#8e44ad, 0.2);
   padding: 3px 2px;
-  &:hover{
-    border-bottom-color: #9b59b6;
-  }
 }
 
 input[type="radio"]{
@@ -96,12 +92,12 @@ label.nav{
   grid-template-columns: 1fr 50px 40px;
   align-items: center;
   position: fixed;
-  top: -55px;
+  top: -65px;
   transition: top 0.5s ease;
 }
 
 .search-bar.active {
-  top: 55px;
+  top: 65px;
 }
 
 .search-bar input {
