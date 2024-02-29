@@ -1,12 +1,10 @@
 .home-container {
   margin-top: 56px;
-  // display: flex;
-  // flex-direction: column;
   color: #f9f9f9;
 }
 
 .movies-container {
-  margin-top: 76px;
+  margin-top: 86px;
 }
 
 .tv-container {
@@ -31,7 +29,6 @@
 // shelf
 .shelf {
   max-height: 443px;
-  // position: relative;
   display: flex;
   flex-direction: row;
 }
@@ -92,39 +89,3 @@
   // box-shadow: 0 0 5px 5px #3c91f9;
 }
 // end drawer
-
-// slider
-.slider {
-  width: 100%;
-  overflow: hidden;
-
-  // firefox scrollbar
-  scrollbar-width: none;
-  scrollbar-color: transparent transparent;
-  margin-bottom: -17px;
-}
-
-.slides {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-.slides::-webkit-scrollbar {
-  height: 0;
-  background-color: transparent;
-}
-
-.slides > div {
-  display: flex;
-  scroll-snap-align: start;
-  // flex-shrink: 0;
-  flex: 1 0 100%;
-  // width: 100%;
-  // margin-right: 50px;
-  // transform-origin: center center;
-  // transform: scale(1);
-  // transition: transform 0.5s;
-}
