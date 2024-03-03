@@ -1,6 +1,6 @@
 // toggle bar
 .toggle-bar {
-  z-index: 1;
+  z-index: 2;
   background-color: green;
   min-height: 40px;
   display: grid;
@@ -127,10 +127,75 @@ label.nav:hover {
 }
 // end search bar
 
+// new list bar
+.new-list-form {
+  display: flex;
+  margin-bottom: 3px;
+}
+
+.new-list-bar {
+  z-index: 1;
+  min-height: 40px;
+  display: grid;
+  width: 60%;
+  overflow: hidden;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  align-items: center;
+  position: fixed;
+  top: -120px;
+  transition: top 0.5s ease;
+}
+
+.new-list-bar.active {
+  position: sticky;
+  width: 100%;
+  top: 120px;
+}
+
+.new-list-bar input {
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 0px;
+  padding: 15px;
+  font-size: 20px;
+  width: 100%;
+}
+
+.new-list-bar input:focus {
+  outline: none;
+}
+
+.btn-new-list {
+  cursor: pointer;
+  background: #3c91f9;
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 40px;
+  border: none;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  transition: color 0.2s ease-in-out;
+  span {
+    margin-top: 9px;
+  }
+}
+
+.btn-new-list:hover {
+  background-color: #00b5ff;
+}
+
+.btn-new-list:disabled {
+  background-color: #557091;
+}
+// end new list bar
+
 .list-grid {
   margin-top: 111px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+  // TODO move justify center to media query
   justify-items: center;
   gap: 1rem;
   padding: 1rem;

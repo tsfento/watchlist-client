@@ -4,18 +4,22 @@ import { WatchList } from '../../shared/models/watchlist';
 import { WatchTitle } from '../../shared/models/watchtitle';
 import { TitleService } from '../../core/services/title.service';
 import { DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-lists',
   standalone: true,
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, ReactiveFormsModule],
   templateUrl: './lists.component.html',
   styleUrl: './lists.component.scss'
 })
 export class ListsComponent implements OnInit{
+  newListForm:FormGroup = new FormGroup({
+    listTitle: new FormControl('', Validators.required)
+  });
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;
+  isUserLists:boolean = true;
   lists:WatchList[] = [];
   titles:WatchTitle[] = [];
   beforeFilteredTitles:WatchTitle[] = [];
@@ -34,12 +38,16 @@ export class ListsComponent implements OnInit{
     });
   }
 
+  createNewList() {
+  }
+
   onToggle(input:string) {
     if (input === 'user') {
       this.listService.getUserLists().subscribe({
         next: (lists:WatchList[]) => {
           this.lists = lists;
           this.isViewingTitles = false;
+          this.isUserLists = true;
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);
@@ -53,6 +61,7 @@ export class ListsComponent implements OnInit{
           this.lists = lists;
           this.beforeFilteredTitles = this.titles;
           this.isViewingTitles = false;
+          this.isUserLists = false;
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);
@@ -66,6 +75,7 @@ export class ListsComponent implements OnInit{
           this.lists = lists;
           this.beforeFilteredTitles = this.titles;
           this.isViewingTitles = false;
+          this.isUserLists = false;
         },
         error: (error:any) => {
           console.error('Error fetching lists', error);

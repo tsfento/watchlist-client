@@ -11,7 +11,7 @@
   <input #all_toggle name="nav" type="radio" class="all-lists-radio" id="all-lists" value="all" (change)="onToggle(all_toggle.value)"/>
   <label class="nav" for="all-lists">
     <span>All Lists</span>
-    </label>
+  </label>
 </div>
 <div class="search-bar" [class.active]="isViewingTitles">
   <input class="form-control" type="text">
@@ -24,6 +24,16 @@
 </div>
 <!-- end list toggle bar -->
 @if (!isViewingTitles) {
+  <div class="new-list-bar" [class.active]="isUserLists">
+    <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList()">
+        <input class="form-control" type="text" placeholder="Create a new list...">
+        <button type="submit" class="btn-new-list">
+          <span class="material-symbols-outlined">
+            add
+          </span>
+        </button>
+    </form>
+  </div>
   <div class="list-grid">
     <!-- list -->
     @for (list of lists; track list.id) {
@@ -44,8 +54,8 @@
         }
       </div>
     }
-    <!-- end list -->
   </div>
+  <!-- end list -->
 } @else {
   <div class="titles-grid">
     <!-- titles -->
