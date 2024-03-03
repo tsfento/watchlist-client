@@ -33,7 +33,7 @@ label {
 input {
   padding: .50rem;
   margin-top: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   color: #222;
   background-color: white;
 }
@@ -106,7 +106,15 @@ label.nav{
     border-bottom-color: #4a5369;
     span {
       opacity: 100%;
+      transition: none;
     }
+  }
+}
+
+label.nav:hover {
+  span {
+    opacity: 100%;
+    transition: opacity 0.2s ease-in;
   }
 }
 // end toggle bar
