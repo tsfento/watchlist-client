@@ -1,5 +1,6 @@
 // toggle bar
 .toggle-bar {
+  z-index: 1;
   background-color: green;
   min-height: 40px;
   display: grid;
@@ -130,7 +131,7 @@ label.nav:hover {
   margin-top: 111px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
-  // justify-items: center;
+  justify-items: center;
   gap: 1rem;
   padding: 1rem;
 }
@@ -142,8 +143,8 @@ label.nav:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
-  max-width: 550px;
+  width: 550px;
+  // max-width: 550px;
   transform: scale(100%);
   transition: transform 0.3s ease-in-out;
 }

@@ -9,3 +9,22 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #252e42 !important;
 }
+
+// scrollbar
+// Chrome
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #4a5369;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3c91f9;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #007bff;
+}
+// end scrollbar
