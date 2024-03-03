@@ -3,6 +3,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  // Firefox Scrollbar
+  // scrollbar-color: #3c91f9 #4a5369;
+  scrollbar-width: none;
 }
 
 body {
@@ -10,10 +14,9 @@ body {
   background-color: #252e42 !important;
 }
 
-// scrollbar
-// Chrome
+// Chrome scrollbar
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 0px;
 }
 
 ::-webkit-scrollbar-track {
@@ -27,4 +30,4 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #007bff;
 }
-// end scrollbar
+// end Chrome scrollbar
