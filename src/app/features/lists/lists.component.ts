@@ -5,6 +5,10 @@ import { WatchTitle } from '../../shared/models/watchtitle';
 import { TitleService } from '../../core/services/title.service';
 import { DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../../core/services/user.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { User } from '../../shared/models/user';
 
 @Component({
   selector: 'app-lists',
@@ -14,8 +18,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './lists.component.scss'
 })
 export class ListsComponent implements OnInit{
+  currentUser:User | null = null;
   newListForm:FormGroup = new FormGroup({
-    listTitle: new FormControl('', Validators.required)
+    listTitle: new FormControl('', Validators.required),
+    private: new FormControl(false, Validators.required)
   });
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;
@@ -25,10 +31,14 @@ export class ListsComponent implements OnInit{
   beforeFilteredTitles:WatchTitle[] = [];
   searchQuery: string = '';
 
-  constructor(private listService:ListService, private titleService:TitleService) {}
+  constructor(private listService:ListService, private titleService:TitleService, private userService:UserService, private http:HttpClient) {}
 
   ngOnInit(): void {
-    this.listService.getUserLists().subscribe({
+    this.userService.currentUserBehaviorSubject.subscribe((user) => {
+      this.currentUser = user;
+    });
+
+    this.listService.getUserLists(this.currentUser?.username).subscribe({
       next: (lists:WatchList[]) => {
         this.lists = lists;
       },
@@ -39,11 +49,14 @@ export class ListsComponent implements OnInit{
   }
 
   createNewList() {
+    if (this.newListForm.valid) {
+      this.http.post<WatchList>(`${environment.apiUrl}/${this.currentUser?.username}/lists`, this.newListForm);
+    }
   }
 
   onToggle(input:string) {
     if (input === 'user') {
-      this.listService.getUserLists().subscribe({
+      this.listService.getUserLists(this.currentUser?.username).subscribe({
         next: (lists:WatchList[]) => {
           this.lists = lists;
           this.isViewingTitles = false;
@@ -56,7 +69,7 @@ export class ListsComponent implements OnInit{
     }
 
     if (input === 'follow') {
-      this.listService.getFollowedLists().subscribe({
+      this.listService.getFollowedLists(this.currentUser?.username).subscribe({
         next: (lists:WatchList[]) => {
           this.lists = lists;
           this.beforeFilteredTitles = this.titles;

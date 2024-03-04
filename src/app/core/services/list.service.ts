@@ -15,11 +15,11 @@ export class ListService {
     return this.http.get<WatchList[]>(`${environment.apiUrl}/lists`);
   }
 
-  getUserLists(): Observable<WatchList[]>{
-    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/follower/lists`);
+  getUserLists(username:string = ''): Observable<WatchList[]>{
+    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`);
   }
 
-  getFollowedLists(): Observable<WatchList[]>{
-    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/follower/followed_lists`);
+  getFollowedLists(username:string = ''): Observable<WatchList[]>{
+    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`);
   }
 }
