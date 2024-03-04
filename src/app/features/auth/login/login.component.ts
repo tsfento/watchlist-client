@@ -26,7 +26,6 @@ export class LoginComponent {
   constructor(private authService:AuthenticationService, private router:Router) {}
 
   login() {
-    console.log('login is called');
     if (this.loginForm.valid) {
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
@@ -52,7 +51,6 @@ export class LoginComponent {
 
       this.authService.signUp(email, username, password, password_confirmation).subscribe({
         next: (response:any) => {
-          console.log(response);
           this.isLoggingIn = true;
         },
         error: (error:any) => {

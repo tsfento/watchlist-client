@@ -26,9 +26,9 @@
 @if (!isViewingTitles) {
   <div class="new-list-bar" [class.active]="isUserLists">
     <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList()">
-        <input type="text" formControlName="listTitle" placeholder="Create a new list...">
+        <input type="text" formControlName="title" placeholder="Create a new list...">
         <label for="private">Private?</label>
-        <input type="checkbox" formControlName="listPrivate">
+        <input type="checkbox" formControlName="private">
         <button type="submit" class="btn-new-list">
           <span class="material-symbols-outlined">
             add

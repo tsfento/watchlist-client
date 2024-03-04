@@ -20,8 +20,8 @@ import { User } from '../../shared/models/user';
 export class ListsComponent implements OnInit{
   currentUser:User | null = null;
   newListForm:FormGroup = new FormGroup({
-    listTitle: new FormControl('', Validators.required),
-    listPrivate: new FormControl(false, Validators.required)
+    title: new FormControl('', Validators.required),
+    private: new FormControl(false, Validators.required)
   });
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;
@@ -50,8 +50,18 @@ export class ListsComponent implements OnInit{
 
   createNewList() {
     if (this.newListForm.valid) {
-      this.http.post<WatchList>(`${environment.apiUrl}/${this.currentUser?.username}/lists`, this.newListForm);
+      this.http.post<WatchList>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists`, this.newListForm.value).subscribe({
+        next: (res:any) => {
+          console.log(res);
+          this.onToggle('user');
+        },
+        error: (res:any) => {
+          console.log(res.error);
+        }
+      });
     }
+
+    console.log(this.newListForm.value);
   }
 
   onToggle(input:string) {

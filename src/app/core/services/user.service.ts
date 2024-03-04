@@ -20,6 +20,7 @@ export class UserService {
     return this.http.get(`${environment.apiUrl}/web/bootstrap`).pipe(
       tap((res:any) => {
         this.setCurrentUser(res.current_user);
+        console.log(res.current_user);
       })
     );
   }
