@@ -21,7 +21,7 @@ export class ListsComponent implements OnInit{
   currentUser:User | null = null;
   newListForm:FormGroup = new FormGroup({
     listTitle: new FormControl('', Validators.required),
-    private: new FormControl(false, Validators.required)
+    listPrivate: new FormControl(false, Validators.required)
   });
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;

@@ -153,13 +153,28 @@ label.nav:hover {
   top: 120px;
 }
 
-.new-list-bar input {
+.new-list-bar input[type=text] {
   height: 40px;
   margin-top: 10px;
-  border-radius: 0px;
   padding: 15px;
   font-size: 20px;
   width: 100%;
+}
+
+.new-list-bar label {
+  color: #f5f5f5;
+  margin-top: 10px;
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+
+.new-list-bar input[type=checkbox] {
+  height: 30px;
+  margin-top: 15px;
+  margin-left: 10px;
+  padding: 15px;
+  font-size: 20px;
+  width: 30px;
 }
 
 .new-list-bar input:focus {
