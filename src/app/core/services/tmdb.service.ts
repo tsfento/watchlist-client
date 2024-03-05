@@ -24,4 +24,8 @@ export class TmdbService {
   getTopRatedTV() {
     return this.http.get<any>(`${environment.apiUrl}/tmdb/top_rated_tv`);
   }
+
+  getTitleDetails(tmdbId:number, contentType:string) {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/${contentType}/details/${tmdbId}`);
+  }
 }

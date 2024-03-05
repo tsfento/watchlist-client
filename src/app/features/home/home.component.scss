@@ -38,10 +38,46 @@
   object-fit: cover;
 }
 
-.now-playing-details {
+.shelf-details-container {
   background-color: #a5abbd;
   color: black;
   width: 100%;
+}
+
+.shelf-details {
+  margin: 0px 20px;
+  display: grid;
+  grid-template-rows: 80px 1fr 80px;
+}
+
+.details-header {
+  display: grid;
+  grid-template-rows: 64px 16px;
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.70);
+  }
+  .year {
+    font-size: 3rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.70);
+  }
+  .sub-title {
+    margin-left: 10px;
+  }
+}
+
+.details-overview {
+  margin-top: 10px;
+  font-size: 1.25rem;
+  .overview-header {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  p {
+    margin-top: 5px;
+  }
 }
 // end shelf
 
@@ -83,9 +119,5 @@
 .drawer a img.active {
   opacity: 100%;
   z-index: 5;
-  // border: 1px solid #3c91f9;
-  // -moz-box-shadow: 0 0 5px 5px #3c91f9;
-  // -webkit-box-shadow: 0 0 5px 5px#3c91f9;
-  // box-shadow: 0 0 5px 5px #3c91f9;
 }
 // end drawer

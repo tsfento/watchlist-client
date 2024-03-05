@@ -9,12 +9,19 @@
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
               <img src="{{ 'https://image.tmdb.org/t/p/w300' + nPMovie.poster_path }}" alt="{{ nPMovie.title + ' poster'}}">
-              <div class="now-playing-details">
-                <div class="details-title">
-                  {{ nPMovie.title }}
-                </div>
-                <div class="details-overview">
-                  {{ nPMovie.overview }}
+              <div class="shelf-details-container">
+                <div class="shelf-details">
+                  <div class="details-header">
+                    <span><span class="title">{{ nPMovie.title }}</span><span class="year"> ({{ nPMovie.release_date | date:'yyyy' }})</span></span>
+                    <span><span class="sub-title">Starring: So-and-so</span><span>{{ nowPlayingDisplay.runtime }}</span></span>
+                  </div>
+                  <div class="details-overview">
+                    <span class="overview-header">Overview</span>
+                    <p>{{ nPMovie.overview }}</p>
+                  </div>
+                  <div class="details-actions">
+                    Add to List
+                  </div>
                 </div>
               </div>
             </div>
@@ -42,12 +49,14 @@
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
               <img src="{{ 'https://image.tmdb.org/t/p/w300' + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}">
-              <div class="now-playing-details">
-                <div class="details-title">
-                  {{ popMovie.title }}
-                </div>
-                <div class="details-overview">
-                  {{ popMovie.overview }}
+              <div class="shelf-details-container">
+                <div class="shelf-details">
+                  <div class="details-title">
+                    {{ popMovie.title }}
+                  </div>
+                  <div class="details-overview">
+                    {{ popMovie.overview }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -77,12 +86,14 @@
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
               <img src="{{ 'https://image.tmdb.org/t/p/w300' + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}">
-              <div class="now-playing-details">
-                <div class="details-title">
-                  {{ popTV.title }}
-                </div>
-                <div class="details-overview">
-                  {{ popTV.overview }}
+              <div class="shelf-details-container">
+                <div class="shelf-details">
+                  <div class="details-title">
+                    {{ popTV.title }}
+                  </div>
+                  <div class="details-overview">
+                    {{ popTV.overview }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -110,12 +121,14 @@
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
               <img src="{{ 'https://image.tmdb.org/t/p/w300' + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}">
-              <div class="now-playing-details">
-                <div class="details-title">
-                  {{ topTV.title }}
-                </div>
-                <div class="details-overview">
-                  {{ topTV.overview }}
+              <div class="shelf-details-container">
+                <div class="shelf-details">
+                  <div class="details-title">
+                    {{ topTV.title }}
+                  </div>
+                  <div class="details-overview">
+                    {{ topTV.overview }}
+                  </div>
                 </div>
               </div>
             </div>

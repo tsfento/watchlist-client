@@ -13,14 +13,22 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
+
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
+  nowPlayingDisplay:TmdbMovie = new TmdbMovie('');
+
   popularMovies:TmdbMovie[] = [];
   popularMovieIndex:number = 0;
+  popularMovieDisplay:TmdbMovie = new TmdbMovie('');
+
   popularTV:TmdbMovie[] = [];
   popularTVIndex:number = 0;
+  popularTVDisplay:TmdbMovie = new TmdbMovie('');
+
   topRatedTV:TmdbMovie[] = [];
   topRatedTVIndex:number = 0;
+  topRatedTVDisplay:TmdbMovie = new TmdbMovie('');
 
   constructor(private tmdbService:TmdbService) {}
 
@@ -28,7 +36,6 @@ export class HomeComponent implements OnInit {
     this.tmdbService.getNowPlayingMovies().subscribe({
       next: (response:TmdbResponse) => {
         this.nowPlayingMovies = response.results;
-        // console.log('Now Playing Movies:', this.nowPlayingMovies);
       },
       error: (error:any) => {
         console.error(error);
@@ -38,7 +45,6 @@ export class HomeComponent implements OnInit {
     this.tmdbService.getPopularMovies().subscribe({
       next: (response:TmdbResponse) => {
         this.popularMovies = response.results;
-        // console.log('Popular Movies:', this.popularMovies);
       },
       error: (error:any) => {
         console.error(error);
@@ -48,7 +54,6 @@ export class HomeComponent implements OnInit {
     this.tmdbService.getPopularTV().subscribe({
       next: (response:TmdbResponse) => {
         this.popularTV = response.results;
-        // console.log('Popular TV:', this.popularTV);
       },
       error: (error:any) => {
         console.error(error);
@@ -58,7 +63,6 @@ export class HomeComponent implements OnInit {
     this.tmdbService.getTopRatedTV().subscribe({
       next: (response:TmdbResponse) => {
         this.topRatedTV = response.results;
-        // console.log('Top Rated TV:', this.topRatedTV);
       },
       error: (error:any) => {
         console.error(error);
@@ -67,10 +71,6 @@ export class HomeComponent implements OnInit {
   }
 
   changeIndex(type:string, index:number) {
-    // if (type === 'nPMovie') {
-    //   this.nowPlayingMovieIndex = index;
-    // }
-
     switch(type) {
       case 'nPMovie':
         this.nowPlayingMovieIndex = index;
@@ -85,6 +85,16 @@ export class HomeComponent implements OnInit {
         this.topRatedTVIndex = index;
         break;
     }
+  }
+
+  titleDetails(tmdbId:number, contentType:string) {
+    this.tmdbService.getTitleDetails(tmdbId, contentType).subscribe({
+      next: (response:TmdbMovie) => {
+      },
+      error: (error:any) => {
+        console.error(error);
+      }
+    });
   }
 
   onWheel(event:WheelEvent, drawer:HTMLElement) {
