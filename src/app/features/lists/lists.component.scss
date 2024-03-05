@@ -261,15 +261,19 @@ label.nav:hover {
   margin-top: 10px;
 }
 
-.list-image {
+.list-posters {
   position: relative;
+  margin: 10px;
 }
 
-.list-image img {
+.list-posters img {
   width: 150px;
   object-fit: cover;
-  margin: 10px;
-  // border-radius: 5px;
+}
+
+.list-posters img:not(:first-child) {
+  margin-left: -100px;
+  box-shadow: -15px 0px 17px -7px #4a5369;
 }
 
 .list-title-count {

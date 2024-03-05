@@ -45,7 +45,7 @@
           <span class="list-username">&#64;{{ list.user.username }}</span>
         </div>
         @if (list.watch_titles_count !== 0) {
-          <div class="list-image">
+          <div class="list-posters">
             @if (list.poster_imgs !== []) {
               @for (poster_img of list.poster_imgs; track $index) {
                 <img src="{{ poster_url + poster_img }}" alt="{{ list.title }} poster">
