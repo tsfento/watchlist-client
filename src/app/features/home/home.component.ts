@@ -3,6 +3,7 @@ import { TmdbService } from '../../core/services/tmdb.service';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { CommonModule } from '@angular/common';
+import { TmplAstBoundAttribute } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
@@ -74,6 +75,7 @@ export class HomeComponent implements OnInit {
     switch(type) {
       case 'nPMovie':
         this.nowPlayingMovieIndex = index;
+        this.titleDetails(this.nowPlayingMovies[this.nowPlayingMovieIndex], 'movie');
         break;
       case 'popMovie':
         this.popularMovieIndex = index;
@@ -87,9 +89,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  titleDetails(tmdbId:number, contentType:string) {
-    this.tmdbService.getTitleDetails(tmdbId, contentType).subscribe({
+  titleDetails(tmdbTitle:TmdbMovie, contentType:string) {
+    this.tmdbService.getTitleDetails(tmdbTitle.id, contentType).subscribe({
       next: (response:TmdbMovie) => {
+        tmdbTitle = response;
       },
       error: (error:any) => {
         console.error(error);
