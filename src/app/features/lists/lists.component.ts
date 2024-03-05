@@ -38,21 +38,17 @@ export class ListsComponent implements OnInit{
       this.currentUser = user;
     });
 
-    this.listService.getUserLists(this.currentUser?.username).subscribe({
-      next: (lists:WatchList[]) => {
-        this.lists = lists;
-      },
-      error: (error:any) => {
-        console.error('Error fetching lists', error);
-      }
-    });
+    if (this.currentUser !== null) {
+      this.onToggle('user');
+    } else {
+      this.onToggle('all');
+    }
   }
 
   createNewList() {
     if (this.newListForm.valid) {
       this.http.post<WatchList>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists`, this.newListForm.value).subscribe({
         next: (res:any) => {
-          console.log(res);
           this.onToggle('user');
         },
         error: (res:any) => {

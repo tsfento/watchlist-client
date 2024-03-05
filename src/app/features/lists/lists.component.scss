@@ -206,6 +206,7 @@ label.nav:hover {
 }
 // end new list bar
 
+// lists css
 .list-grid {
   margin-top: 111px;
   display: grid;
@@ -216,7 +217,10 @@ label.nav:hover {
   padding: 1rem;
 }
 
-// lists css
+.list-grid.no-user {
+  margin-top: 61px;
+}
+
 .list-container {
   cursor: pointer;
   background-color: #4a5369;

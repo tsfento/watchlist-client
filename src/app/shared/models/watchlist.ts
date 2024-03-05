@@ -6,7 +6,7 @@ export class WatchList {
   title:string;
   user:User;
   watch_titles_count:number;
-  poster_img:string;
+  poster_imgs:string[];
 
   constructor(watchList:any) {
     this.id = watchList.id || 0;
@@ -14,6 +14,6 @@ export class WatchList {
     this.title = watchList.title || '';
     this.user = watchList.user || '';
     this.watch_titles_count = watchList.watch_titles_count || 0;
-    this.poster_img = watchList.poster_img || '';
+    this.poster_imgs = watchList.poster_imgs || [];
   }
 }
