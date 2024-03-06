@@ -3,14 +3,15 @@ import { TmdbService } from '../../core/services/tmdb.service';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { CommonModule } from '@angular/common';
-import { TmplAstBoundAttribute } from '@angular/compiler';
+import { AddTitleModalComponent } from '../add-title-modal/add-title-modal.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  providers: [AddTitleModalComponent]
 })
 export class HomeComponent implements OnInit {
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
@@ -31,12 +32,18 @@ export class HomeComponent implements OnInit {
   topRatedTVIndex:number = 0;
   topRatedTVDisplay:TmdbMovie = new TmdbMovie('');
 
-  constructor(private tmdbService:TmdbService) {}
+  constructor(private tmdbService:TmdbService, public addTitleModal:AddTitleModalComponent) {}
 
   ngOnInit(): void {
     this.tmdbService.getNowPlayingMovies().subscribe({
       next: (response:TmdbResponse) => {
-        this.nowPlayingMovies = response.results;
+        const tempNowPlayingMovies = response.results;
+
+        tempNowPlayingMovies.forEach((m:TmdbMovie) => {
+          this.titleDetails(m, 'movie');
+          console.log(m.runtime);
+        });
+        this.nowPlayingMovies = tempNowPlayingMovies;
       },
       error: (error:any) => {
         console.error(error);
@@ -45,7 +52,13 @@ export class HomeComponent implements OnInit {
 
     this.tmdbService.getPopularMovies().subscribe({
       next: (response:TmdbResponse) => {
-        this.popularMovies = response.results;
+        const tempPopularMovies = response.results;
+
+        tempPopularMovies.forEach((m:TmdbMovie) => {
+          this.titleDetails(m, 'movie');
+          console.log(m.runtime);
+        });
+        this.popularMovies = tempPopularMovies;
       },
       error: (error:any) => {
         console.error(error);
@@ -54,7 +67,12 @@ export class HomeComponent implements OnInit {
 
     this.tmdbService.getPopularTV().subscribe({
       next: (response:TmdbResponse) => {
-        this.popularTV = response.results;
+        const tempPopularTV = response.results;
+
+        // tempPopularTV.forEach((m:TmdbMovie) => {
+        //   this.titleDetails(m, 'tv');
+        // });
+        this.popularTV = tempPopularTV;
       },
       error: (error:any) => {
         console.error(error);
@@ -63,7 +81,12 @@ export class HomeComponent implements OnInit {
 
     this.tmdbService.getTopRatedTV().subscribe({
       next: (response:TmdbResponse) => {
-        this.topRatedTV = response.results;
+        const tempTopRatedTV = response.results;
+
+        // tempTopRatedTV.forEach((t:TmdbMovie) => {
+        //   this.titleDetails(t, 'tv');
+        // });
+        this.topRatedTV = tempTopRatedTV;
       },
       error: (error:any) => {
         console.error(error);
@@ -89,15 +112,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  titleDetails(tmdbTitle:TmdbMovie, contentType:string) {
+  titleDetails(tmdbTitle:TmdbMovie, contentType:string): TmdbMovie {
     this.tmdbService.getTitleDetails(tmdbTitle.id, contentType).subscribe({
       next: (response:TmdbMovie) => {
-        tmdbTitle = response;
+        tmdbTitle.runtime = response.runtime;
       },
       error: (error:any) => {
         console.error(error);
       }
     });
+
+    return tmdbTitle;
   }
 
   onWheel(event:WheelEvent, drawer:HTMLElement) {
