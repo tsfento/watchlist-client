@@ -38,6 +38,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   gotAllListsSub = new Subscription;
   gotUserListsSub = new Subscription;
   gotFollowedListsSub = new Subscription;
+  gotTitlesSub = new Subscription;
 
   constructor(private listService:ListService, private titleService:TitleService, private userService:UserService, private http:HttpClient) {}
 
@@ -69,6 +70,10 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
       this.followedLists = gotLists;
     });
+
+    this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
+      this.titles = gotTitles;
+    });
   }
 
   ngOnDestroy(): void {
@@ -82,6 +87,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.http.post<WatchList>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists`, this.newListForm.value).subscribe({
         next: (res:any) => {
           this.onToggle('user');
+          console.log(res);
         },
         error: (res:any) => {
           console.log(res.error);
@@ -110,16 +116,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   showTitles(id:number, username:string) {
-    this.titleService.getTitles(id, username).subscribe({
-      next: (titles:WatchTitle[]) => {
-        this.titles = titles;
-        this.beforeFilteredTitles = this.titles;
-        // console.log(this.titles);
-      },
-      error: (error:any) => {
-        console.error('Error fetching titles', error);
-      }
-    });
+    this.titleService.getTitles(id, username);
 
     this.isViewingTitles = true;
   }

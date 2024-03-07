@@ -21,10 +21,12 @@ export class ListService {
     this.http.get<WatchList[]>(`${environment.apiUrl}/lists`).subscribe({
       next: (response:WatchList[]) => {
         this.allLists = response;
-        this.gotAllLists.next(this.allLists.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        this.gotAllLists.next(this.allLists.slice());
       }
     });
   }
@@ -33,10 +35,12 @@ export class ListService {
     this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`).subscribe({
       next: (response:WatchList[]) => {
         this.userLists = response;
-        this.gotUserLists.next(this.userLists.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        this.gotUserLists.next(this.userLists.slice());
       }
     });
   }
@@ -45,10 +49,12 @@ export class ListService {
     this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`).subscribe({
       next: (response:WatchList[]) => {
         this.followedLists = response;
-        this.gotFollowedLists.next(this.followedLists.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        this.gotFollowedLists.next(this.followedLists.slice());
       }
     });
   }

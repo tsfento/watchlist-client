@@ -32,11 +32,12 @@ export class TmdbService {
           this.getTitleDetails(m, 'movie');
         });
         this.nowPlayingMovies = tempNowPlayingMovies;
-
-        this.gotNowPlayingMovies.next(this.nowPlayingMovies.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        // this.gotNowPlayingMovies.next(this.nowPlayingMovies.slice());
       }
     });
   }
@@ -50,11 +51,12 @@ export class TmdbService {
           this.getTitleDetails(m, 'movie');
         });
         this.popularMovies = tempPopularMovies;
-
-        this.gotPopularMovies.next(this.popularMovies.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        // this.gotPopularMovies.next(this.popularMovies.slice());
       }
     });
   }
@@ -68,11 +70,12 @@ export class TmdbService {
         //   this.getTitleDetails(m, 'movie');
         // });
         this.popularTV = tempPopularTV;
-
-        this.gotPopularTV.next(this.popularTV.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        // this.gotPopularTV.next(this.popularTV.slice());
       }
     });
   }
@@ -86,25 +89,30 @@ export class TmdbService {
         //   this.getTitleDetails(m, 'movie');
         // });
         this.topRatedTV = tempTopRatedTV;
-
-        this.gotTopRatedTv.next(this.topRatedTV.slice());
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        // this.gotTopRatedTv.next(this.topRatedTV.slice());
       }
     });
   }
 
-  getTitleDetails(tmdbTitle:TmdbMovie, contentType:string):TmdbMovie {
+  getTitleDetails(tmdbTitle:TmdbMovie, contentType:string) {
     this.http.get<any>(`${environment.apiUrl}/tmdb/${contentType}/details/${tmdbTitle.id}`).subscribe({
       next: (response:TmdbMovie) => {
         tmdbTitle.runtime = response.runtime;
       },
       error: (error:any) => {
         console.error(error);
+      },
+      complete: () => {
+        this.gotNowPlayingMovies.next(this.nowPlayingMovies.slice());
+        this.gotPopularMovies.next(this.popularMovies.slice());
+        this.gotPopularTV.next(this.popularTV.slice());
+        this.gotTopRatedTv.next(this.topRatedTV.slice());
       }
     });
-
-    return tmdbTitle;
   }
 }
