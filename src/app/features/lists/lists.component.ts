@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ListService } from '../../core/services/list.service';
 import { WatchList } from '../../shared/models/watchlist';
 import { WatchTitle } from '../../shared/models/watchtitle';
@@ -9,6 +9,7 @@ import { UserService } from '../../core/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lists',
@@ -17,7 +18,7 @@ import { User } from '../../shared/models/user';
   templateUrl: './lists.component.html',
   styleUrl: './lists.component.scss'
 })
-export class ListsComponent implements OnInit{
+export class ListsComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   newListForm:FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -26,23 +27,54 @@ export class ListsComponent implements OnInit{
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;
   isUserLists:boolean = true;
-  lists:WatchList[] = [];
+  displayLists:WatchList[] = [];
+  allLists:WatchList[] = [];
+  userLists:WatchList[] = [];
+  followedLists:WatchList[] = [];
   titles:WatchTitle[] = [];
   beforeFilteredTitles:WatchTitle[] = [];
   searchQuery: string = '';
+
+  gotAllListsSub = new Subscription;
+  gotUserListsSub = new Subscription;
+  gotFollowedListsSub = new Subscription;
 
   constructor(private listService:ListService, private titleService:TitleService, private userService:UserService, private http:HttpClient) {}
 
   ngOnInit(): void {
     this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+
+      this.listService.getUserLists(this.currentUser?.username);
+      this.listService.getFollowedLists(this.currentUser?.username);
+      this.listService.getAllLists();
     });
 
-    if (this.currentUser !== null) {
-      this.onToggle('user');
-    } else {
-      this.onToggle('all');
-    }
+    this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
+      this.allLists = gotLists;
+
+      if (this.currentUser === null) {
+        this.onToggle('all');
+      }
+    });
+
+    this.gotUserListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
+      this.userLists = gotLists;
+
+      if (this.currentUser !== null) {
+        this.onToggle('user');
+      }
+    });
+
+    this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
+      this.followedLists = gotLists;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.gotAllListsSub.unsubscribe();
+    this.gotUserListsSub.unsubscribe();
+    this.gotFollowedListsSub.unsubscribe();
   }
 
   createNewList() {
@@ -61,45 +93,19 @@ export class ListsComponent implements OnInit{
   }
 
   onToggle(input:string) {
+    if (input === 'all') {
+      this.listService.getAllLists();
+      this.displayLists = this.allLists;
+    }
+
     if (input === 'user') {
-      this.listService.getUserLists(this.currentUser?.username).subscribe({
-        next: (lists:WatchList[]) => {
-          this.lists = lists;
-          this.isViewingTitles = false;
-          this.isUserLists = true;
-        },
-        error: (error:any) => {
-          console.error('Error fetching lists', error);
-        }
-      });
+      this.listService.getUserLists(this.currentUser?.username);
+      this.displayLists = this.userLists;
     }
 
     if (input === 'follow') {
-      this.listService.getFollowedLists(this.currentUser?.username).subscribe({
-        next: (lists:WatchList[]) => {
-          this.lists = lists;
-          this.beforeFilteredTitles = this.titles;
-          this.isViewingTitles = false;
-          this.isUserLists = false;
-        },
-        error: (error:any) => {
-          console.error('Error fetching lists', error);
-        }
-      });
-    }
-
-    if (input === 'all') {
-      this.listService.getAllLists().subscribe({
-        next: (lists:WatchList[]) => {
-          this.lists = lists;
-          this.beforeFilteredTitles = this.titles;
-          this.isViewingTitles = false;
-          this.isUserLists = false;
-        },
-        error: (error:any) => {
-          console.error('Error fetching lists', error);
-        }
-      });
+      this.listService.getFollowedLists(this.currentUser?.username);
+      this.displayLists = this.followedLists;
     }
   }
 
