@@ -54,7 +54,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.allLists = gotLists;
 
       if (this.currentUser === null) {
-        this.onToggle('all');
+        this.displayLists = this.allLists;
       }
     });
 
@@ -62,7 +62,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.userLists = gotLists;
 
       if (this.currentUser !== null) {
-        this.onToggle('user');
+        this.displayLists = this.userLists;
       }
     });
 
