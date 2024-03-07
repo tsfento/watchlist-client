@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TmdbService } from '../../core/services/tmdb.service';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { CommonModule } from '@angular/common';
 import { AddTitleModalComponent } from '../add-title-modal/add-title-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,92 +14,61 @@ import { AddTitleModalComponent } from '../add-title-modal/add-title-modal.compo
   styleUrl: './home.component.scss',
   providers: [AddTitleModalComponent]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
-  nowPlayingDisplay:TmdbMovie = new TmdbMovie('');
+  gotNowPlayingMoviesSub = new Subscription;
 
   popularMovies:TmdbMovie[] = [];
   popularMovieIndex:number = 0;
-  popularMovieDisplay:TmdbMovie = new TmdbMovie('');
+  gotPopularMoviesSub = new Subscription;
 
   popularTV:TmdbMovie[] = [];
   popularTVIndex:number = 0;
-  popularTVDisplay:TmdbMovie = new TmdbMovie('');
+  gotPopularTVSub = new Subscription;
 
   topRatedTV:TmdbMovie[] = [];
   topRatedTVIndex:number = 0;
-  topRatedTVDisplay:TmdbMovie = new TmdbMovie('');
+  gotTopRatedTVSub = new Subscription;
 
   constructor(private tmdbService:TmdbService, public addTitleModal:AddTitleModalComponent) {}
 
   ngOnInit(): void {
-    this.tmdbService.getNowPlayingMovies().subscribe({
-      next: (response:TmdbResponse) => {
-        const tempNowPlayingMovies = response.results;
+    this.tmdbService.getNowPlayingMovies();
+    this.tmdbService.getPopularMovies();
+    this.tmdbService.getPopularTV();
+    this.tmdbService.getTopRatedTV();
 
-        tempNowPlayingMovies.forEach((m:TmdbMovie) => {
-          this.titleDetails(m, 'movie');
-          console.log(m.runtime);
-        });
-        this.nowPlayingMovies = tempNowPlayingMovies;
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
+    this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
+      this.nowPlayingMovies = gotTitles;
     });
 
-    this.tmdbService.getPopularMovies().subscribe({
-      next: (response:TmdbResponse) => {
-        const tempPopularMovies = response.results;
-
-        tempPopularMovies.forEach((m:TmdbMovie) => {
-          this.titleDetails(m, 'movie');
-          console.log(m.runtime);
-        });
-        this.popularMovies = tempPopularMovies;
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
+    this.gotPopularMoviesSub = this.tmdbService.gotPopularMovies.subscribe((gotTitles) => {
+      this.popularMovies = gotTitles;
     });
 
-    this.tmdbService.getPopularTV().subscribe({
-      next: (response:TmdbResponse) => {
-        const tempPopularTV = response.results;
-
-        // tempPopularTV.forEach((m:TmdbMovie) => {
-        //   this.titleDetails(m, 'tv');
-        // });
-        this.popularTV = tempPopularTV;
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
+    this.gotPopularTVSub = this.tmdbService.gotPopularTV.subscribe((gotTitles) => {
+      this.popularTV = gotTitles;
     });
 
-    this.tmdbService.getTopRatedTV().subscribe({
-      next: (response:TmdbResponse) => {
-        const tempTopRatedTV = response.results;
-
-        // tempTopRatedTV.forEach((t:TmdbMovie) => {
-        //   this.titleDetails(t, 'tv');
-        // });
-        this.topRatedTV = tempTopRatedTV;
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
+    this.gotTopRatedTVSub = this.tmdbService.gotTopRatedTv.subscribe((gotTitles) => {
+      this.topRatedTV = gotTitles;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.gotNowPlayingMoviesSub.unsubscribe();
+    this.gotPopularMoviesSub.unsubscribe();
+    this.gotPopularTVSub.unsubscribe();
+    this.gotTopRatedTVSub.unsubscribe();
   }
 
   changeIndex(type:string, index:number) {
     switch(type) {
       case 'nPMovie':
         this.nowPlayingMovieIndex = index;
-        this.titleDetails(this.nowPlayingMovies[this.nowPlayingMovieIndex], 'movie');
         break;
       case 'popMovie':
         this.popularMovieIndex = index;
@@ -110,19 +80,6 @@ export class HomeComponent implements OnInit {
         this.topRatedTVIndex = index;
         break;
     }
-  }
-
-  titleDetails(tmdbTitle:TmdbMovie, contentType:string): TmdbMovie {
-    this.tmdbService.getTitleDetails(tmdbTitle.id, contentType).subscribe({
-      next: (response:TmdbMovie) => {
-        tmdbTitle.runtime = response.runtime;
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
-    });
-
-    return tmdbTitle;
   }
 
   onWheel(event:WheelEvent, drawer:HTMLElement) {

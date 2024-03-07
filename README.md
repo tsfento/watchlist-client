@@ -15,7 +15,7 @@ TODO
 
 # Packages Used
 
-The client utilizes no additional packages at this time.
+[Bootstrap](https://getbootstrap.com/) is used for the carousels on the home component.
 
 # Backend API
 
