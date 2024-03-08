@@ -5,6 +5,7 @@ import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { CommonModule } from '@angular/common';
 import { AddTitleModalComponent } from '../add-title-modal/add-title-modal.component';
 import { Subscription } from 'rxjs';
+import { TitleService } from '../../core/services/title.service';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,11 @@ import { Subscription } from 'rxjs';
   imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  providers: [AddTitleModalComponent]
+  providers: []
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  poster_url:string = 'https://image.tmdb.org/t/p/w154'
+  med_poster_url:string = 'https://image.tmdb.org/t/p/w300';
+  small_poster_url:string = 'https://image.tmdb.org/t/p/w154'
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -33,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   topRatedTVIndex:number = 0;
   gotTopRatedTVSub = new Subscription;
 
-  constructor(private tmdbService:TmdbService, public addTitleModal:AddTitleModalComponent) {}
+  constructor(private tmdbService:TmdbService, public titleService:TitleService) {}
 
   ngOnInit(): void {
     this.tmdbService.getNowPlayingMovies();

@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class ListsComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
+  currentUserSub = new Subscription;
   newListForm:FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     private: new FormControl(false, Validators.required)
@@ -43,7 +44,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   constructor(private listService:ListService, private titleService:TitleService, private userService:UserService, private http:HttpClient) {}
 
   ngOnInit(): void {
-    this.userService.currentUserBehaviorSubject.subscribe((user) => {
+    this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
       this.listService.getUserLists(this.currentUser?.username);
@@ -77,6 +78,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.currentUserSub.unsubscribe();
     this.gotAllListsSub.unsubscribe();
     this.gotUserListsSub.unsubscribe();
     this.gotFollowedListsSub.unsubscribe();

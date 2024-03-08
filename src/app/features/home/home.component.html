@@ -8,7 +8,7 @@
           @for (nPMovie of nowPlayingMovies; track $index) {
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
-              <img src="{{ 'https://image.tmdb.org/t/p/w300' + nPMovie.poster_path }}" alt="{{ nPMovie.title + ' poster'}}">
+              <img src="{{ med_poster_url + nPMovie.poster_path }}" alt="{{ nPMovie.title + ' poster'}}">
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-header">
@@ -20,7 +20,7 @@
                     <p>{{ nPMovie.overview }}</p>
                   </div>
                   <div class="details-actions">
-                    <a data-bs-toggle="modal" data-bs-target="#addTitleModal">Add to List</a>
+                    <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add to List</a>
                   </div>
                 </div>
               </div>
@@ -32,7 +32,7 @@
           <div #nPMovieDrawer class="drawer" (wheel)="onWheel($event, nPMovieDrawer)">
             @for (nowPlayingMovie of nowPlayingMovies; track $index) {
               <a type="button" data-bs-target="#nPMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('nPMovie', $index)">
-                <img src="{{ poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
+                <img src="{{ small_poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
               </a>
             }
           </div>
@@ -48,7 +48,7 @@
           @for (popMovie of popularMovies; track $index) {
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
-              <img src="{{ 'https://image.tmdb.org/t/p/w300' + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}">
+              <img src="{{ med_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}">
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-title">
@@ -67,7 +67,7 @@
           <div #popMovieDrawer class="drawer" (wheel)="onWheel($event, popMovieDrawer)">
             @for (popMovie of popularMovies; track $index) {
               <a type="button" data-bs-target="#popMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popMovie', $index)">
-                <img src="{{ poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}" [class.active]="popularMovieIndex == $index">
+                <img src="{{ small_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}" [class.active]="popularMovieIndex == $index">
               </a>
             }
           </div>
@@ -85,7 +85,7 @@
           @for (popTV of popularTV; track $index) {
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
-              <img src="{{ 'https://image.tmdb.org/t/p/w300' + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}">
+              <img src="{{ med_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}">
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-title">
@@ -104,7 +104,7 @@
           <div #popTVDrawer class="drawer" (wheel)="onWheel($event, popTVDrawer)">
             @for (popTV of popularTV; track $index) {
               <a type="button" data-bs-target="#popTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popTV', $index)">
-                <img src="{{ poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}" [class.active]="popularTVIndex == $index">
+                <img src="{{ small_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}" [class.active]="popularTVIndex == $index">
               </a>
             }
           </div>
@@ -120,7 +120,7 @@
           @for (topTV of topRatedTV; track $index) {
           <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
             <div class="shelf">
-              <img src="{{ 'https://image.tmdb.org/t/p/w300' + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}">
+              <img src="{{ med_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}">
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-title">
@@ -139,7 +139,7 @@
           <div #topTVDrawer class="drawer" (wheel)="onWheel($event, topTVDrawer)">
             @for (topTV of topRatedTV; track $index) {
               <a type="button" data-bs-target="#topTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('topTV', $index)">
-                <img src="{{ poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}" [class.active]="topRatedTVIndex == $index">
+                <img src="{{ small_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}" [class.active]="topRatedTVIndex == $index">
               </a>
             }
           </div>

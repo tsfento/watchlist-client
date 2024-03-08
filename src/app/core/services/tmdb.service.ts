@@ -103,6 +103,7 @@ export class TmdbService {
     this.http.get<any>(`${environment.apiUrl}/tmdb/${contentType}/details/${tmdbTitle.id}`).subscribe({
       next: (response:TmdbMovie) => {
         tmdbTitle.runtime = response.runtime;
+        tmdbTitle.imdb_id = response.imdb_id;
       },
       error: (error:any) => {
         console.error(error);
