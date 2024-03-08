@@ -1,25 +1,31 @@
-.add-title-modal {
-  position: fixed;
-  top: calc(50% - 100px);
-  left: calc(50% - 200px);
-  width: 400px;
-  height: 200px;
-  border: none;
-}
+// non-bootstrap
+// .add-title-modal {
+//   position: fixed;
+//   top: calc(50% - 100px);
+//   left: calc(50% - 200px);
+//   width: 400px;
+//   height: 200px;
+//   border: none;
+// }
 
-.add-title-modal::backdrop {
-  background-color: rgba(0, 0, 0, 0.4);
-}
+// .add-title-modal::backdrop {
+//   background-color: rgba(0, 0, 0, 0.4);
+// }
 
-dialog[open] {
-  animation: fadein 0.25s ease-in forwards;
-}
+// dialog[open] {
+//   animation: fadein 0.25s ease-in forwards;
+// }
 
-@keyframes fadein{
-  0%{
-    opacity:0;
-  }
-  100%{
-    opacity:1;
-  }
-}
+// @keyframes fadein{
+//   0%{
+//     opacity:0;
+//   }
+//   100%{
+//     opacity:1;
+//   }
+// }
+// end non-bootstrap
+
+// bootstrap
+
+// end bootstrap
