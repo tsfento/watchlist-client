@@ -107,6 +107,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle {
+    const userWatchTitle = this.userWatchTitles.filter(t => t.tmdb_id === tmdbId)[0];
+    return userWatchTitle;
+  }
+
   onWheel(event:WheelEvent, drawer:HTMLElement) {
     event.preventDefault();
     drawer.scrollLeft += event.deltaY;

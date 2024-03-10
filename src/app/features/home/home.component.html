@@ -21,6 +21,9 @@
                   </div>
                   <div class="details-actions">
                     <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add to List</a>
+                    @if (this.getTmdbIdFromUserWatchTitles(nPMovie.id) && this.getTmdbIdFromUserWatchTitles(nPMovie.id).watched === true) {
+                      <p>Watched</p>
+                    }
                   </div>
                 </div>
               </div>
