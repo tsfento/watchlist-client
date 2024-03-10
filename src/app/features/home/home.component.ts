@@ -6,6 +6,9 @@ import { CommonModule } from '@angular/common';
 import { AddTitleModalComponent } from '../add-title-modal/add-title-modal.component';
 import { Subscription } from 'rxjs';
 import { TitleService } from '../../core/services/title.service';
+import { UserWatchTitle } from '../../shared/models/user-watch-title';
+import { UserService } from '../../core/services/user.service';
+import { User } from '../../shared/models/user';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +21,12 @@ import { TitleService } from '../../core/services/title.service';
 export class HomeComponent implements OnInit, OnDestroy {
   med_poster_url:string = 'https://image.tmdb.org/t/p/w300';
   small_poster_url:string = 'https://image.tmdb.org/t/p/w154'
+
+  currentUser:User | null = null;
+  currentUserSub = new Subscription;
+
+  userWatchTitles:UserWatchTitle[] = [];
+  gotUserWatchTitlesSub = new Subscription;
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -35,13 +44,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   topRatedTVIndex:number = 0;
   gotTopRatedTVSub = new Subscription;
 
-  constructor(private tmdbService:TmdbService, public titleService:TitleService) {}
+  constructor(private tmdbService:TmdbService, public titleService:TitleService, private userService:UserService) {}
 
   ngOnInit(): void {
     this.tmdbService.getNowPlayingMovies();
     this.tmdbService.getPopularMovies();
     this.tmdbService.getPopularTV();
     this.tmdbService.getTopRatedTV();
+
+    this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
+      this.currentUser = user;
+
+      if (this.currentUser !== null) {
+        this.titleService.getUserWatchTitles(this.currentUser.username);
+      }
+    });
+
+    this.gotUserWatchTitlesSub = this.titleService.gotUserWatchTitles.subscribe((gotUserTitles) => {
+      this.userWatchTitles = gotUserTitles;
+      console.log(this.userWatchTitles);
+    });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
       this.nowPlayingMovies = gotTitles;
@@ -61,6 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.gotUserWatchTitlesSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();
