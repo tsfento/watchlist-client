@@ -4,15 +4,20 @@ import { User } from '../../models/user';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../core/services/user.service';
 import { AuthenticationService } from '../../../core/services/authentication.service';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  searchForm:FormGroup = new FormGroup({
+    search: new FormControl('', Validators.required)
+  });
+
   currentUser:User | null = null;
   currentUserSub = new Subscription;
 
@@ -40,6 +45,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleSearching() {
     this.isSearching = !this.isSearching;
+  }
+
+  onSearch() {
+    console.log(this.searchForm.value.search);
   }
 
   onRoute(route:string) {

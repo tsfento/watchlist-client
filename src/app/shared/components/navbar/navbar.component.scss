@@ -40,11 +40,11 @@
 // search
 #search {
   float: right;
-  width: 750px;
+  width: 800px;
 }
 
 .search-container {
-  width:735px;
+  width:785px;
   height:30px;
   position: relative;
   float:left;
@@ -55,7 +55,7 @@
   position:absolute;
   width:0px;
   float:Left;
-  margin-left:710px;
+  margin-left:760px;
   transition: all 0.5s ease-in-out;
   background: transparent;
   height:30px;
@@ -71,7 +71,7 @@
 .search-container input:focus {
   background: white;
   color: black;
-  width: 700px;
+  width: 750px;
   margin-left: 0px;
 }
 

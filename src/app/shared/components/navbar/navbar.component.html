@@ -6,8 +6,8 @@
   <div class="btn-container">
     @if (isLoggedIn()) {
       <div class="search-container" [class.active]="isSearching">
-        <form>
-          <input type="text" placeholder="Search for a title...">
+        <form [formGroup]="searchForm" (keyup.enter)="onSearch(); toggleSearching();">
+          <input type="text" placeholder="Search for a title..." formControlName="search">
 
           <a class="nav-btn" (click)="toggleSearching()">
             <div class="srch_btn" [class.hide]="isSearching">

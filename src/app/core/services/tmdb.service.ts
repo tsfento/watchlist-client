@@ -116,4 +116,7 @@ export class TmdbService {
       }
     });
   }
+
+  getSearchResults(search:string) {
+  }
 }
