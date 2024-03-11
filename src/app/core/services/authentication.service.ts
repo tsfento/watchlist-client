@@ -46,6 +46,6 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/welcome']);
   }
 }

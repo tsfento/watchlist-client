@@ -8,35 +8,65 @@
   position: fixed;
   width: 60%;
   border-bottom: 2px solid #3c91f9;
-
-  // for hiding/showing navbar
-  // top: -56px;
-  // transition: top 0.5s ease;
 }
 
-// for hiding/showing navbar
-// .navbar.active {
-//   top: 0px;
-// }
-
-.navbar .branding {
+.branding a {
   font-size: 2rem;
   font-weight: bold;
-  color: white;
   padding-left: 0.5rem;
+  color: #f9f9f9;
+  text-decoration: none;
 }
 
-.burger {
+.btn-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  margin-right: 20px;
+}
+
+.nav-btn {
   cursor: pointer;
-  background: none;
-  border: none;
-  // font-size: 1.5rem;
-  scale: 150%;
-  margin-top: 10px;
-  color: white;
-  transition: color 0.3s ease-in-out;
+  text-decoration: none;
+  color: #f9f9f9;
+  font-size: 1.25rem;
+  transition: color 0.2s ease-in-out;
 }
 
-.burger:hover {
+// search
+.search-container input {
+}
+
+.search-btn, .close-btn {
+  vertical-align: text-bottom;
+  // vertical-align: bottom;
+  scale: 125%;
+}
+// end search
+
+.nav-btn:not(:last-child) {
+  margin-right: 20px;
+}
+
+.nav-btn:hover {
   color: #3c91f9;
 }
+
+// .burger {
+//   cursor: pointer;
+//   background: none;
+//   border: none;
+//   // font-size: 1.5rem;
+//   scale: 150%;
+//   margin-top: 10px;
+//   color: white;
+//   transition: color 0.3s ease-in-out;
+// }
+
+// .burger:hover {
+//   color: #3c91f9;
+// }

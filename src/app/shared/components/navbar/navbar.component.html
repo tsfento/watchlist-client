@@ -1,12 +1,46 @@
 <!-- <div class="navbar" [class.active]="!onRoute('welcome')"> -->
 <div class="navbar">
-  <div class="branding">WeWatch</div>
+  <div class="branding">
+    <a routerLink="/">WeWatch</a>
+  </div>
 
-  <div class="burger-container">
-    <button class="burger">
+  <div class="btn-container">
+    @if (isLoggedIn()) {
+      <a class="nav-btn" routerLink="/lists">Lists</a>
+      <a class="nav-btn" (click)="logout()">Logout</a>
+    } @else {
+
+      <div class="search-container">
+        <input type="text">
+
+        <!-- search-btn -->
+        <div class="search-btn-container">
+          <a class="nav-btn">
+            <span class="material-symbols-outlined search-btn ">
+              search
+            </span>
+          </a>
+          <a class="nav-btn">
+            <span class="material-symbols-outlined close-btn">
+              close
+            </span>
+          </a>
+        </div>
+        <!-- end search-btn -->
+      </div>
+
+      @if (router.url === '/') {
+        <a class="nav-btn" routerLink="/lists">Lists</a>
+      } @else {
+        <a class="nav-btn" routerLink="/">Home</a>
+      }
+      <a class="nav-btn" routerLink="/welcome">Login/Sign Up</a>
+    }
+
+    <!-- <button class="burger">
       <span class="material-symbols-outlined">
       menu
       </span>
-    </button>
+    </button> -->
   </div>
 </div>
