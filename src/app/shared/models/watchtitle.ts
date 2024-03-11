@@ -1,3 +1,5 @@
+import { UserWatchTitle } from "./user-watch-title";
+
 export class WatchTitle {
   id:number;
   tmdb_id:number;
@@ -7,6 +9,7 @@ export class WatchTitle {
   release_date:string;
   overview:string;
   runtime:number;
+  current_user_watch_titles:UserWatchTitle[];
 
   constructor(watchTitle:any) {
     this.id = watchTitle.id;
@@ -17,5 +20,6 @@ export class WatchTitle {
     this.release_date = watchTitle.release_date;
     this.overview = watchTitle.overview;
     this.runtime = watchTitle.runtime;
+    this.current_user_watch_titles = watchTitle.current_user_watch_titles;
   }
 }

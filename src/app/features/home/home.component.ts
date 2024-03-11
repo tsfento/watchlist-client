@@ -25,9 +25,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
 
-  userWatchTitles:UserWatchTitle[] = [];
-  gotUserWatchTitlesSub = new Subscription;
-
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
   gotNowPlayingMoviesSub = new Subscription;
@@ -55,14 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      if (this.currentUser !== null) {
-        this.titleService.getUserWatchTitles(this.currentUser.username);
-      }
-    });
-
-    this.gotUserWatchTitlesSub = this.titleService.gotUserWatchTitles.subscribe((gotUserTitles) => {
-      this.userWatchTitles = gotUserTitles;
-      console.log(this.userWatchTitles);
+      console.log(this.currentUser);
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
@@ -83,7 +73,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.gotUserWatchTitlesSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();
@@ -107,8 +96,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle {
-    const userWatchTitle = this.userWatchTitles.filter(t => t.tmdb_id === tmdbId)[0];
+  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
+    const userWatchTitle = this.currentUser?.user_watch_titles.find(t => t.watch_title.tmdb_id === tmdbId);
+
     return userWatchTitle;
   }
 
