@@ -10,11 +10,26 @@
       <a class="nav-btn" (click)="logout()">Logout</a>
     } @else {
 
-      <div class="search-container">
-        <input type="text">
+      <div class="search-container" [class.active]="isSearching">
+        <form>
+          <input type="text" placeholder="Search for a title...">
+
+          <a class="nav-btn" (click)="toggleSearching()">
+            <div class="srch_btn" [class.hide]="isSearching">
+              <span class="material-symbols-outlined search-btn">
+                search
+              </span>
+            </div>
+            <div class="cls_btn" [class.hide]="!isSearching">
+              <span class="material-symbols-outlined close-btn">
+                close
+              </span>
+            </div>
+          </a>
+        </form>
 
         <!-- search-btn -->
-        <div class="search-btn-container">
+        <!-- <div class="search-btn-container">
           <a class="nav-btn">
             <span class="material-symbols-outlined search-btn ">
               search
@@ -25,7 +40,7 @@
               close
             </span>
           </a>
-        </div>
+        </div> -->
         <!-- end search-btn -->
       </div>
 

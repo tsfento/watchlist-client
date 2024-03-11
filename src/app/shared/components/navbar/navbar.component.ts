@@ -16,6 +16,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
 
+  isSearching:boolean = false;
+
   constructor(public router:Router, private authService:AuthenticationService, private userService:UserService) {}
 
   ngOnInit(): void {
@@ -34,6 +36,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+  }
+
+  toggleSearching() {
+    this.isSearching = !this.isSearching;
   }
 
   onRoute(route:string) {
