@@ -3,26 +3,19 @@
     <a routerLink="/">WeWatch</a>
   </div>
 
+  <div class="nav-search-bar">
+    <input type="text" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
+    <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)">
+      <span class="material-symbols-outlined search-btn">
+        search
+      </span>
+    </button>
+  </div>
+
+
   <div class="btn-container">
     @if (isLoggedIn()) {
-      <div class="search-container" [class.active]="isSearching">
-        <form [formGroup]="searchForm" (keyup.enter)="onSearch(); toggleSearching();">
-          <input type="text" placeholder="Search for a title..." formControlName="search">
 
-          <a class="nav-btn" (click)="toggleSearching()">
-            <div class="srch_btn" [class.hide]="isSearching">
-              <span class="material-symbols-outlined search-btn">
-                search
-              </span>
-            </div>
-            <div class="cls_btn" [class.hide]="!isSearching">
-              <span class="material-symbols-outlined close-btn">
-                close
-              </span>
-            </div>
-          </a>
-        </form>
-      </div>
       @if (router.url === '/') {
         <a class="nav-btn" routerLink="/lists">Lists</a>
       } @else {

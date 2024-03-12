@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      console.log(this.currentUser);
+      // console.log(this.currentUser);
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {

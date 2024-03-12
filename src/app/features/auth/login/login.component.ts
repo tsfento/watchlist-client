@@ -32,7 +32,7 @@ export class LoginComponent {
 
       this.authService.login(username, password).subscribe({
         next: (response:any) => {
-          console.log(response);
+          // console.log(response);
           this.router.navigate(['/lists']);
         },
         error: (error:any) => {
