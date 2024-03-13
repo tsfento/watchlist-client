@@ -1,25 +1,26 @@
 <div class="navbar">
   <div class="branding">
-    <a routerLink="/">WeWatch</a>
+    <a routerLink="/" (click)="clearSearch()">WeWatch</a>
   </div>
 
-  <div class="nav-search-bar">
-    <input type="text" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
-    <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)">
-      <span class="material-symbols-outlined search-btn">
-        search
-      </span>
-    </button>
-  </div>
-
+  @if (isLoggedIn()) {
+    <div class="nav-search-bar">
+      <input type="text" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
+      <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)">
+        <span class="material-symbols-outlined search-btn">
+          search
+        </span>
+      </button>
+    </div>
+  }
 
   <div class="btn-container">
     @if (isLoggedIn()) {
 
       @if (router.url === '/') {
-        <a class="nav-btn" routerLink="/lists">Lists</a>
+        <a class="nav-btn" routerLink="/lists" (click)="clearSearch()">Lists</a>
       } @else {
-        <a class="nav-btn" routerLink="/">Home</a>
+        <a class="nav-btn" routerLink="/" (click)="clearSearch()">Home</a>
       }
       <a class="nav-btn" (click)="logout()">Logout</a>
     } @else {

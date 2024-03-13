@@ -26,7 +26,9 @@ export class ListService {
         console.error(error);
       },
       complete: () => {
-        this.gotAllLists.next(this.allLists.slice());
+        if (this.allLists !== null) {
+          this.gotAllLists.next(this.allLists.slice());
+        }
       }
     });
   }
@@ -40,7 +42,9 @@ export class ListService {
         console.error(error);
       },
       complete: () => {
-        this.gotUserLists.next(this.userLists.slice());
+        if (this.userLists !== null) {
+          this.gotUserLists.next(this.userLists.slice());
+        }
       }
     });
   }
@@ -54,7 +58,9 @@ export class ListService {
         console.error(error);
       },
       complete: () => {
-        this.gotFollowedLists.next(this.followedLists.slice());
+        if (this.followedLists !== null) {
+          this.gotFollowedLists.next(this.followedLists.slice());
+        }
       }
     });
   }

@@ -21,6 +21,12 @@ export class TmdbService {
   topRatedTV:TmdbMovie[] = [];
   gotTopRatedTv = new BehaviorSubject<TmdbMovie[]>([]);
 
+  searchValue:string = '';
+  searchSubject = new BehaviorSubject<string>('');
+
+  searchResults:TmdbMovie[] = [];
+  gotSearchResults = new BehaviorSubject<TmdbMovie[]>([]);
+
   constructor(private http:HttpClient) { }
 
   getNowPlayingMovies() {
@@ -117,6 +123,24 @@ export class TmdbService {
     });
   }
 
-  getSearchResults(search:string) {
+  setSearch(search:string) {
+    this.searchSubject.next(search);
+  }
+
+  getSearchResults(query:string, type:string = 'movie', lang:string = 'en', page:number = 1) {
+    this.http.post<any>(`${environment.apiUrl}/tmdb/search`, {
+      query: query,
+      type: type,
+      lang: lang,
+      page: page
+    }).subscribe({
+      next: (response:TmdbResponse) => {
+        this.searchResults = response.results;
+        this.gotSearchResults.next(this.searchResults.slice());
+      },
+      error: (error:any) => {
+        console.error(error);
+      }
+    })
   }
 }
