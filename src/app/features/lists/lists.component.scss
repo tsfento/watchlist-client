@@ -315,7 +315,7 @@ label.nav:hover {
 }
 
 .title-container {
-  cursor: pointer;
+  // cursor: pointer;
   background-color: #4a5369;
   // border-radius: 10px;
   width: 75%;
@@ -330,5 +330,9 @@ label.nav:hover {
 
 .title-poster {
   margin: 15px;
+}
+
+.no-poster {
+  max-width: 154px;
 }
 // end titles css

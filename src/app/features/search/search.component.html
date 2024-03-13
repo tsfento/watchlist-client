@@ -1,1 +1,19 @@
-<p>search works!</p>
+<div class="titles-grid">
+  <!-- titles -->
+  @for (result of searchResults; track result.id) {
+    <div class="title-container">
+      <div class="title-poster">
+        @if (result.poster_path !== null) {
+          <img src="{{ poster_url + result.poster_path }}" alt="{{ result.title }} poster">
+        } @else {
+          <img src="./assets/images/no_poster.png" alt="No poster available" width="154">
+        }
+      </div>
+      <div class="title-title">{{ result.title }}</div>
+      <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
+      <div class="title-runtime">{{ result.runtime }} minutes</div>
+      <div class="title-overview">{{ result.overview }}</div>
+    </div>
+  }
+  <!-- end titles -->
+</div>

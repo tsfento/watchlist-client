@@ -26,6 +26,7 @@ export class TmdbService {
 
   searchResults:TmdbMovie[] = [];
   gotSearchResults = new BehaviorSubject<TmdbMovie[]>([]);
+  gettingRuntime:boolean = false;
 
   constructor(private http:HttpClient) { }
 
@@ -119,6 +120,11 @@ export class TmdbService {
         this.gotPopularMovies.next(this.popularMovies.slice());
         this.gotPopularTV.next(this.popularTV.slice());
         this.gotTopRatedTv.next(this.topRatedTV.slice());
+
+        if (this.gettingRuntime) {
+          this.gotSearchResults.next(this.searchResults.slice());
+          this.gettingRuntime = false;
+        }
       }
     });
   }
@@ -135,8 +141,19 @@ export class TmdbService {
       page: page
     }).subscribe({
       next: (response:TmdbResponse) => {
-        this.searchResults = response.results;
-        this.gotSearchResults.next(this.searchResults.slice());
+        const tempSearchResults = response.results;
+
+        if (type === 'movie') {
+          this.gettingRuntime = true;
+
+          tempSearchResults.forEach((m:TmdbMovie) => {
+            this.getTitleDetails(m, 'movie');
+          });
+          this.searchResults = tempSearchResults;
+        } else {
+          this.searchResults = tempSearchResults;
+          this.gotSearchResults.next(this.searchResults.slice());
+        }
       },
       error: (error:any) => {
         console.error(error);

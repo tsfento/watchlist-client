@@ -1,0 +1,28 @@
+// titles css
+.titles-grid {
+  // margin-top: 111px; add filter bar for language and title type
+  margin-top: 61px;
+  display: grid;
+  grid-template-columns: 1;
+  justify-items: start;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.title-container {
+  background-color: #4a5369;
+  // border-radius: 10px;
+  width: 75%;
+  justify-self: center;
+  color: #f9f9f9;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  // max-width: 200px;
+}
+
+.title-poster {
+  margin: 15px;
+}
+// end titles css
