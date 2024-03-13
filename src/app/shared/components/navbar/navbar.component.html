@@ -5,8 +5,9 @@
 
   @if (isLoggedIn()) {
     <div class="nav-search-bar">
-      <input type="text" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
-      <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)">
+      <input type="search" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
+      <!-- <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)"> -->
+      <button type="submit" class="nav-search-submit">
         <span class="material-symbols-outlined search-btn">
           search
         </span>
