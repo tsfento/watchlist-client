@@ -73,6 +73,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.currentUserSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();

@@ -13,6 +13,12 @@
       <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
       <div class="title-runtime">{{ result.runtime }} minutes</div>
       <div class="title-overview">{{ result.overview }}</div>
+      <div class="actions">
+        <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result)">Add to List</a>
+        @if (this.getTmdbIdFromUserWatchTitles(result.id) !== undefined) {
+          <p>Watched</p>
+        }
+      </div>
     </div>
   }
   <!-- end titles -->
