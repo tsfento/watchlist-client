@@ -28,6 +28,8 @@ export class TmdbService {
   gotSearchResults = new BehaviorSubject<TmdbMovie[]>([]);
   gettingRuntime:boolean = false;
   gettingNextPage:boolean = false;
+  pageNum:number = 1;
+  totalPages:number = 1;
 
   constructor(private http:HttpClient) { }
 
@@ -40,12 +42,10 @@ export class TmdbService {
           this.getTitleDetails(m, 'movie');
         });
         this.nowPlayingMovies = tempNowPlayingMovies;
+        this.gotNowPlayingMovies.next(this.nowPlayingMovies.slice());
       },
       error: (error:any) => {
         console.error(error);
-      },
-      complete: () => {
-        // this.gotNowPlayingMovies.next(this.nowPlayingMovies.slice());
       }
     });
   }
@@ -59,12 +59,10 @@ export class TmdbService {
           this.getTitleDetails(m, 'movie');
         });
         this.popularMovies = tempPopularMovies;
+        this.gotPopularMovies.next(this.popularMovies.slice());
       },
       error: (error:any) => {
         console.error(error);
-      },
-      complete: () => {
-        // this.gotPopularMovies.next(this.popularMovies.slice());
       }
     });
   }
@@ -78,12 +76,10 @@ export class TmdbService {
         //   this.getTitleDetails(m, 'movie');
         // });
         this.popularTV = tempPopularTV;
+        this.gotPopularTV.next(this.popularTV.slice());
       },
       error: (error:any) => {
         console.error(error);
-      },
-      complete: () => {
-        // this.gotPopularTV.next(this.popularTV.slice());
       }
     });
   }
@@ -97,12 +93,10 @@ export class TmdbService {
         //   this.getTitleDetails(m, 'movie');
         // });
         this.topRatedTV = tempTopRatedTV;
+        this.gotTopRatedTv.next(this.topRatedTV.slice());
       },
       error: (error:any) => {
         console.error(error);
-      },
-      complete: () => {
-        // this.gotTopRatedTv.next(this.topRatedTV.slice());
       }
     });
   }
@@ -115,17 +109,6 @@ export class TmdbService {
       },
       error: (error:any) => {
         console.error(error);
-      },
-      complete: () => {
-        this.gotNowPlayingMovies.next(this.nowPlayingMovies.slice());
-        this.gotPopularMovies.next(this.popularMovies.slice());
-        this.gotPopularTV.next(this.popularTV.slice());
-        this.gotTopRatedTv.next(this.topRatedTV.slice());
-
-        if (this.gettingRuntime) {
-          this.gotSearchResults.next(this.searchResults.slice());
-          this.gettingRuntime = false;
-        }
       }
     });
   }
@@ -135,31 +118,34 @@ export class TmdbService {
   }
 
   getSearchResults(query:string, type:string = 'movie', lang:string = 'en', page:number = 1) {
-    this.http.post<any>(`${environment.apiUrl}/tmdb/search`, {
-      query: query,
-      type: type,
-      lang: lang,
-      page: page
-    }).subscribe({
-      next: (response:TmdbResponse) => {
-        // console.log(response);
-        const tempSearchResults = response.results;
+    if (page <= this.totalPages) {
+      this.http.post<any>(`${environment.apiUrl}/tmdb/search`, {
+        query: query,
+        type: type,
+        lang: lang,
+        page: page
+      }).subscribe({
+        next: (response:TmdbResponse) => {
+          // console.log(response);
+          this.pageNum = response.page;
+          this.totalPages = response.total_pages;
+          const tempSearchResults = response.results;
 
-        if (type === 'movie') {
-          this.gettingRuntime = true;
-
-          tempSearchResults.forEach((m:TmdbMovie) => {
-            this.getTitleDetails(m, 'movie');
-          });
-          this.searchResults = tempSearchResults;
-        } else {
-          this.searchResults = tempSearchResults;
-          this.gotSearchResults.next(this.searchResults.slice());
+          if (type === 'movie') {
+            tempSearchResults.forEach((m:TmdbMovie) => {
+              this.getTitleDetails(m, 'movie');
+            });
+            this.searchResults = tempSearchResults;
+            this.gotSearchResults.next(this.searchResults.slice());
+          } else {
+            this.searchResults = tempSearchResults;
+            this.gotSearchResults.next(this.searchResults.slice());
+          }
+        },
+        error: (error:any) => {
+          console.error(error);
         }
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
-    })
+      });
+    }
   }
 }
