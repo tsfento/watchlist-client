@@ -27,6 +27,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   searchValue:string = '';
   searchSub = new Subscription;
+  searchType:string = 'movie';
+  searchLang:string = 'en';
 
   searchResults:TmdbMovie[] = [];
   searchResultsSub = new Subscription;
@@ -48,10 +50,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this.searchSub = this.tmdbService.searchSubject.subscribe((search) => {
       this.searchValue = search;
+      this.searchResults = [];
       this.tmdbService.getSearchResults(this.searchValue);
     });
 
     this.searchResultsSub = this.tmdbService.gotSearchResults.subscribe((results) => {
+      console.log(results);
       this.searchResults = [...this.searchResults, ...results];
     });
   }
@@ -69,12 +73,15 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   filterResults(type:string, lang:string) {
+    this.searchType = type;
+    this.searchLang = lang;
+
     this.tmdbService.getSearchResults(this.searchValue, type, lang);
   }
 
   loadNextPage(pageNum:number) {
     this.isLoading = true;
-    this.tmdbService.getSearchResults(this.searchValue, 'movie', 'en', pageNum);
+    this.tmdbService.getSearchResults(this.searchValue, this.searchType, this.searchLang, pageNum);
     this.page++;
     this.isLoading = false;
   }

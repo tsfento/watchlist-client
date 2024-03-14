@@ -119,6 +119,7 @@ export class TmdbService {
 
   getSearchResults(query:string, type:string = 'movie', lang:string = 'en', page:number = 1) {
     if (page <= this.totalPages) {
+
       this.http.post<any>(`${environment.apiUrl}/tmdb/search`, {
         query: query,
         type: type,
