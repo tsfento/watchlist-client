@@ -1,3 +1,13 @@
+<div class="filter-bar">
+  <form class="filter-form">
+      <input type="text" formControlName="title" placeholder="Add filter buttons...">
+      <label for="private">Private?</label>
+      <input type="checkbox" formControlName="private">
+      <button type="submit" class="btn-filter">
+        <span>Filter</span>
+      </button>
+  </form>
+</div>
 <div class="titles-grid">
   <!-- titles -->
   @for (result of searchResults; track result.id) {

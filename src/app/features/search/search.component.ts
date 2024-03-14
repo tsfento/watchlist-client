@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchSub = this.tmdbService.searchSubject.subscribe((search) => {
       this.searchValue = search;
       this.searchResults = [];
-      this.tmdbService.getSearchResults(this.searchValue);
+      this.tmdbService.getSearchResults(this.searchValue, this.searchType, this.searchLang);
     });
 
     this.searchResultsSub = this.tmdbService.gotSearchResults.subscribe((results) => {
@@ -72,12 +72,20 @@ export class SearchComponent implements OnInit, OnDestroy {
     return userWatchTitle;
   }
 
-  filterResults(type:string, lang:string) {
+  setSearchType(type:string) {
     this.searchType = type;
-    this.searchLang = lang;
-
-    this.tmdbService.getSearchResults(this.searchValue, type, lang);
   }
+
+  setSearchLang(lang:string) {
+    this.searchLang = lang;
+  }
+
+  // filterResults(type:string, lang:string) {
+  //   this.searchType = type;
+  //   this.searchLang = lang;
+
+  //   this.tmdbService.getSearchResults(this.searchValue, type, lang);
+  // }
 
   loadNextPage(pageNum:number) {
     this.isLoading = true;

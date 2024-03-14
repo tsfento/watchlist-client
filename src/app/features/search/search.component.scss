@@ -1,6 +1,6 @@
 // titles css
 .titles-grid {
-  // margin-top: 111px; add filter bar for language and title type
+  // margin-top: 111px;
   margin-top: 61px;
   display: grid;
   grid-template-columns: 1;
@@ -30,3 +30,77 @@
   cursor: pointer;
 }
 // end titles css
+
+// new list bar
+.filter-form {
+  display: flex;
+  margin-bottom: 3px;
+}
+
+.filter-bar {
+  z-index: 1;
+  min-height: 40px;
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  align-items: center;
+  // position: fixed;
+  // width: 60%;
+  position: sticky;
+  width: 100%;
+  top: 70px;
+}
+
+.filter-bar input[type=text] {
+  height: 40px;
+  margin-top: 10px;
+  padding: 15px;
+  font-size: 20px;
+  width: 100%;
+}
+
+.filter-bar label {
+  color: #f5f5f5;
+  margin-top: 10px;
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+
+.filter-bar input[type=checkbox] {
+  height: 30px;
+  margin-top: 15px;
+  margin-left: 10px;
+  padding: 15px;
+  font-size: 20px;
+  width: 30px;
+}
+
+.filter-bar input:focus {
+  outline: none;
+}
+
+.btn-filter {
+  cursor: pointer;
+  background: #3c91f9;
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 0 15px;
+  border: none;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  transition: color 0.2s ease-in-out;
+  span {
+    margin-top: 9px;
+  }
+}
+
+.btn-filter:hover {
+  background-color: #00b5ff;
+}
+
+.btn-filter:disabled {
+  background-color: #557091;
+}
+// end new list bar
