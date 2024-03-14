@@ -27,6 +27,7 @@ export class TmdbService {
   searchResults:TmdbMovie[] = [];
   gotSearchResults = new BehaviorSubject<TmdbMovie[]>([]);
   gettingRuntime:boolean = false;
+  gettingNextPage:boolean = false;
 
   constructor(private http:HttpClient) { }
 
@@ -141,6 +142,7 @@ export class TmdbService {
       page: page
     }).subscribe({
       next: (response:TmdbResponse) => {
+        // console.log(response);
         const tempSearchResults = response.results;
 
         if (type === 'movie') {

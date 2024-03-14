@@ -1,6 +1,7 @@
 .navbar {
   z-index: 5;
   display: flex;
+  flex-wrap: nowrap;
   justify-content: flex-end;
   align-items: center;
   background-color: #252e42;

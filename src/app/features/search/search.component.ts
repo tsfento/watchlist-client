@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { TmdbService } from '../../core/services/tmdb.service';
 import { Subscription } from 'rxjs';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
@@ -16,6 +16,10 @@ import { User } from '../../shared/models/user';
   styleUrl: './search.component.scss'
 })
 export class SearchComponent implements OnInit, OnDestroy {
+  page:number = 1;
+  perPage:number = 20;
+  isLoading:boolean = false;
+
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
 
   currentUser:User | null = null;
@@ -29,6 +33,14 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   constructor(private tmdbService:TmdbService, public titleService:TitleService, private userService:UserService) {}
 
+  @HostListener('window:scroll',['$event'])
+  onWindowScroll(event:any){
+    if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+      // console.log(event);
+      this.loadNextPage(this.page + 1);
+    }
+  }
+
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
@@ -41,7 +53,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this.searchResultsSub = this.tmdbService.gotSearchResults.subscribe((results) => {
       this.searchResults = results;
-      console.log(this.searchResults);
+      // console.log(this.searchResults);
     });
   }
 
@@ -59,5 +71,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   filterResults(type:string, lang:string) {
     this.tmdbService.getSearchResults(this.searchValue, type, lang);
+  }
+
+  loadNextPage(pageNum:number) {
+    this.isLoading = true;
+    this.tmdbService.getSearchResults(this.searchValue, 'movie', 'en', pageNum);
+    this.page++;
+    this.isLoading = false;
   }
 }
