@@ -35,7 +35,7 @@
           <div #nPMovieDrawer class="drawer" (wheel)="onWheel($event, nPMovieDrawer)">
             @for (nowPlayingMovie of nowPlayingMovies; track $index) {
               <a type="button" data-bs-target="#nPMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('nPMovie', $index)">
-                <img src="{{ small_poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index">
+                <img src="{{ small_poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index" draggable="false">
               </a>
             }
           </div>
@@ -70,7 +70,7 @@
           <div #popMovieDrawer class="drawer" (wheel)="onWheel($event, popMovieDrawer)">
             @for (popMovie of popularMovies; track $index) {
               <a type="button" data-bs-target="#popMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popMovie', $index)">
-                <img src="{{ small_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}" [class.active]="popularMovieIndex == $index">
+                <img src="{{ small_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}" [class.active]="popularMovieIndex == $index" draggable="false">
               </a>
             }
           </div>
@@ -107,7 +107,7 @@
           <div #popTVDrawer class="drawer" (wheel)="onWheel($event, popTVDrawer)">
             @for (popTV of popularTV; track $index) {
               <a type="button" data-bs-target="#popTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popTV', $index)">
-                <img src="{{ small_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}" [class.active]="popularTVIndex == $index">
+                <img src="{{ small_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}" [class.active]="popularTVIndex == $index" draggable="false">
               </a>
             }
           </div>
@@ -142,7 +142,7 @@
           <div #topTVDrawer class="drawer" (wheel)="onWheel($event, topTVDrawer)">
             @for (topTV of topRatedTV; track $index) {
               <a type="button" data-bs-target="#topTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('topTV', $index)">
-                <img src="{{ small_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}" [class.active]="topRatedTVIndex == $index">
+                <img src="{{ small_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}" [class.active]="topRatedTVIndex == $index" draggable="false">
               </a>
             }
           </div>
