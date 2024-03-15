@@ -100,6 +100,7 @@ label.nav{
   font-size: 20px;
   span {
     opacity: 25%;
+    transition: opacity 0.2s ease-in;
   }
   input[type="radio"]:checked + &{
     background-color: #4a5369;
@@ -114,7 +115,6 @@ label.nav{
 label.nav:hover {
   span {
     opacity: 100%;
-    transition: opacity 0.2s ease-in;
   }
 }
 // end toggle bar

@@ -1,11 +1,32 @@
 <div class="filter-bar">
   <form class="filter-form">
-      <input type="text" formControlName="title" placeholder="Add filter buttons...">
-      <label for="private">Private?</label>
-      <input type="checkbox" formControlName="private">
-      <button type="submit" class="btn-filter">
-        <span>Filter</span>
-      </button>
+    <label class="info-label" for="filter">Content Type:</label>
+
+    <!-- movie/tv toggle -->
+    <div class="toggle-bar">
+      <input #movie_toggle name="type" type="radio" class="type movie-radio" id="movie" value="movie" (change)="setSearchType(movie_toggle.value)" checked="checked"/>
+      <label class="type" for="movie">
+        <span>Movie</span>
+      </label>
+      <input #tv_toggle name="type" type="radio" class="tv-radio" id="tv" value="tv" (change)="setSearchType(tv_toggle.value)"/>
+      <label class="type" for="tv">
+        <span>TV</span>
+      </label>
+    </div>
+  <!-- end movie/tv toggle -->
+
+    <label class="info-label" for="language">Language:</label>
+    <select #lang_select class="lang-select" name="lang" id="langSelect"(change)="setSearchLang(lang_select.value)">
+      <option value="en">English</option>
+      <option value="de">German</option>
+      <option value="fr">French</option>
+      <option value="es">Spanish</option>
+      <option value="jp">Japanese</option>
+      <option value="sv">Swedish</option>
+    </select>
+    <button type="button" class="btn-filter" (click)="filterResults()">
+      <span>Filter</span>
+    </button>
   </form>
 </div>
 <div class="titles-grid">
@@ -19,19 +40,17 @@
           <img src="./assets/images/no_poster.png" alt="No poster available for {{ result.title }}" width="154">
         }
       </div>
-      <div class="title-title">{{ result.title }}</div>
-      <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
-      @if (result.runtime !== 0) {
-        <div class="title-runtime">{{ result.runtime }} minutes</div>
-      } @else {
-        <div class="title-runtime">No runtime available</div>
-      }
-      <div class="title-overview">{{ result.overview }}</div>
-      <div class="actions">
-        <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result)">Add to List</a>
-        @if (this.getTmdbIdFromUserWatchTitles(result.id) !== undefined) {
-          <p>Watched</p>
-        }
+      <div class="title-details">
+        <div class="title-title">{{ result.title ? result.title : result.original_name }}</div>
+        <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
+        <div class="title-runtime">{{ !result.runtime || result.runtime === 0 ? 'No runtime available' : result.runtime + ' minutes'  }}</div>
+        <div class="title-overview">{{ result.overview }}</div>
+        <div class="actions">
+          <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result)">Add to List</a>
+          @if (this.getTmdbIdFromUserWatchTitles(result.id) !== undefined) {
+            <p>Watched</p>
+          }
+        </div>
       </div>
     </div>
   }

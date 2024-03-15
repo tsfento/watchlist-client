@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { noAuthGuard } from './core/guards/no-auth.guard';
 
 export const routes: Routes = [
   {
@@ -10,6 +11,7 @@ export const routes: Routes = [
   {
     path: 'welcome',
     loadComponent: () => import('./features/auth/login/login.component').then((c) => c.LoginComponent),
+    // canActivate: [noAuthGuard]
   },
   {
     path: 'lists',

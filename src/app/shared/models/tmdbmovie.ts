@@ -5,6 +5,7 @@ export class TmdbMovie {
   poster_path:string;
   title:string;
   release_date:string;
+  original_name:string;
   overview:string;
   runtime:number;
 
@@ -15,6 +16,7 @@ export class TmdbMovie {
     this.poster_path = tmdbmovie.poster_path || '';
     this.title = tmdbmovie.title || '';
     this.release_date = tmdbmovie.release_date || '';
+    this.original_name = tmdbmovie.original_name || '';
     this.overview = tmdbmovie.overview || '';
     this.runtime = tmdbmovie.runtime || -1;
   }

@@ -74,18 +74,18 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   setSearchType(type:string) {
     this.searchType = type;
+    // console.log(this.searchType);
   }
 
   setSearchLang(lang:string) {
     this.searchLang = lang;
+    console.log(this.searchLang);
   }
 
-  // filterResults(type:string, lang:string) {
-  //   this.searchType = type;
-  //   this.searchLang = lang;
-
-  //   this.tmdbService.getSearchResults(this.searchValue, type, lang);
-  // }
+  filterResults() {
+    this.searchResults = [];
+    this.tmdbService.getSearchResults(this.searchValue, this.searchType, this.searchLang);
+  }
 
   loadNextPage(pageNum:number) {
     this.isLoading = true;

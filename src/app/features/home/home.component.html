@@ -12,8 +12,8 @@
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-header">
-                    <span><span class="title">{{ nPMovie.title }}</span><span class="year"> ({{ nPMovie.release_date | date:'yyyy' }})</span></span>
-                    <span><span class="sub-title">Starring: So-and-so</span><span>{{ nPMovie.runtime }}</span></span>
+                    <span><span class="title">{{ nPMovie.title ? nPMovie.title : nPMovie.original_name }}</span><span class="year"> ({{ nPMovie.release_date | date:'yyyy' }})</span></span>
+                    <span><span class="sub-title">Starring: So-and-so</span><span>{{ !nPMovie.runtime || nPMovie.runtime === 0 ? 'No runtime available' : nPMovie.runtime + ' minutes'  }}</span></span>
                   </div>
                   <div class="details-overview">
                     <span class="overview-header">Overview</span>

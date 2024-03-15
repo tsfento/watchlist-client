@@ -1,42 +1,4 @@
-// titles css
-.titles-grid {
-  // margin-top: 111px;
-  margin-top: 61px;
-  display: grid;
-  grid-template-columns: 1;
-  justify-items: start;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.title-container {
-  background-color: #4a5369;
-  // border-radius: 10px;
-  width: 75%;
-  justify-self: center;
-  color: #f9f9f9;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  // max-width: 200px;
-}
-
-.title-poster {
-  margin: 15px;
-}
-
-.actions a {
-  cursor: pointer;
-}
-// end titles css
-
-// new list bar
-.filter-form {
-  display: flex;
-  margin-bottom: 3px;
-}
-
+// filter bar
 .filter-bar {
   z-index: 1;
   min-height: 40px;
@@ -52,19 +14,18 @@
   top: 70px;
 }
 
-.filter-bar input[type=text] {
-  height: 40px;
-  margin-top: 10px;
-  padding: 15px;
-  font-size: 20px;
-  width: 100%;
+.filter-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3px;
 }
 
-.filter-bar label {
+.info-label {
   color: #f5f5f5;
   margin-top: 10px;
   font-size: 1.5rem;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .filter-bar input[type=checkbox] {
@@ -103,4 +64,95 @@
 .btn-filter:disabled {
   background-color: #557091;
 }
-// end new list bar
+// end filter bar
+
+// toggle bar
+.toggle-bar {
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 1fr;
+  grid-template-columns: 125px 125px;
+  margin-top: 10px;
+  height: 40px;
+}
+
+.type label, a{
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+  transition: border 0.2s;
+  padding: 3px 2px;
+}
+
+input[type="radio"]{
+  display: none;
+}
+
+label.type{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #3c91f9;
+  background: #252e42;
+  user-select: none;
+  color: #ffffff;
+  font-size: 20px;
+  span {
+    opacity: 25%;
+    transition: opacity 0.2s ease-in;
+  }
+  input[type="radio"]:checked + &{
+    background-color: #3c91f9;
+    span {
+      opacity: 100%;
+      transition: none;
+    }
+  }
+}
+
+label.type:hover {
+  span {
+    opacity: 100%;
+  }
+}
+// end toggle bar
+
+// language select
+.lang-select {
+  height: 40px;
+  margin-top: 10px;
+  width: 200px;
+}
+// end language select
+
+// titles css
+.titles-grid {
+  // margin-top: 111px;
+  margin-top: 61px;
+  display: grid;
+  grid-template-columns: 1;
+  justify-items: start;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.title-container {
+  background-color: #4a5369;
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  justify-self: center;
+  color: #f9f9f9;
+}
+
+.title-poster {
+  margin: 15px;
+}
+
+.actions a {
+  cursor: pointer;
+}
+// end titles css
