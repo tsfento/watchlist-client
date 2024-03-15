@@ -17,6 +17,7 @@
 .filter-form {
   display: flex;
   justify-content: center;
+  gap: 10px;
   margin-bottom: 3px;
 }
 
@@ -24,14 +25,11 @@
   color: #f5f5f5;
   margin-top: 10px;
   font-size: 1.5rem;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .filter-bar input[type=checkbox] {
   height: 30px;
   margin-top: 15px;
-  margin-left: 10px;
   padding: 15px;
   font-size: 20px;
   width: 30px;
@@ -46,7 +44,6 @@
   background: #3c91f9;
   height: 40px;
   margin-top: 10px;
-  margin-left: 10px;
   padding: 0 15px;
   border: none;
   font-size: 1.5rem;
@@ -66,7 +63,7 @@
 }
 // end filter bar
 
-// toggle bar
+// type toggle
 .toggle-bar {
   display: grid;
   overflow: hidden;
@@ -118,7 +115,7 @@ label.type:hover {
     opacity: 100%;
   }
 }
-// end toggle bar
+// end type toggle
 
 // language select
 .lang-select {
@@ -150,6 +147,18 @@ label.type:hover {
 
 .title-poster {
   margin: 15px;
+}
+
+.title-details {
+  padding: 10px;
+  width: 100%;
+  color: black;
+  background-color: #a5abbd;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
 }
 
 .actions a {
