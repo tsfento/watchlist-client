@@ -14,8 +14,8 @@
   </label>
 </div>
 <div class="search-bar" [class.active]="isViewingTitles">
-  <input class="form-control" type="text">
-  <button class="random-title">⚄</button>
+  <input type="text" placeholder="Filter titles..." (input)="onFilterInput($event)">
+  <button class="random-title" (click)="randomTitle()">⚄</button>
   <button class="close-titles" (click)="closeTitles()">
     <span class="material-symbols-outlined">
       close

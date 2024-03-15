@@ -4,7 +4,7 @@ import { WatchList } from '../../shared/models/watchlist';
 import { WatchTitle } from '../../shared/models/watchtitle';
 import { TitleService } from '../../core/services/title.service';
 import { DatePipe } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../core/services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-lists',
   standalone: true,
-  imports: [DatePipe, ReactiveFormsModule],
+  imports: [DatePipe, ReactiveFormsModule, FormsModule],
   templateUrl: './lists.component.html',
   styleUrl: './lists.component.scss'
 })
@@ -34,7 +34,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   followedLists:WatchList[] = [];
   titles:WatchTitle[] = [];
   beforeFilteredTitles:WatchTitle[] = [];
-  searchQuery: string = '';
+  filterQuery: string = '';
 
   gotAllListsSub = new Subscription;
   gotUserListsSub = new Subscription;
@@ -74,7 +74,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
       this.titles = gotTitles;
-      // console.log(this.titles);
+      this.beforeFilteredTitles = this.titles;
     });
   }
 
@@ -130,24 +130,39 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   // Working on filtering titles by search
-  searchTitles() {
-    this.beforeFilteredTitles = this.titles;
+  filterTitles() {
+    this.resetFilter();
 
-    this.titles.filter(title =>
-      title.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      title.release_date.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      title.overview.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      title.runtime.toString().includes(this.searchQuery.toLowerCase())
+    this.titles = this.titles.filter(title =>
+      title.title.toLowerCase().includes(this.filterQuery.toLowerCase()) ||
+      title.release_date.toLowerCase().includes(this.filterQuery.toLowerCase()) ||
+      title.overview.toLowerCase().includes(this.filterQuery.toLowerCase()) ||
+      title.runtime.toString().includes(this.filterQuery.toLowerCase())
     );
   }
 
-  onSearchInput() {
-    if (this.searchQuery === '') {
-      this.resetSearch();
+  onFilterInput(event:any) {
+    if (event.data === null) {
+      this.filterQuery = this.filterQuery.substring(0, this.filterQuery.length - 1);
+    } else {
+      this.filterQuery += event.data;
+    }
+
+    console.log(this.filterQuery);
+
+    if (this.filterQuery === '') {
+      this.resetFilter();
+    } else {
+      this.filterTitles();
     }
   }
 
-  resetSearch() {
+  resetFilter() {
     this.titles = this.beforeFilteredTitles;
+  }
+
+  randomTitle() {
+    this.resetFilter();
+    this.titles = [this.titles[Math.floor(Math.random()*this.titles.length)]];
   }
 }
