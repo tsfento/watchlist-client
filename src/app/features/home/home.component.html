@@ -22,7 +22,7 @@
                   <div class="details-actions">
                     <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add to List</a>
                     <a>{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched === true ? 'Watched' : 'Unwatched' }}</a>
-                    <a (click)="addWatchedDate(nPMovie.tmdb_id, nPMovie.imdb_id, nPMovie.poster_path, nPMovie.title, nPMovie.release_date, nPMovie.overview, nPMovie.runtime)">Add Watch Date</a>
+                    <a data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add Watch Date</a>
                   </div>
                 </div>
               </div>

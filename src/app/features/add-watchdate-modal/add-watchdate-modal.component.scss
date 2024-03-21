@@ -1,0 +1,59 @@
+.modal-content,
+.modal-header,
+.modal-body,
+.modal-footer {
+  border-radius: 0px;
+  border: none;
+}
+
+.modal-body,
+.modal-footer {
+  background-color: #a5abbd;
+}
+
+.modal-header {
+  background-color: #4a5369;
+  color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+}
+
+.close-add-watchdate-modal {
+  cursor: pointer;
+  background: none;
+  border: none;
+  scale: 110%;
+  color: white;
+  margin-top: 7px;
+  transition: color 0.3s ease-in-out;
+}
+
+.close-add-watchdate-modal:hover {
+  color: #3c91f9;
+}
+
+.btn-cancel {
+  padding: .75rem;
+  border: none;
+  background-color: #4a5369;
+  font-weight: 500;
+  color: #f9f9f9;
+}
+
+.btn-add {
+  padding: .75rem;
+  border: none;
+  background-color: #3c91f9;
+  font-weight: 500;
+  color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-add:hover {
+  background-color: #00b5ff;
+}
+
+.btn-add:disabled {
+  background-color: #557091;
+}

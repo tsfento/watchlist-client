@@ -101,13 +101,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     return userWatchTitle;
   }
 
-  addWatchedDate(tmdbId:number, imdbId:string, posterPath:string, title:string, releaseDate:string, overview:string, runtime:number) {
-    // Release Date YYYY-MM-DD
-    // today's date formatted and split to be YYYY-MM-DD:
-    const today = new Date(Date.now()).toISOString().split('T')[0];
+  // addWatchedDate(tmdbId:number, imdbId:string, posterPath:string, title:string, releaseDate:string, overview:string, runtime:number) {
+  //   // Release Date YYYY-MM-DD
+  //   // today's date formatted and split to be YYYY-MM-DD:
+  //   // const today = new Date(Date.now()).toISOString().split('T')[0];
 
-    // this.tmdbService.addWatchedDate(tmdbId, imdbId, posterPath, title, releaseDate, overview, runtime, date, this.currentUser!.username);
-  }
+  //   // this.tmdbService.addWatchedDate(tmdbId, imdbId, posterPath, title, releaseDate, overview, runtime, date, this.currentUser!.username);
+  // }
 
   onWheel(event:WheelEvent, drawer:HTMLElement) {
     event.preventDefault();

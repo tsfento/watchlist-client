@@ -1,27 +1,28 @@
-<div class="modal fade" id="addTitleModal" tabindex="-1">
+<div class="modal fade" id="addWatchDateModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add to List</h5>
-        <button type="button" class="close-add-title-modal" data-bs-dismiss="modal" aria-label="Close">
+        <button type="button" class="close-add-watchdate-modal" data-bs-dismiss="modal" aria-label="Close">
           <span class="material-symbols-outlined">
             close
           </span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="addTitleForm" (ngSubmit)="onAddTitle()">
+        <form [formGroup]="addWatchDateForm" (ngSubmit)="onAddWatchDate()">
           <div class="form-group">
-            <label for="selected_list">Select list</label>
-            <select id="selected_list" formControlName="watch_list">
+            <label for="date">Select date</label>
+            <input type="date" formControlName="date">
+            <!-- <select id="selected_list" formControlName="watch_list">
               <option value="">Select a list</option>
               @for (list of userLists; track $index) {
                 <option [ngValue]="list.id">{{ list.title }}</option>
               }
-            </select>
+            </select> -->
           </div>
           <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn-add" data-bs-dismiss="modal" [disabled]="!addTitleForm.valid">Add to List</button>
+          <button type="submit" class="btn-add" data-bs-dismiss="modal" [disabled]="!addWatchDateForm.valid">Add to List</button>
         </form>
       </div>
       <div class="modal-footer">
