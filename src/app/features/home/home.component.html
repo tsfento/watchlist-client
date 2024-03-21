@@ -22,6 +22,7 @@
                   <div class="details-actions">
                     <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add to List</a>
                     <a>{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched === true ? 'Watched' : 'Unwatched' }}</a>
+                    <a (click)="addWatchedDate(nPMovie.tmdb_id, nPMovie.imdb_id, nPMovie.poster_path, nPMovie.title, nPMovie.release_date, nPMovie.overview, nPMovie.runtime)">Add Watch Date</a>
                   </div>
                 </div>
               </div>
@@ -30,7 +31,8 @@
         }
         </div>
         <div class="drawer-container">
-          <div #nPMovieDrawer class="drawer" (wheel)="onWheel($event, nPMovieDrawer)">
+          <div #nPMovieDrawer class="drawer" id="drawer"
+          (wheel)="onWheel($event, nPMovieDrawer)">
             @for (nowPlayingMovie of nowPlayingMovies; track $index) {
               <a type="button" data-bs-target="#nPMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('nPMovie', $index)">
                 <img src="{{ small_poster_url + nowPlayingMovie.poster_path }}" alt="{{ nowPlayingMovie.title + ' poster'}}" [class.active]="nowPlayingMovieIndex == $index" draggable="false">

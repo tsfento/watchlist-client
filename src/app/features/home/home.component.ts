@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TmdbService } from '../../core/services/tmdb.service';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
-import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { CommonModule } from '@angular/common';
-import { AddTitleModalComponent } from '../add-title-modal/add-title-modal.component';
 import { Subscription } from 'rxjs';
 import { TitleService } from '../../core/services/title.service';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
@@ -101,6 +99,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     const userWatchTitle = this.currentUser?.user_watch_titles.find(t => t.watch_title.tmdb_id === tmdbId);
 
     return userWatchTitle;
+  }
+
+  addWatchedDate(tmdbId:number, imdbId:string, posterPath:string, title:string, releaseDate:string, overview:string, runtime:number) {
+    // Release Date YYYY-MM-DD
+    // today's date formatted and split to be YYYY-MM-DD:
+    const today = new Date(Date.now()).toISOString().split('T')[0];
+
+    // this.tmdbService.addWatchedDate(tmdbId, imdbId, posterPath, title, releaseDate, overview, runtime, date, this.currentUser!.username);
   }
 
   onWheel(event:WheelEvent, drawer:HTMLElement) {

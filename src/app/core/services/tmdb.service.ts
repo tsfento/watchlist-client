@@ -118,8 +118,12 @@ export class TmdbService {
   }
 
   getSearchResults(query:string, type:string = 'movie', lang:string = 'en', page:number = 1) {
-    if (page <= this.totalPages) {
+    if (page === 1) {
+      this.searchResults = [];
+      this.gotSearchResults.next(this.searchResults);
+    }
 
+    if (page <= this.totalPages) {
       this.http.post<any>(`${environment.apiUrl}/tmdb/search`, {
         query: query,
         type: type,
@@ -148,5 +152,25 @@ export class TmdbService {
         }
       });
     }
+  }
+
+  addWatchedDate(tmdbId:number, imdbId:string, posterPath:string, title:string, releaseDate:string, overview:string, runtime:number, date:string, username:string) {
+    this.http.post(`${environment.apiUrl}/users/${username}/add_watch_date`, {
+      tmdb_id: tmdbId,
+      imdb_id: imdbId,
+      poster_path: posterPath,
+      title: title,
+      release_date: releaseDate,
+      overview: overview,
+      runtime: runtime,
+      date: date
+    }).subscribe({
+      next: (response:any) => {
+        console.log
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
   }
 }
