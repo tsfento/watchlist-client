@@ -23,4 +23,8 @@ export class UserService {
       })
     );
   }
+
+  deleteList(username:string, listId:number) {
+    this.http.delete(`${environment.apiUrl}/users/${username}/lists/${listId}`).subscribe();
+  }
 }

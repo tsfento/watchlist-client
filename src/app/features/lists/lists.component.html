@@ -25,7 +25,7 @@
 <!-- end list toggle bar -->
 @if (!isViewingTitles) {
   <div class="new-list-bar" [class.active]="isUserLists && currentUser !== null">
-    <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList()">
+    <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList(); user_toggle.checked = true;">
         <input type="text" formControlName="title" placeholder="Create a new list...">
         <label for="private">Private?</label>
         <input type="checkbox" formControlName="private">
@@ -38,7 +38,7 @@
   </div>
   <div class="list-grid" [class.no-user]="currentUser === null">
     <!-- list -->
-    @for (list of displayLists; track list.id) {
+    @for (list of displayLists; track $index) {
       <div class="list-container" (click)="showTitles(list.id, list.user.username)">
         <div class="list-header">
           <span class="list-title">{{ list.title }}</span>
@@ -57,6 +57,13 @@
           <div class="list-empty">
             <span>No Titles</span>
           </div>
+        }
+        @if (list.user_id === currentUser?.id) {
+          <a class="list-delete-btn" (click)="deleteList(list.id, $index); $event.stopPropagation();">
+            <span class="material-symbols-outlined icon-btn">
+              delete
+            </span>
+          </a>
         }
       </div>
     }

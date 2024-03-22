@@ -34,7 +34,7 @@
       </a>
       <a class="nav-btn nav-btn-text" (click)="logout()">Logout</a>
     } @else {
-      <a class="nav-btn" title="Home" routerLinkActive="active" routerLink="/">
+      <a class="nav-btn" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">
         <span class="material-symbols-outlined icon-btn">
           home
         </span>
@@ -44,7 +44,7 @@
           list_alt
         </span>
       </a>
-      <a class="nav-btn nav-btn-text" routerLink="/welcome">Login/Sign Up</a>
+      <a class="nav-btn nav-btn-text" routerLinkActive="active" routerLink="/welcome">Login/Sign Up</a>
     }
   </div>
 </div>
