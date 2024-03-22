@@ -8,7 +8,7 @@
       <input type="search" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
       <!-- <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)"> -->
       <button type="submit" class="nav-search-submit">
-        <span class="material-symbols-outlined search-btn">
+        <span class="material-symbols-outlined icon-btn">
           search
         </span>
       </button>
@@ -17,20 +17,34 @@
 
   <div class="btn-container">
     @if (isLoggedIn()) {
-
-      @if (router.url === '/') {
-        <a class="nav-btn" routerLink="/lists" (click)="clearSearch()">Lists</a>
-      } @else {
-        <a class="nav-btn" routerLink="/" (click)="clearSearch()">Home</a>
-      }
-      <a class="nav-btn" (click)="logout()">Logout</a>
+      <a class="nav-btn" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
+        <span class="material-symbols-outlined icon-btn">
+          home
+        </span>
+      </a>
+      <a class="nav-btn" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
+        <span class="material-symbols-outlined icon-btn">
+          list_alt
+        </span>
+      </a>
+      <a class="nav-btn nav-btn-calendar" routerLinkActive="active" title="Watch History" routerLink="/lists" (click)="clearSearch()">
+        <span class="material-symbols-outlined icon-btn">
+          calendar_month
+        </span>
+      </a>
+      <a class="nav-btn nav-btn-text" (click)="logout()">Logout</a>
     } @else {
-      @if (router.url === '/') {
-        <a class="nav-btn" routerLink="/lists">Lists</a>
-      } @else {
-        <a class="nav-btn" routerLink="/">Home</a>
-      }
-      <a class="nav-btn" routerLink="/welcome">Login/Sign Up</a>
+      <a class="nav-btn" title="Home" routerLinkActive="active" routerLink="/">
+        <span class="material-symbols-outlined icon-btn">
+          home
+        </span>
+      </a>
+      <a class="nav-btn" title="Lists" routerLinkActive="active" routerLink="/lists">
+        <span class="material-symbols-outlined icon-btn">
+          list_alt
+        </span>
+      </a>
+      <a class="nav-btn nav-btn-text" routerLink="/welcome">Login/Sign Up</a>
     }
   </div>
 </div>

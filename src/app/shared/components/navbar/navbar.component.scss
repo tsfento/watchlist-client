@@ -38,6 +38,14 @@
   transition: color 0.2s ease-in-out;
 }
 
+.nav-btn-calendar {
+  margin-top: -1px;
+}
+
+.nav-btn-text {
+  margin-top: 3px;
+}
+
 .nav-btn:not(:last-child) {
   margin-right: 20px;
 }
@@ -46,10 +54,8 @@
   color: #3c91f9;
 }
 
-:root {
-  --clr-primary: #ee6352;
-  --clr-body: #333;
-  --clr-bg: #ddd;
+.active .icon-btn {
+  color: #3c91f9;
 }
 
 // new search
@@ -81,7 +87,7 @@
   outline: 0;
 }
 
-.search-btn {
+.icon-btn {
   margin-top: 6px;
   vertical-align: text-bottom;
   color: #f9f9f9;
@@ -89,7 +95,7 @@
   transition: color 0.2s ease-in-out;;
 }
 
-.search-btn:hover {
+.icon-btn:hover {
   color: #3c91f9;
 }
 
