@@ -1,38 +1,46 @@
 import { Component } from '@angular/core';
 import { ListService } from '../../core/services/list.service';
-import { LongPressDirective } from '../../shared/directives/long-press.directive';
+
+declare var window:any;
 
 @Component({
   selector: 'app-delete-list-modal',
   standalone: true,
-  imports: [LongPressDirective],
+  imports: [],
   templateUrl: './delete-list-modal.component.html',
   styleUrl: './delete-list-modal.component.scss'
 })
 export class DeleteListModalComponent {
-  holdCount:number = 0;
+  deleteTimeout:any;
 
   constructor(private listService:ListService) {}
 
-  deleteList() {
-    this.holdCount = 0;
-    // this.listService.deleteList();
+  deleteList(btn:HTMLButtonElement) {
+    this.closeDeleteListModal(btn);
+    this.listService.deleteList();
+    clearTimeout(this.deleteTimeout);
   }
 
   onDown(btn:HTMLButtonElement) {
+    btn.classList.remove('released');
     btn.classList.add('holding');
-  }
 
-  onHold(btn:HTMLButtonElement) {
-    if (this.holdCount < 25) {
-      this.holdCount += 1;
-    } else {
-      console.log(this.holdCount);
-    }
+    this.deleteTimeout = setTimeout(() => {
+      this.deleteList(btn);
+    }, 3100);
   }
 
   onRelease(btn:HTMLButtonElement) {
-    this.holdCount = 0;
+    clearTimeout(this.deleteTimeout);
     btn.classList.remove('holding');
+    btn.classList.add('released');
+  }
+
+  closeDeleteListModal(btn:HTMLButtonElement) {
+    const deleteListModal:any = window.bootstrap.Modal.getOrCreateInstance(document.getElementById('deleteListModal'));
+
+    deleteListModal.hide();
+    btn.classList.remove('holding');
+    btn.classList.add('released');
   }
 }

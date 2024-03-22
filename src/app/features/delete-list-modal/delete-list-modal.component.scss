@@ -90,11 +90,16 @@
   font-weight: 500;
   color: crimson;
   cursor: pointer;
-  transition: 3s linear;
 }
 
 .holding {
   background-position: left;
   color: #f9f9f9;
-  // transition: background-color 10s, color 10s;
+  transition: background 3s linear, color 1.5s ease-in;
+}
+
+.released {
+  background: white;
+  background: linear-gradient(to left, white 50%, crimson 50%) right;
+  background-size: 200%;
 }

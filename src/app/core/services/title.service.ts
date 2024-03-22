@@ -23,7 +23,7 @@ export class TitleService {
     this.http.get<WatchTitle[]>(`${environment.apiUrl}/users/${username}/lists/${id}`).subscribe({
       next: (response:WatchTitle[]) => {
         this.listTitles = response;
-        console.log(response);
+        // console.log(response);
       },
       error: (error:any) => {
         console.error(error);
