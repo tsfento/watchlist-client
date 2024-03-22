@@ -59,7 +59,7 @@
           </div>
         }
         @if (list.user_id === currentUser?.id) {
-          <a class="list-delete-btn" (click)="deleteList(list.id, $index); $event.stopPropagation();">
+          <a class="list-delete-btn" data-bs-toggle="modal" data-bs-target="#deleteListModal" (click)="deleteList(list.id, $index, currentUser!.username); $event.stopPropagation();">
             <span class="material-symbols-outlined icon-btn">
               delete
             </span>

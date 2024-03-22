@@ -15,20 +15,23 @@ export class ListService {
   followedLists:WatchList[] = [];
   gotFollowedLists = new BehaviorSubject<WatchList[]>([]);
 
+  listIdToDelete:number = 0;
+  listIndexToDelete:number = 0;
+  currentUserUsername:string = '';
+
   constructor(private http:HttpClient) { }
 
   getAllLists() {
     this.http.get<WatchList[]>(`${environment.apiUrl}/lists`).subscribe({
       next: (response:WatchList[]) => {
         this.allLists = response;
-      },
-      error: (error:any) => {
-        console.error(error);
-      },
-      complete: () => {
+
         if (this.allLists !== null) {
           this.gotAllLists.next(this.allLists.slice());
         }
+      },
+      error: (error:any) => {
+        console.error(error);
       }
     });
   }
@@ -37,14 +40,13 @@ export class ListService {
     this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`).subscribe({
       next: (response:WatchList[]) => {
         this.userLists = response;
-      },
-      error: (error:any) => {
-        console.error(error);
-      },
-      complete: () => {
+
         if (this.userLists !== null) {
           this.gotUserLists.next(this.userLists.slice());
         }
+      },
+      error: (error:any) => {
+        console.error(error);
       }
     });
   }
@@ -53,15 +55,26 @@ export class ListService {
     this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`).subscribe({
       next: (response:WatchList[]) => {
         this.followedLists = response;
-      },
-      error: (error:any) => {
-        console.error(error);
-      },
-      complete: () => {
+
         if (this.followedLists !== null) {
           this.gotFollowedLists.next(this.followedLists.slice());
         }
+      },
+      error: (error:any) => {
+        console.error(error);
       }
     });
+  }
+
+  setListIdToDelete(listId:number, listIndex:number, username:string) {
+    this.listIdToDelete = listId;
+    this.listIndexToDelete = listIndex;
+    this.currentUserUsername = username;
+  }
+
+  deleteList() {
+    this.http.delete(`${environment.apiUrl}/users/${this.currentUserUsername}/lists/${this.listIdToDelete}`).subscribe();
+    this.userLists.splice(this.listIndexToDelete, 1);
+    this.gotUserLists.next(this.userLists.slice());
   }
 }

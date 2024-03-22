@@ -91,7 +91,8 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.http.post<WatchList>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists`, this.newListForm.value).subscribe({
         next: (res:any) => {
           this.onToggle('user');
-          console.log(res);
+          this.newListForm.reset();
+          // console.log(res);
         },
         error: (res:any) => {
           console.log(res.error);
@@ -166,8 +167,10 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.titles = [this.titles[Math.floor(Math.random()*this.titles.length)]];
   }
 
-  deleteList(listId:number, listIndex:number) {
-    this.userService.deleteList(this.currentUser!.username, listId);
-    this.userLists.splice(listIndex, 1);
+  deleteList(listId:number, listIndex:number, username:string) {
+    // this.userService.deleteList(this.currentUser!.username, listId);
+    // this.userLists.splice(listIndex, 1);
+
+    this.listService.setListIdToDelete(listId, listIndex, username);
   }
 }
