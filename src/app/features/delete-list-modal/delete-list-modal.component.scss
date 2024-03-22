@@ -84,9 +84,17 @@
   padding: .75rem;
   margin-bottom: 10px;
   border: none;
-  background-color: crimson;
+  background: white;
+  background: linear-gradient(to left, white 50%, crimson 50%) right;
+  background-size: 200%;
   font-weight: 500;
-  color: #f9f9f9;
+  color: crimson;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: 3s linear;
+}
+
+.holding {
+  background-position: left;
+  color: #f9f9f9;
+  // transition: background-color 10s, color 10s;
 }

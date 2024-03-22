@@ -13,7 +13,11 @@
         <p class="warning">Deleting a list is irreversible!</p>
         <p class="warning">Hold button to confirm.</p>
         <div class="btn-container">
-          <button type="button" class="confirm-btn" data-bs-dismiss="modal" (click)="deleteList()">Confirm Delete</button>
+          <button #confirmButton type="button" class="confirm-btn" data-bs-dismiss="modal"
+            (mousedown)="onDown(confirmButton)"
+            longPress (mouseLongPress)="onHold(confirmButton)"
+            (mouseup)="onRelease(confirmButton)"
+          >Confirm Delete</button>
           <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
         </div>
       </div>

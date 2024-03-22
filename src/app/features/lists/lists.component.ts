@@ -99,8 +99,6 @@ export class ListsComponent implements OnInit, OnDestroy {
         }
       });
     }
-
-    console.log(this.newListForm.value);
   }
 
   onToggle(input:string) {
@@ -130,7 +128,6 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.isViewingTitles = false;
   }
 
-  // Working on filtering titles by search
   filterTitles() {
     this.resetFilter();
 
@@ -149,7 +146,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.filterQuery += event.data;
     }
 
-    console.log(this.filterQuery);
+    // console.log(this.filterQuery);
 
     if (this.filterQuery === '') {
       this.resetFilter();
