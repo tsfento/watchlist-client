@@ -41,14 +41,14 @@ export class ListsComponent implements OnInit, OnDestroy {
   gotFollowedListsSub = new Subscription;
   gotTitlesSub = new Subscription;
 
-  constructor(private listService:ListService, private titleService:TitleService, private userService:UserService, private http:HttpClient) {}
+  constructor(private listService:ListService, private titleService:TitleService, private userService:UserService) {}
 
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      this.listService.getUserLists(this.currentUser?.username);
-      this.listService.getFollowedLists(this.currentUser?.username);
+      this.listService.getUserLists(this.currentUser!.username);
+      this.listService.getFollowedLists(this.currentUser!.username);
       this.listService.getAllLists();
     });
 
@@ -88,17 +88,22 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   createNewList() {
     if (this.newListForm.valid) {
-      this.http.post<WatchList>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists`, this.newListForm.value).subscribe({
-        next: (res:any) => {
-          this.onToggle('user');
-          this.newListForm.reset();
-          // console.log(res);
-        },
-        error: (res:any) => {
-          console.log(res.error);
-        }
-      });
+      this.listService.createList(this.currentUser!.username, this.newListForm.value);
+      this.onToggle('user');
+      this.newListForm.reset();
     }
+  }
+
+  followList(listId:number) {
+    this.listService.followList(this.currentUser!.username, listId);
+  }
+
+  unfollowList(listId:number) {
+    this.listService.unfollowList(this.currentUser!.username, listId);
+  }
+
+  checkIfFollowing(listId:number) {
+    return this.followedLists.some(l => l.id === listId);
   }
 
   onToggle(input:string) {
@@ -108,12 +113,12 @@ export class ListsComponent implements OnInit, OnDestroy {
     }
 
     if (input === 'user') {
-      this.listService.getUserLists(this.currentUser?.username);
+      this.listService.getUserLists(this.currentUser!.username);
       this.displayLists = this.userLists;
     }
 
     if (input === 'follow') {
-      this.listService.getFollowedLists(this.currentUser?.username);
+      this.listService.getFollowedLists(this.currentUser!.username);
       this.displayLists = this.followedLists;
     }
   }

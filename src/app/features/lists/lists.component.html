@@ -59,11 +59,25 @@
           </div>
         }
         @if (list.user_id === currentUser?.id) {
-          <a class="list-delete-btn" data-bs-toggle="modal" data-bs-target="#deleteListModal" (click)="deleteList(list.id, $index, currentUser!.username); $event.stopPropagation();">
+          <a class="list-delete-btn" title="Delete List" data-bs-toggle="modal" data-bs-target="#deleteListModal" (click)="deleteList(list.id, $index, currentUser!.username); $event.stopPropagation();">
             <span class="material-symbols-outlined icon-btn">
               delete
             </span>
           </a>
+        } @else {
+          @if (checkIfFollowing(list.id)) {
+            <a class="list-follow-btn" title="Unfollow List" (click)="unfollowList(list.id); $event.stopPropagation();">
+              <span class="material-symbols-outlined icon-btn icon-filled">
+                star
+              </span>
+            </a>
+          } @else {
+            <a class="list-follow-btn" title="Follow List" (click)="followList(list.id); $event.stopPropagation();">
+              <span class="material-symbols-outlined icon-btn">
+                star
+              </span>
+            </a>
+          }
         }
       </div>
     }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { WatchList } from '../../shared/models/watchlist';
 
@@ -36,7 +36,7 @@ export class ListService {
     });
   }
 
-  getUserLists(username:string = '') {
+  getUserLists(username:string = this.currentUserUsername) {
     this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`).subscribe({
       next: (response:WatchList[]) => {
         this.userLists = response;
@@ -51,7 +51,7 @@ export class ListService {
     });
   }
 
-  getFollowedLists(username:string = '') {
+  getFollowedLists(username:string = this.currentUserUsername) {
     this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`).subscribe({
       next: (response:WatchList[]) => {
         this.followedLists = response;
@@ -62,6 +62,39 @@ export class ListService {
       },
       error: (error:any) => {
         console.error(error);
+      }
+    });
+  }
+
+  createList(username:string, form:FormData) {
+    this.http.post<WatchList>(`${environment.apiUrl}/users/${username}/lists`, form).subscribe({
+      next: (response:any) => {
+        this.getUserLists(username);
+      },
+      error: (response:any) => {
+        console.log(response.error);
+      }
+    });
+  }
+
+  followList(username:string, listId:number) {
+    this.http.get<WatchList>(`${environment.apiUrl}/users/follow_list/${listId}`).subscribe({
+      next: (response:any) => {
+        this.getFollowedLists(username);
+      },
+      error: (response:any) => {
+        console.log(response.error);
+      }
+    });
+  }
+
+  unfollowList(username:string, listId:number) {
+    this.http.get<WatchList>(`${environment.apiUrl}/users/unfollow_list/${listId}`).subscribe({
+      next: (response:any) => {
+        this.getFollowedLists(username);
+      },
+      error: (response:any) => {
+        console.log(response.error);
       }
     });
   }

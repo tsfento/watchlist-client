@@ -303,18 +303,34 @@ label.nav:hover {
   }
 }
 
-.list-delete-btn {
+.list-delete-btn,
+.list-follow-btn {
   z-index: 5;
   position: absolute;
   bottom: 10px;
   right: 20px;
-  scale: 110%;
+  scale: 115%;
   color: #252e42;
   transition: color 0.2s ease-in-out;
 }
 
 .list-delete-btn:hover {
   color: crimson;
+}
+
+.list-follow-btn:hover {
+  color: gold;
+  font-variation-settings: 'FILL' 1;
+}
+
+.icon-filled {
+  color: gold;
+  font-variation-settings: 'FILL' 1;
+}
+
+.icon-filled:hover {
+  color: #252e42;
+  font-variation-settings: 'FILL' 0;
 }
 // end lists css
 
