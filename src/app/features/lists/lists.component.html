@@ -89,12 +89,25 @@
     @for (title of titles; track title.id) {
       <div class="title-container">
         <div class="title-poster">
-          <img src="{{ poster_url + title.poster_path }}" alt="">
+          @if (title.poster_path !== null) {
+            <img src="{{ poster_url + title.poster_path }}" alt="{{ title.title }} poster">
+          } @else {
+            <img src="./assets/images/no_poster.png" alt="No poster available for {{ title.title }}" width="154">
+          }
         </div>
-        <div class="title-title">{{ title.title }}</div>
-        <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
-        <div class="title-runtime">{{ title.runtime }} minutes</div>
-        <div class="title-overview">{{ title.overview }}</div>
+        <div class="title-details">
+          <div class="title-title">{{ title.title }}</div>
+          <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
+          <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes' }}</div>
+          <div class="title-overview">{{ title.overview }}</div>
+        </div>
+        @if (checkIfUserList(listViewingId)) {
+          <a class="title-delete-btn" title="Delete Title" (click)="deleteTitle(title.tmdb_id); $event.stopPropagation();">
+            <span class="material-symbols-outlined icon-btn">
+              delete
+            </span>
+          </a>
+        }
       </div>
     }
     <!-- end titles -->

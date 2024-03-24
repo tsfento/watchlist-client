@@ -72,6 +72,7 @@ label.nav:hover {
 
 // search bar
 .search-bar {
+  z-index: 5;
   min-height: 40px;
   display: grid;
   width: 60%;
@@ -314,7 +315,18 @@ label.nav:hover {
   transition: color 0.2s ease-in-out;
 }
 
-.list-delete-btn:hover {
+.title-delete-btn {
+  z-index: 1;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  scale: 115%;
+  color: #252e42;
+  transition: color 0.2s ease-in-out;
+}
+
+.list-delete-btn:hover,
+.title-delete-btn:hover {
   color: crimson;
 }
 
@@ -345,21 +357,24 @@ label.nav:hover {
 }
 
 .title-container {
-  // cursor: pointer;
+  position: relative;
   background-color: #4a5369;
-  // border-radius: 10px;
   width: 75%;
+  display: flex;
+  flex-direction: row;
   justify-self: center;
   color: #f9f9f9;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  // max-width: 200px;
 }
 
 .title-poster {
   margin: 15px;
+}
+
+.title-details {
+  padding: 10px;
+  width: 100%;
+  color: black;
+  background-color: #a5abbd;
 }
 
 .no-poster {

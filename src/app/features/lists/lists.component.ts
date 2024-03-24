@@ -27,6 +27,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   });
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;
+  listViewingId:number = 0;
   isUserLists:boolean = true;
   displayLists:WatchList[] = [];
   allLists:WatchList[] = [];
@@ -47,8 +48,8 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      this.listService.getUserLists(this.currentUser!.username);
-      this.listService.getFollowedLists(this.currentUser!.username);
+      this.listService.getUserLists(this.currentUser?.username);
+      this.listService.getFollowedLists(this.currentUser?.username);
       this.listService.getAllLists();
     });
 
@@ -102,6 +103,10 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.listService.unfollowList(this.currentUser!.username, listId);
   }
 
+  checkIfUserList(listId:number) {
+    return this.userLists.some(l => l.id === listId);
+  }
+
   checkIfFollowing(listId:number) {
     return this.followedLists.some(l => l.id === listId);
   }
@@ -123,10 +128,11 @@ export class ListsComponent implements OnInit, OnDestroy {
     }
   }
 
-  showTitles(id:number, username:string) {
-    this.titleService.getTitles(id, username);
+  showTitles(listId:number, username:string) {
+    this.titleService.getTitles(listId, username);
 
     this.isViewingTitles = true;
+    this.listViewingId = listId;
   }
 
   closeTitles() {
@@ -174,5 +180,9 @@ export class ListsComponent implements OnInit, OnDestroy {
     // this.userLists.splice(listIndex, 1);
 
     this.listService.setListIdToDelete(listId, listIndex, username);
+  }
+
+  deleteTitle(tmdbId:number) {
+    this.titleService.deleteTitle(this.currentUser!.username, this.listViewingId, tmdbId);
   }
 }
