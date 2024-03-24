@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ListService } from '../../core/services/list.service';
+import { FormGroup } from '@angular/forms';
 
 declare var window:any;
 
@@ -39,8 +40,8 @@ export class DeleteListModalComponent {
   closeDeleteListModal(btn:HTMLButtonElement) {
     const deleteListModal:any = window.bootstrap.Modal.getOrCreateInstance(document.getElementById('deleteListModal'));
 
-    deleteListModal.hide();
     btn.classList.remove('holding');
     btn.classList.add('released');
+    deleteListModal.hide();
   }
 }

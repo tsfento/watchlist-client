@@ -86,10 +86,12 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   createNewList() {
+    console.log(this.newListForm.valid);
+
     if (this.newListForm.valid) {
       this.listService.createList(this.currentUser!.username, this.newListForm.value);
       this.onToggle('user');
-      this.newListForm.reset();
+      this.newListForm.reset({private: false});
     }
   }
 
@@ -174,9 +176,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   deleteList(listId:number, listIndex:number, username:string) {
-    // this.userService.deleteList(this.currentUser!.username, listId);
-    // this.userLists.splice(listIndex, 1);
-
+    // console.log(this.newListForm.valid);
+    // this.newListForm.reset();
     this.listService.setListIdToDelete(listId, listIndex, username);
   }
 
