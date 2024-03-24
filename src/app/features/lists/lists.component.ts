@@ -6,8 +6,6 @@ import { TitleService } from '../../core/services/title.service';
 import { DatePipe } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../core/services/user.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user';
 import { Subscription } from 'rxjs';
 
