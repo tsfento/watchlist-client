@@ -1,20 +1,36 @@
-<div class="history-container">
+<div class="history-grid">
   @if (watchDates !== null) {
-    @if (isAscendingOrder) {
-      @for (date of watchDates[0] | keyvalue: ascOrder; track $index) {
-        <span>{{ date.key }}</span>
-        @for (title of date.value; track $index) {
-          <span>{{ title.title }}</span>
-        }
-      }
-    } @else {
+    <div class="history-container">
       @for (date of watchDates[0] | keyvalue: descOrder; track $index) {
-        <span>{{ date.key }}</span>
-        @for (title of date.value; track $index) {
-          <span>{{ title.title }}</span>
-        }
+        <div class="date-grid">
+          <div class="date-container">
+            <div>{{ date.key | date:"longDate" }}</div>
+          </div>
+        </div>
+        <div class="titles-grid">
+          @for (title of date.value; track $index) {
+            <div class="title-container">
+              <div class="title-poster">
+                @if (title.poster_path !== null) {
+                  <img src="{{ poster_url + title.poster_path }}" alt="{{ title.title }} poster">
+                } @else {
+                  <img src="./assets/images/no_poster.png" alt="No poster available for {{ title.title }}" width="154">
+                }
+              </div>
+              <div class="title-details">
+                <div class="title-title">{{ title.title ? title.title : title.original_name }}</div>
+                <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
+                <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes'  }}</div>
+                <div class="title-overview">{{ title.overview }}</div>
+                <div class="actions">
+                  <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title)">Add to List</a>
+                  <a>{{ this.getTmdbIdFromUserWatchTitles(title.id)?.watched === true ? 'Watched' : 'Unwatched' }}</a>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       }
-    }
-    <button (click)="changeSort()">Sort</button>
+    </div>
   }
 </div>

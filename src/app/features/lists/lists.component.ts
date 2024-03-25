@@ -46,8 +46,10 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      this.listService.getUserLists(this.currentUser?.username);
-      this.listService.getFollowedLists(this.currentUser?.username);
+      if (this.currentUser !== null) {
+        this.listService.getUserLists(this.currentUser!.username);
+        this.listService.getFollowedLists(this.currentUser!.username);
+      }
       this.listService.getAllLists();
     });
 

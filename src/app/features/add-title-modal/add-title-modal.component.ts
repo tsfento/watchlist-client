@@ -38,7 +38,9 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      this.listService.getUserLists(user?.username);
+      if (this.currentUser !== null) {
+        this.listService.getUserLists(this.currentUser.username);
+      }
     });
 
     this.userListsSub = this.listService.gotUserLists.subscribe((gotLists) => {

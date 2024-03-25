@@ -36,34 +36,38 @@ export class ListService {
     });
   }
 
-  getUserLists(username:string = this.currentUserUsername) {
-    this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`).subscribe({
-      next: (response:WatchList[]) => {
-        this.userLists = response;
+  getUserLists(username:string) {
+    if (username !== '') {
+      this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`).subscribe({
+        next: (response:WatchList[]) => {
+          this.userLists = response;
 
-        if (this.userLists !== null) {
-          this.gotUserLists.next(this.userLists.slice());
+          if (this.userLists !== null) {
+            this.gotUserLists.next(this.userLists.slice());
+          }
+        },
+        error: (error:any) => {
+          console.error(error);
         }
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
-    });
+      });
+    }
   }
 
-  getFollowedLists(username:string = this.currentUserUsername) {
-    this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`).subscribe({
-      next: (response:WatchList[]) => {
-        this.followedLists = response;
+  getFollowedLists(username:string) {
+    if (username !== '') {
+      this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`).subscribe({
+        next: (response:WatchList[]) => {
+          this.followedLists = response;
 
-        if (this.followedLists !== null) {
-          this.gotFollowedLists.next(this.followedLists.slice());
+          if (this.followedLists !== null) {
+            this.gotFollowedLists.next(this.followedLists.slice());
+          }
+        },
+        error: (error:any) => {
+          console.error(error);
         }
-      },
-      error: (error:any) => {
-        console.error(error);
-      }
-    });
+      });
+    }
   }
 
   createList(username:string, form:FormData) {

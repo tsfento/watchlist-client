@@ -23,24 +23,23 @@ export class UserService {
 
   getBootstrapData() {
     return this.http.get(`${environment.apiUrl}/web/bootstrap`).pipe(
-      tap((res:any) => {
-        this.setCurrentUser(res.current_user);
+      tap((response:any) => {
+        this.setCurrentUser(response.current_user);
       })
     );
   }
 
   getUserWatchDates() {
-    this.http.get(`${environment.apiUrl}/users/${this.currentUser?.username}/watch_dates`).subscribe({
-      next: (response:any) => {
-        // const json:any = JSON.stringify(response)
-        // this.watchDates = JSON.parse(json);
-        // console.log(this.watchDates);
-        this.watchDates = response;
-        this.watchDatesBehaviorSubject.next(this.watchDates);
-      },
-      error: (error:any) => {
-        console.log(error);
-      }
-    })
+    if (this.currentUser !== null) {
+      this.http.get(`${environment.apiUrl}/users/${this.currentUser?.username}/watch_dates`).subscribe({
+        next: (response:any) => {
+          this.watchDates = response;
+          this.watchDatesBehaviorSubject.next(this.watchDates);
+        },
+        error: (error:any) => {
+          console.log(error);
+        }
+      })
+    }
   }
 }

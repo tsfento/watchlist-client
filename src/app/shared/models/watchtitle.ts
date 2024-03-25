@@ -6,6 +6,7 @@ export class WatchTitle {
   imdb_id:string;
   poster_path:string;
   title:string;
+  original_name:string;
   release_date:string;
   overview:string;
   runtime:number;
@@ -17,6 +18,7 @@ export class WatchTitle {
     this.imdb_id = watchTitle.imdb_id;
     this.poster_path = watchTitle.poster_path;
     this.title = watchTitle.title;
+    this.original_name = watchTitle.original_name;
     this.release_date = watchTitle.release_date;
     this.overview = watchTitle.overview;
     this.runtime = watchTitle.runtime;
