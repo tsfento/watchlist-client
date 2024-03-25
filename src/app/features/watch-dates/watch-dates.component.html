@@ -1,1 +1,20 @@
-<!-- @for (dates) -->
+<div class="history-container">
+  @if (watchDates !== null) {
+    @if (isAscendingOrder) {
+      @for (date of watchDates[0] | keyvalue: ascOrder; track $index) {
+        <span>{{ date.key }}</span>
+        @for (title of date.value; track $index) {
+          <span>{{ title.title }}</span>
+        }
+      }
+    } @else {
+      @for (date of watchDates[0] | keyvalue: descOrder; track $index) {
+        <span>{{ date.key }}</span>
+        @for (title of date.value; track $index) {
+          <span>{{ title.title }}</span>
+        }
+      }
+    }
+    <button (click)="changeSort()">Sort</button>
+  }
+</div>

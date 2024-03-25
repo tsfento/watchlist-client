@@ -1,17 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../core/services/user.service';
 import { Subscription } from 'rxjs';
+import { WatchTitle } from '../../shared/models/watchtitle';
+import { KeyValue, KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-watch-dates',
   standalone: true,
-  imports: [],
+  imports: [KeyValuePipe],
   templateUrl: './watch-dates.component.html',
   styleUrl: './watch-dates.component.scss'
 })
 export class WatchDatesComponent implements OnInit, OnDestroy {
-  watchDates:any;
+  watchDates:{[key: string]: WatchTitle[]}[] | null = null;
   watchDatesSub = new Subscription;
+  isAscendingOrder:boolean = false;
+  ascOrder:any = (a: KeyValue<string,WatchTitle[]>, b: KeyValue<string,WatchTitle[]>): number => {
+    return 0;
+  };
+  descOrder:any = (a: KeyValue<string,WatchTitle[]>, b: KeyValue<string,WatchTitle[]>): number => {
+    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  };
 
   constructor(private userService:UserService) {}
 
@@ -27,4 +36,22 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.watchDatesSub.unsubscribe();
   }
+
+  changeSort() {
+    this.isAscendingOrder = !this.isAscendingOrder;
+  }
+
+  // ascOrder() {
+  //   // TODO
+  //   this.watchDatesOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
+  //     return 0;
+  //   }
+  // }
+
+  // descOrder() {
+  //   // TODO
+  //   this.watchDatesOrder = (a: KeyValue<string,WatchTitle[]>, b: KeyValue<string,WatchTitle[]>): number => {
+  //     return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  //   }
+  // }
 }
