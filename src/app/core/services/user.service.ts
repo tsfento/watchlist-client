@@ -8,12 +8,16 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class UserService {
+  currentUser:User | null = null;
   currentUserBehaviorSubject = new BehaviorSubject<User | null>(null);
+  watchDates:any;
+  watchDatesBehaviorSubject = new BehaviorSubject<any>(null);
 
   constructor(private http:HttpClient) { }
 
   setCurrentUser(user: User | null) {
-    this.currentUserBehaviorSubject.next(user);
+    this.currentUser = user;
+    this.currentUserBehaviorSubject.next(this.currentUser);
   }
 
   getBootstrapData() {
@@ -22,5 +26,18 @@ export class UserService {
         this.setCurrentUser(res.current_user);
       })
     );
+  }
+
+  getUserWatchDates() {
+    this.http.get(`${environment.apiUrl}/users/${this.currentUser?.username}/watch_dates`).subscribe({
+      next: (response:any) => {
+        this.watchDates = response;
+        // console.log(this.watchDates);
+        this.watchDatesBehaviorSubject.next(this.watchDates);
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    })
   }
 }

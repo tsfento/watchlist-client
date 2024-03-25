@@ -22,4 +22,9 @@ export const routes: Routes = [
     loadComponent: () => import('./features/search/search.component').then((c) => c.SearchComponent),
     canActivate: [authGuard]
   },
+  {
+    path: 'history',
+    loadComponent: () => import('./features/watch-dates/watch-dates.component').then((c) => c.WatchDatesComponent),
+    canActivate: [authGuard]
+  },
 ];
