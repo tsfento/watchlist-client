@@ -7,6 +7,8 @@ import { TitleService } from '../../core/services/title.service';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
 import { UserService } from '../../core/services/user.service';
 import { User } from '../../shared/models/user';
+import { WatchTitle } from '../../shared/models/watchtitle';
+import { TmdbResponse } from '../../shared/models/tmdbresponse';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUserSub = new Subscription;
   currentUserWatchTitles:UserWatchTitle[] | null = null;
   currentUserWatchTitlesSub = new Subscription;
+  recommendations:{[key: string]: WatchTitle[]}[] = [];
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -56,6 +59,38 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
       this.currentUserWatchTitles = user_watch_titles;
+
+      if (this.currentUserWatchTitles !== null) {
+        this.currentUserWatchTitles.forEach((t) => {
+          if (t.rating === true) {
+            let titleRecs:{[key: string]: any} = {}
+            let recs = []
+
+            this.tmdbService.getRecommendations('movie', t.watch_title.tmdb_id).subscribe({
+              next: (response:TmdbResponse) => {
+                recs = response.results;
+                if (recs.length !== 0) {
+                  titleRecs[t.watch_title.title] = recs;
+                  this.recommendations?.push(titleRecs);
+                }
+              },
+              error: (error:any) => {
+                console.log(error);
+              }
+            });
+          }
+        });
+      }
+
+      // if (this.currentUserWatchTitles !== null) {
+      //   this.currentUserWatchTitles?.forEach((t) => {
+      //     if (t.rating === true) {
+      //       let titleRecs:{[key: string]: any} = {}
+
+      //
+      //     }
+      //   }
+      // }
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
@@ -138,5 +173,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   onWheel(event:WheelEvent, drawer:HTMLElement) {
     event.preventDefault();
     drawer.scrollLeft += event.deltaY;
+  }
+
+  getRecommendations(type:string, tmdbId:number) {
+    return this.tmdbService.getRecommendations(type, tmdbId);
   }
 }

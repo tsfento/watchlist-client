@@ -159,4 +159,12 @@
       <!-- end carousel -->
     </div>
   </div>
+  <div class="recommendations-container">
+    @for (rec of recommendations[0] | keyvalue; track $index) {
+      <span>Because you liked {{ rec.key }}</span>
+      @for (title of rec.value; track $index) {
+        <span>{{ title.title }}</span>
+      }
+    }
+  </div>
 </div>

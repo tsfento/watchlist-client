@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { BehaviorSubject } from 'rxjs';
+import { UserWatchTitle } from '../../shared/models/user-watch-title';
+import { WatchTitle } from '../../shared/models/watchtitle';
 
 @Injectable({
   providedIn: 'root'
@@ -154,23 +156,7 @@ export class TmdbService {
     }
   }
 
-  addWatchedDate(tmdbId:number, imdbId:string, posterPath:string, title:string, releaseDate:string, overview:string, runtime:number, date:string, username:string) {
-    this.http.post(`${environment.apiUrl}/users/${username}/add_watch_date`, {
-      tmdb_id: tmdbId,
-      imdb_id: imdbId,
-      poster_path: posterPath,
-      title: title,
-      release_date: releaseDate,
-      overview: overview,
-      runtime: runtime,
-      date: date
-    }).subscribe({
-      next: (response:any) => {
-        console.log
-      },
-      error: (error:any) => {
-        console.log(error);
-      }
-    });
+  getRecommendations(type:string, tmdbId:number) {
+    return this.http.get<TmdbResponse>(`${environment.apiUrl}/tmdb/${type}/${tmdbId}/recommendations`);
   }
 }

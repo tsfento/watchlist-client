@@ -1,6 +1,8 @@
+import { WatchTitle } from "./watchtitle";
+
 export class TmdbResponse {
   page:number;
-  results:any;
+  results:WatchTitle[];
   total_pages:number;
 
   constructor(response:any) {

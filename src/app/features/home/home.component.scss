@@ -96,12 +96,14 @@
 }
 
 .pos-rating-btn:hover, .pos-rating-btn.active {
-  color: green;
+  color: limegreen;
+  text-shadow: #1d811d 1px 1px;
   font-variation-settings: 'FILL' 1;
 }
 
 .neg-rating-btn:hover, .neg-rating-btn.active {
   color: crimson;
+  text-shadow: #874150 1px 1px;
   font-variation-settings: 'FILL' 1;
 }
 // end shelf
