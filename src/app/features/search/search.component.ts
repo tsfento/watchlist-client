@@ -24,6 +24,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   currentUser:User | null = null;
   currentUserSub = new Subscription;
+  currentUserWatchTitles:UserWatchTitle[] | null = null;
+  currentUserWatchTitlesSub = new Subscription;
 
   searchValue:string = '';
   searchSub = new Subscription;
@@ -46,6 +48,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+      this.userService.getUserWatchTitles();
+    });
+
+    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
+      this.currentUserWatchTitles = user_watch_titles;
     });
 
     this.searchSub = this.tmdbService.searchSubject.subscribe((search) => {
@@ -62,14 +69,19 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
+    this.currentUserWatchTitlesSub.unsubscribe();
     this.searchSub.unsubscribe();
     this.searchResultsSub.unsubscribe();
   }
 
-  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
-    const userWatchTitle = this.currentUser?.user_watch_titles.find(t => t.watch_title.tmdb_id === tmdbId);
+  getTmdbIdFromUserWatchTitles(tmdbId:number): boolean | undefined {
+    if (this.currentUserWatchTitles !== null) {
+      const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
 
-    return userWatchTitle;
+      return userWatchTitle?.watched;
+    } else {
+      return false;
+    }
   }
 
   setSearchType(type:string) {

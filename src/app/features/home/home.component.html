@@ -21,7 +21,7 @@
                   </div>
                   <div class="details-actions">
                     <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add to List</a>
-                    <a>{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched === true ? 'Watched' : 'Unwatched' }}</a>
+                    <a (click)="setTitleWatched(nPMovie.id)">{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id) ? 'Watched' : 'Unwatched' }}</a>
                     <a data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add Watch Date</a>
                   </div>
                 </div>

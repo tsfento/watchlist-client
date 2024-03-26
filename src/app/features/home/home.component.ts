@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   currentUser:User | null = null;
   currentUserSub = new Subscription;
+  currentUserWatchTitles:UserWatchTitle[] | null = null;
+  currentUserWatchTitlesSub = new Subscription;
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -49,8 +51,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+      this.userService.getUserWatchTitles();
+    });
 
-      // console.log(this.currentUser);
+    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
+      this.currentUserWatchTitles = user_watch_titles;
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
@@ -72,6 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
+    this.currentUserWatchTitlesSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();
@@ -95,19 +101,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
-    const userWatchTitle = this.currentUser?.user_watch_titles.find(t => t.watch_title.tmdb_id === tmdbId);
+  getTmdbIdFromUserWatchTitles(tmdbId:number): boolean | undefined {
+    if (this.currentUserWatchTitles !== null) {
+      const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
 
-    return userWatchTitle;
+      return userWatchTitle?.watched;
+    } else {
+      return
+    }
   }
 
-  // addWatchedDate(tmdbId:number, imdbId:string, posterPath:string, title:string, releaseDate:string, overview:string, runtime:number) {
-  //   // Release Date YYYY-MM-DD
-  //   // today's date formatted and split to be YYYY-MM-DD:
-  //   // const today = new Date(Date.now()).toISOString().split('T')[0];
+  setTitleWatched(tmdbId:number) {
+    this.titleService.setTitleWatched(this.currentUser!.username, tmdbId);
 
-  //   // this.tmdbService.addWatchedDate(tmdbId, imdbId, posterPath, title, releaseDate, overview, runtime, date, this.currentUser!.username);
-  // }
+    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
+
+    if (userWatchTitle) {
+      userWatchTitle.watched = !userWatchTitle.watched;
+    }
+  }
 
   onWheel(event:WheelEvent, drawer:HTMLElement) {
     event.preventDefault();

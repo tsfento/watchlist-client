@@ -17,6 +17,8 @@ import { UserWatchTitle } from '../../shared/models/user-watch-title';
 export class WatchDatesComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
+  currentUserWatchTitles:UserWatchTitle[] | null = null;
+  currentUserWatchTitlesSub = new Subscription;
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
 
   watchDates:{[key: string]: WatchTitle[]}[] | null = null;
@@ -34,6 +36,11 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+      this.userService.getUserWatchTitles();
+    });
+
+    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
+      this.currentUserWatchTitles = user_watch_titles;
     });
 
     this.userService.getUserWatchDates();
@@ -46,13 +53,18 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
+    this.currentUserWatchTitlesSub.unsubscribe();
     this.watchDatesSub.unsubscribe();
   }
 
-  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
-    const userWatchTitle = this.currentUser?.user_watch_titles.find(t => t.watch_title.tmdb_id === tmdbId);
+  getTmdbIdFromUserWatchTitles(tmdbId:number): boolean | undefined {
+    if (this.currentUserWatchTitles !== null) {
+      const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
 
-    return userWatchTitle;
+      return userWatchTitle?.watched;
+    } else {
+      return false;
+    }
   }
 
   changeSort() {

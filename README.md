@@ -15,7 +15,7 @@ TODO
 
 # Packages Used
 
-[Bootstrap](https://getbootstrap.com/) is used for the carousels on the home component.
+[Bootstrap](https://getbootstrap.com/) is used for the carousels on the home component and for some modals.
 
 # Backend API
 

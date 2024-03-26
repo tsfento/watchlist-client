@@ -24,7 +24,7 @@
                 <div class="title-overview">{{ title.overview }}</div>
                 <div class="actions">
                   <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title)">Add to List</a>
-                  <a>{{ this.getTmdbIdFromUserWatchTitles(title.id)?.watched === true ? 'Watched' : 'Unwatched' }}</a>
+                  <a>{{ this.getTmdbIdFromUserWatchTitles(title.id) ? 'Watched' : 'Unwatched' }}</a>
                 </div>
               </div>
             </div>

@@ -3,11 +3,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { WatchTitle } from '../../shared/models/watchtitle';
 import { environment } from '../../../environments/environment';
-import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { WatchTitleSend } from '../../shared/models/watchtitlesend';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -51,5 +49,16 @@ export class TitleService {
       title.overview,
       title.runtime
     ));
+  }
+
+  setTitleWatched(username:string, tmdbId:number) {
+    this.http.get(`${environment.apiUrl}/users/${username}/${tmdbId}/set_watched`).subscribe({
+      next: (response:any) => {
+        console.log(response.watched);
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
   }
 }
