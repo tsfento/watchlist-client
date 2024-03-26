@@ -101,13 +101,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTmdbIdFromUserWatchTitles(tmdbId:number): boolean | undefined {
+  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
     if (this.currentUserWatchTitles !== null) {
       const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
 
-      return userWatchTitle?.watched;
+      return userWatchTitle;
     } else {
-      return
+      return;
     }
   }
 
@@ -118,6 +118,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     if (userWatchTitle) {
       userWatchTitle.watched = !userWatchTitle.watched;
+    }
+  }
+
+  setRating(rating:boolean, tmdbId:number) {
+    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
+
+    if (userWatchTitle !== null || undefined) {
+      if (userWatchTitle!.rating === rating) {
+        this.titleService.setTitleRating(this.currentUser!.username, tmdbId, null);
+        userWatchTitle!.rating = null;
+      } else {
+        this.titleService.setTitleRating(this.currentUser!.username, tmdbId, rating);
+        userWatchTitle!.rating = rating;
+      }
     }
   }
 

@@ -61,4 +61,17 @@ export class TitleService {
       }
     });
   }
+
+  setTitleRating(username:string, tmdbId:number, rating:boolean | null) {
+    this.http.put(`${environment.apiUrl}/users/${username}/${tmdbId}/set_rating`, {
+      rating: rating
+    }).subscribe({
+      next: (response:any) => {
+        console.log(response.watched);
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
+  }
 }

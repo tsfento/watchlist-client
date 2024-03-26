@@ -80,8 +80,29 @@
   }
 }
 
+.details-actions {
+  display: flex;
+  flex-direction: row;
+}
+
 .details-actions a {
   cursor: pointer;
+}
+
+.pos-rating-btn,
+.neg-rating-btn {
+  color: #4a5369;
+  transition: color 0.3s ease-in-out;
+}
+
+.pos-rating-btn:hover, .pos-rating-btn.active {
+  color: green;
+  font-variation-settings: 'FILL' 1;
+}
+
+.neg-rating-btn:hover, .neg-rating-btn.active {
+  color: crimson;
+  font-variation-settings: 'FILL' 1;
 }
 // end shelf
 
