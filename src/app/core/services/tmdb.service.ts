@@ -4,8 +4,6 @@ import { environment } from '../../../environments/environment';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { BehaviorSubject } from 'rxjs';
-import { UserWatchTitle } from '../../shared/models/user-watch-title';
-import { WatchTitle } from '../../shared/models/watchtitle';
 
 @Injectable({
   providedIn: 'root'
@@ -158,5 +156,9 @@ export class TmdbService {
 
   getRecommendations(type:string, tmdbId:number) {
     return this.http.get<TmdbResponse>(`${environment.apiUrl}/tmdb/${type}/${tmdbId}/recommendations`);
+  }
+
+  getRecommendationDetails(tmdbTitle:TmdbMovie, contentType:string) {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/${contentType}/details/${tmdbTitle.id}`);
   }
 }

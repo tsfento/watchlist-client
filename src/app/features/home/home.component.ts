@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUserSub = new Subscription;
   currentUserWatchTitles:UserWatchTitle[] | null = null;
   currentUserWatchTitlesSub = new Subscription;
-  recommendations:{[key: string]: WatchTitle[]}[] = [];
+  recommendations:{[key: string]: TmdbMovie[]}[] = [];
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -72,6 +72,18 @@ export class HomeComponent implements OnInit, OnDestroy {
               next: (response:TmdbResponse) => {
                 recs = response.results;
                 if (recs.length !== 0) {
+                  recs.forEach((t) => {
+                    this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
+                      next: (response:TmdbMovie) => {
+                        t.runtime = response.runtime;
+                        t.imdb_id = response.imdb_id;
+                      },
+                      error: (error:any) => {
+                        console.error(error);
+                      }
+                    });
+                  });
+
                   titleRecs[t.watch_title.title] = recs;
                   this.recommendations?.push(titleRecs);
                 }
