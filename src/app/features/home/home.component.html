@@ -21,12 +21,12 @@
                   </div>
                   <div class="details-actions">
                     <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)">Add to List</a>
-                    <a (click)="setTitleWatched(nPMovie.id)">{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                    <a (click)="setTitleWatched(nPMovie)">{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
                     <div class="rating-btn-container">
-                      <a (click)="setRating(false, nPMovie.id)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === false">
+                      <a (click)="setRating(false, nPMovie)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === false">
                         thumb_down
                       </span></a>
-                      <a (click)="setRating(true, nPMovie.id)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === true">
+                      <a (click)="setRating(true, nPMovie)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === true">
                         thumb_up
                       </span></a>
                     </div>
@@ -160,10 +160,12 @@
     </div>
   </div>
   <div class="recommendations-container">
-    @for (rec of recommendations[0] | keyvalue; track $index) {
-      <span>Because you liked {{ rec.key }}</span>
-      @for (title of rec.value; track $index) {
-        <span>{{ title.title }}</span>
+    @for (recommendation of recommendations; track $index) {
+      @for (rec of recommendation | keyvalue; track $index) {
+        <span>Because you liked {{ rec.key }}</span>
+        @for (title of rec.value; track $index) {
+          <span>{{ title.title }}</span>
+        }
       }
     }
   </div>

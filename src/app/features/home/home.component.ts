@@ -61,6 +61,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.currentUserWatchTitles = user_watch_titles;
 
       if (this.currentUserWatchTitles !== null) {
+        this.recommendations = [];
+
         this.currentUserWatchTitles.forEach((t) => {
           if (t.rating === true) {
             let titleRecs:{[key: string]: any} = {}
@@ -81,16 +83,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           }
         });
       }
-
-      // if (this.currentUserWatchTitles !== null) {
-      //   this.currentUserWatchTitles?.forEach((t) => {
-      //     if (t.rating === true) {
-      //       let titleRecs:{[key: string]: any} = {}
-
-      //
-      //     }
-      //   }
-      // }
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
@@ -146,27 +138,30 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTitleWatched(tmdbId:number) {
-    this.titleService.setTitleWatched(this.currentUser!.username, tmdbId);
+  setTitleWatched(title:TmdbMovie) {
+    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === title.tmdb_id);
 
-    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
-
-    if (userWatchTitle) {
+    if (userWatchTitle !== undefined) {
+      this.titleService.setTitleWatched(this.currentUser!.username, title);
       userWatchTitle.watched = !userWatchTitle.watched;
+    } else {
+      this.titleService.setTitleWatched(this.currentUser!.username, title, true);
     }
   }
 
-  setRating(rating:boolean, tmdbId:number) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
+  setRating(rating:boolean, title:TmdbMovie) {
+    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === title.id);
 
-    if (userWatchTitle !== null || undefined) {
+    if (userWatchTitle !== undefined) {
       if (userWatchTitle!.rating === rating) {
-        this.titleService.setTitleRating(this.currentUser!.username, tmdbId, null);
+        this.titleService.setTitleRating(this.currentUser!.username, title, null);
         userWatchTitle!.rating = null;
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, tmdbId, rating);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating);
         userWatchTitle!.rating = rating;
       }
+    } else {
+      this.titleService.setTitleRating(this.currentUser!.username, title, rating, true);
     }
   }
 

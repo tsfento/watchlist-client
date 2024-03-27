@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { WatchTitleSend } from '../../shared/models/watchtitlesend';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
+import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class TitleService {
 
   titleToAddSubject = new BehaviorSubject<WatchTitleSend>(new WatchTitleSend(-1, '', '', '', '', '', -1));
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private userService:UserService) { }
 
   getTitles(id:number, username:string) {
     this.http.get<WatchTitle[]>(`${environment.apiUrl}/users/${username}/lists/${id}`).subscribe({
@@ -51,10 +52,21 @@ export class TitleService {
     ));
   }
 
-  setTitleWatched(username:string, tmdbId:number) {
-    this.http.get(`${environment.apiUrl}/users/${username}/${tmdbId}/set_watched`).subscribe({
+  setTitleWatched(username:string, title:TmdbMovie, getUserWatchTitles:boolean = false) {
+    this.http.post(`${environment.apiUrl}/users/${username}/set_watched`, {
+      tmdb_id: title.id,
+      imdb_id: title.imdb_id,
+      poster_path: title.poster_path,
+      title: title.title,
+      release_date: title.release_date,
+      overview: title.overview,
+      runtime: title.runtime
+    }).subscribe({
       next: (response:any) => {
         console.log(response.watched);
+        if (getUserWatchTitles === true) {
+          this.userService.getUserWatchTitles();
+        }
       },
       error: (error:any) => {
         console.log(error);
@@ -62,12 +74,22 @@ export class TitleService {
     });
   }
 
-  setTitleRating(username:string, tmdbId:number, rating:boolean | null) {
-    this.http.put(`${environment.apiUrl}/users/${username}/${tmdbId}/set_rating`, {
+  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, getUserWatchTitles:boolean = false) {
+    this.http.post(`${environment.apiUrl}/users/${username}/set_rating`, {
+      tmdb_id: title.id,
+      imdb_id: title.imdb_id,
+      poster_path: title.poster_path,
+      title: title.title,
+      release_date: title.release_date,
+      overview: title.overview,
+      runtime: title.runtime,
       rating: rating
     }).subscribe({
       next: (response:any) => {
-        console.log(response.watched);
+        // console.log(response);
+        if (getUserWatchTitles === true) {
+          this.userService.getUserWatchTitles();
+        }
       },
       error: (error:any) => {
         console.log(error);
