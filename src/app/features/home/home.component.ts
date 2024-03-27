@@ -128,6 +128,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  setActive(drawerId:number, index:number) {
+    // console.log(drawerId, index);
+
+    const drawerChildren = document.getElementById("recsDrawer" + drawerId)?.children;
+
+    // console.log(drawerChildren?.length);
+
+    if (drawerChildren) {
+      for (let i = 0; i < drawerChildren?.length; i++) {
+        drawerChildren[i].children[0].classList.remove('active');
+      }
+      drawerChildren[index].children[0].classList.add('active');
+    }
+  }
+
   getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
     if (this.currentUserWatchTitles !== null) {
       const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
