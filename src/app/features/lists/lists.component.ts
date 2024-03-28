@@ -26,6 +26,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
   isViewingTitles:boolean = false;
   listViewingId:number = 0;
+  listViewingUsername:string = '';
   isUserLists:boolean = true;
   displayLists:WatchList[] = [];
   allLists:WatchList[] = [];
@@ -37,6 +38,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   listType:string = '';
   isLoading:boolean = false;
   listPageNum:number = 1;
+  titlePageNum:number = 1;
 
   gotAllListsSub = new Subscription;
   gotUserListsSub = new Subscription;
@@ -47,9 +49,16 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
-    if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
-      // console.log(event);
-      this.loadNextPage();
+    if (!this.isViewingTitles) {
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+        // console.log(event);
+        this.loadNextPageLists();
+      }
+    } else if (this.isViewingTitles) {
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+        // console.log(event);
+        this.loadNextPageTitles();
+      }
     }
   }
 
@@ -57,16 +66,17 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
-      if (this.currentUser !== null) {
-        this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
-        this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum);
-      }
-      this.listService.getAllLists(this.listPageNum);
+      // if (this.currentUser !== null) {
+      //   this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
+      //   this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum);
+      // }
+      // this.listService.getAllLists(this.listPageNum);
     });
 
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.allLists = [...this.allLists, ...gotLists];
+        this.displayLists = this.allLists;
       }
 
       if (this.currentUser === null) {
@@ -76,8 +86,6 @@ export class ListsComponent implements OnInit, OnDestroy {
     });
 
     this.gotUserListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
-      console.log(gotLists);
-
       if (gotLists.length !== 0) {
           this.userLists = [...this.userLists, ...gotLists];
       }
@@ -91,11 +99,14 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.followedLists = [...this.followedLists, ...gotLists];
+        this.displayLists = this.followedLists;
       }
     });
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
-      this.titles = gotTitles;
+      if (gotTitles.length !== 0) {
+        this.titles = [...this.titles, ...gotTitles];
+      }
       this.beforeFilteredTitles = this.titles;
     });
   }
@@ -165,10 +176,11 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   showTitles(listId:number, username:string) {
-    this.titleService.getTitles(listId, username);
+    this.titleService.getTitles(listId, username, this.titlePageNum);
 
     this.isViewingTitles = true;
     this.listViewingId = listId;
+    this.listViewingUsername = username;
   }
 
   closeTitles() {
@@ -192,8 +204,6 @@ export class ListsComponent implements OnInit, OnDestroy {
     } else {
       this.filterQuery += event.data;
     }
-
-    // console.log(this.filterQuery);
 
     if (this.filterQuery === '') {
       this.resetFilter();
@@ -221,7 +231,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.titleService.deleteTitle(this.currentUser!.username, this.listViewingId, tmdbId);
   }
 
-  loadNextPage() {
+  loadNextPageLists() {
     this.isLoading = true;
 
     switch (this.listType) {
@@ -238,5 +248,10 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     this.listPageNum++;
     this.isLoading = false;
+  }
+
+  loadNextPageTitles() {
+    this.titleService.getTitles(this.listViewingId, this.listViewingUsername, this.titlePageNum + 1);
+    this.titlePageNum++;
   }
 }

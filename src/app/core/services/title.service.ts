@@ -18,8 +18,8 @@ export class TitleService {
 
   constructor(private http:HttpClient, private userService:UserService) { }
 
-  getTitles(id:number, username:string) {
-    this.http.get<WatchTitle[]>(`${environment.apiUrl}/users/${username}/lists/${id}`).subscribe({
+  getTitles(id:number, username:string, pageNum:number) {
+    this.http.get<WatchTitle[]>(`${environment.apiUrl}/users/${username}/lists/${id}?page=${pageNum}`).subscribe({
       next: (response:WatchTitle[]) => {
         this.listTitles = response;
         // console.log(response);
@@ -64,9 +64,9 @@ export class TitleService {
     }).subscribe({
       next: (response:any) => {
         console.log(response.watched);
-        // if (getUserWatchTitles === true) {
-        //   this.userService.getUserWatchTitles();
-        // }
+        if (getUserWatchTitles === true) {
+          this.userService.getUserWatchTitles();
+        }
       },
       error: (error:any) => {
         console.log(error);
@@ -86,10 +86,10 @@ export class TitleService {
       rating: rating
     }).subscribe({
       next: (response:any) => {
-        // console.log(response);
-        // if (getUserWatchTitles === true) {
-        //   this.userService.getUserWatchTitles();
-        // }
+        console.log(response);
+        if (getUserWatchTitles === true) {
+          this.userService.getUserWatchTitles();
+        }
       },
       error: (error:any) => {
         console.log(error);

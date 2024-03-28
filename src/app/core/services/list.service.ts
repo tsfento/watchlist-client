@@ -84,7 +84,7 @@ export class ListService {
   followList(username:string, listId:number, pageNum:number) {
     this.http.get<WatchList>(`${environment.apiUrl}/users/follow_list/${listId}`).subscribe({
       next: (response:any) => {
-        this.getFollowedLists(username, pageNum);
+        // this.getFollowedLists(username, pageNum);
       },
       error: (response:any) => {
         console.log(response.error);
@@ -95,7 +95,7 @@ export class ListService {
   unfollowList(username:string, listId:number, pageNum:number) {
     this.http.get<WatchList>(`${environment.apiUrl}/users/unfollow_list/${listId}`).subscribe({
       next: (response:any) => {
-        this.getFollowedLists(username, pageNum);
+        // this.getFollowedLists(username, pageNum);
       },
       error: (response:any) => {
         console.log(response.error);
