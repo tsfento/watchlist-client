@@ -39,6 +39,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   isLoading:boolean = false;
   listPageNum:number = 1;
   titlePageNum:number = 1;
+  pageX:number = 0;
+  pageY:number = 0;
 
   gotAllListsSub = new Subscription;
   gotUserListsSub = new Subscription;
@@ -190,11 +192,24 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.titleService.getTitles(listId, username, this.titlePageNum);
 
     this.isViewingTitles = true;
+    this.displayLists = [];
     this.listViewingId = listId;
     this.listViewingUsername = username;
   }
 
   closeTitles() {
+    this.titles = [];
+    switch (this.listType) {
+      case 'all':
+        this.onToggle('all');
+        break;
+      case 'user':
+        this.onToggle('user');
+        break;
+      case 'follow':
+        this.onToggle('follow');
+        break;
+    }
     this.isViewingTitles = false;
   }
 
