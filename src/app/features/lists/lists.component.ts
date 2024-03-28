@@ -199,6 +199,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   closeTitles() {
     this.titles = [];
+    this.titlePageNum = 1;
     switch (this.listType) {
       case 'all':
         this.onToggle('all');
