@@ -64,9 +64,9 @@ export class TitleService {
     }).subscribe({
       next: (response:any) => {
         console.log(response.watched);
-        if (getUserWatchTitles === true) {
-          this.userService.getUserWatchTitles();
-        }
+        // if (getUserWatchTitles === true) {
+        //   this.userService.getUserWatchTitles();
+        // }
       },
       error: (error:any) => {
         console.log(error);
@@ -87,9 +87,9 @@ export class TitleService {
     }).subscribe({
       next: (response:any) => {
         // console.log(response);
-        if (getUserWatchTitles === true) {
-          this.userService.getUserWatchTitles();
-        }
+        // if (getUserWatchTitles === true) {
+        //   this.userService.getUserWatchTitles();
+        // }
       },
       error: (error:any) => {
         console.log(error);

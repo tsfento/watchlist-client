@@ -39,7 +39,7 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
       this.currentUser = user;
 
       if (this.currentUser !== null) {
-        this.listService.getUserLists(this.currentUser.username);
+        this.listService.getUserLists(this.currentUser.username, 1);
       }
     });
 

@@ -1,7 +1,6 @@
 <div class="filter-bar">
   <form class="filter-form">
     <label class="info-label" for="filter">Content Type:</label>
-
     <!-- movie/tv toggle -->
     <div class="toggle-bar">
       <input #movie_toggle name="type" type="radio" class="type movie-radio" id="movie" value="movie" (change)="setSearchType(movie_toggle.value)" checked="checked"/>
@@ -14,7 +13,6 @@
       </label>
     </div>
   <!-- end movie/tv toggle -->
-
     <label class="info-label" for="language">Language:</label>
     <select #lang_select class="lang-select" name="lang" id="langSelect"(change)="setSearchLang(lang_select.value)">
       <option value="en" selected>English</option>

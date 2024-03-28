@@ -166,7 +166,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setTitleWatched(title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === title.tmdb_id);
+    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === title.id);
 
     if (userWatchTitle !== undefined) {
       this.titleService.setTitleWatched(this.currentUser!.username, title);

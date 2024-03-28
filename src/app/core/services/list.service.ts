@@ -21,8 +21,8 @@ export class ListService {
 
   constructor(private http:HttpClient) { }
 
-  getAllLists() {
-    this.http.get<WatchList[]>(`${environment.apiUrl}/lists`).subscribe({
+  getAllLists(pageNum:number) {
+    this.http.get<WatchList[]>(`${environment.apiUrl}/lists?page=${pageNum}`).subscribe({
       next: (response:WatchList[]) => {
         this.allLists = response;
 
@@ -36,9 +36,9 @@ export class ListService {
     });
   }
 
-  getUserLists(username:string) {
+  getUserLists(username:string, pageNum:number) {
     if (username !== '') {
-      this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists`).subscribe({
+      this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists?page=${pageNum}`).subscribe({
         next: (response:WatchList[]) => {
           this.userLists = response;
 
@@ -53,9 +53,9 @@ export class ListService {
     }
   }
 
-  getFollowedLists(username:string) {
+  getFollowedLists(username:string, pageNum:number) {
     if (username !== '') {
-      this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists`).subscribe({
+      this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists?page=${pageNum}`).subscribe({
         next: (response:WatchList[]) => {
           this.followedLists = response;
 
@@ -73,7 +73,7 @@ export class ListService {
   createList(username:string, form:FormData) {
     this.http.post<WatchList>(`${environment.apiUrl}/users/${username}/lists`, form).subscribe({
       next: (response:any) => {
-        this.getUserLists(username);
+        this.getUserLists(username, 1);
       },
       error: (response:any) => {
         console.log(response.error);
@@ -81,10 +81,10 @@ export class ListService {
     });
   }
 
-  followList(username:string, listId:number) {
+  followList(username:string, listId:number, pageNum:number) {
     this.http.get<WatchList>(`${environment.apiUrl}/users/follow_list/${listId}`).subscribe({
       next: (response:any) => {
-        this.getFollowedLists(username);
+        this.getFollowedLists(username, pageNum);
       },
       error: (response:any) => {
         console.log(response.error);
@@ -92,10 +92,10 @@ export class ListService {
     });
   }
 
-  unfollowList(username:string, listId:number) {
+  unfollowList(username:string, listId:number, pageNum:number) {
     this.http.get<WatchList>(`${environment.apiUrl}/users/unfollow_list/${listId}`).subscribe({
       next: (response:any) => {
-        this.getFollowedLists(username);
+        this.getFollowedLists(username, pageNum);
       },
       error: (response:any) => {
         console.log(response.error);

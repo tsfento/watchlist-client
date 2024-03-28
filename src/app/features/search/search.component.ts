@@ -38,7 +38,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(private tmdbService:TmdbService, public titleService:TitleService, private userService:UserService) {}
 
   @HostListener('window:scroll',['$event'])
-  onWindowScroll(event:any){
+  onWindowScroll(){
     if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
       // console.log(event);
       this.loadNextPage(this.page + 1);
