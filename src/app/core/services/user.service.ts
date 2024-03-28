@@ -38,7 +38,7 @@ export class UserService {
         next: (response:UserWatchTitle[]) => {
           this.currentUserWatchTitles = response;
           this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles.slice());
-          console.log(response);
+          // console.log(response);
         },
         error: (error:any) => {
           console.log(error);

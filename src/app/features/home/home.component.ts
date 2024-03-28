@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { TmdbService } from '../../core/services/tmdb.service';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,6 @@ import { TitleService } from '../../core/services/title.service';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
 import { UserService } from '../../core/services/user.service';
 import { User } from '../../shared/models/user';
-import { WatchTitle } from '../../shared/models/watchtitle';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 
 @Component({
@@ -27,6 +26,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUserWatchTitles:UserWatchTitle[] | null = null;
   currentUserWatchTitlesSub = new Subscription;
   recommendations:{[key: string]: TmdbMovie[]}[] = [];
+  recsIndex:number = 0;
+  recsIterator:number = 0;
+  isLoading:boolean = false;
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -46,11 +48,20 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private tmdbService:TmdbService, public titleService:TitleService, private userService:UserService) {}
 
+  @HostListener('window:scroll',['$event'])
+  onWindowScroll(){
+    if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+      // console.log(event);
+      this.loadNextPageRecs();
+    }
+  }
+
   ngOnInit(): void {
     this.tmdbService.getNowPlayingMovies();
     this.tmdbService.getPopularMovies();
     this.tmdbService.getPopularTV();
     this.tmdbService.getTopRatedTV();
+    this.recsIndex = 1;
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
@@ -62,13 +73,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       if (this.currentUserWatchTitles !== null) {
         this.recommendations = [];
+        this.recsIterator = 0;
 
-        this.currentUserWatchTitles.forEach((t) => {
-          if (t.rating === true) {
-            let titleRecs:{[key: string]: any} = {}
-            let recs = []
+        for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
+          console.log(this.recsIndex++);
+          if (this.recsIterator === 4) {
+            break;
+          }
+          if (this.currentUserWatchTitles[i].rating === null || this.currentUserWatchTitles[i].rating === false) {
+            this.recsIndex++;
+            continue;
+          } else if (this.currentUserWatchTitles[i].rating === true) {
+            // console.log(this.recsIterator);
+            this.recsIterator++;
+            this.recsIndex++;
+            let titleRecs:{[key: string]: any} = {};
+            let recs = [];
 
-            this.tmdbService.getRecommendations('movie', t.watch_title.tmdb_id).subscribe({
+            this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
               next: (response:TmdbResponse) => {
                 recs = response.results;
                 if (recs.length !== 0) {
@@ -84,8 +106,8 @@ export class HomeComponent implements OnInit, OnDestroy {
                     });
                   });
 
-                  titleRecs[t.watch_title.title] = recs;
-                  this.recommendations?.push(titleRecs);
+                  titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
+                  this.recommendations = [...this.recommendations, titleRecs];
                 }
               },
               error: (error:any) => {
@@ -93,7 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
               }
             });
           }
-        });
+        };
       }
     });
 
@@ -141,11 +163,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setActive(drawerId:number, index:number) {
-    // console.log(drawerId, index);
-
     const drawerChildren = document.getElementById("recsDrawer" + drawerId)?.children;
-
-    // console.log(drawerChildren?.length);
 
     if (drawerChildren) {
       for (let i = 0; i < drawerChildren?.length; i++) {
@@ -199,5 +217,52 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getRecommendations(type:string, tmdbId:number) {
     return this.tmdbService.getRecommendations(type, tmdbId);
+  }
+
+  loadNextPageRecs() {
+    console.log(this.recsIndex);
+    this.isLoading = true;
+    if (this.currentUserWatchTitles !== null) {
+      this.recsIterator = 0;
+      for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
+        if (this.recsIterator === 4) {
+          break;
+        }
+        if (this.currentUserWatchTitles[i].rating === (null || false)) {
+          this.recsIndex++;
+        } else if (this.currentUserWatchTitles[i].rating === true) {
+          this.recsIterator++;
+          this.recsIndex++;
+          let titleRecs:{[key: string]: any} = {};
+          let recs = [];
+
+          this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
+            next: (response:TmdbResponse) => {
+              recs = response.results;
+              if (recs.length !== 0) {
+                recs.forEach((t) => {
+                  this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
+                    next: (response:TmdbMovie) => {
+                      t.runtime = response.runtime;
+                      t.imdb_id = response.imdb_id;
+                    },
+                    error: (error:any) => {
+                      console.error(error);
+                    }
+                  });
+                });
+
+                titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
+                this.recommendations = [...this.recommendations, titleRecs];
+              }
+            },
+            error: (error:any) => {
+              console.log(error);
+            }
+          });
+        }
+      };
+    }
+    this.isLoading = false;
   }
 }

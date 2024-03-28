@@ -63,8 +63,17 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.listPageNum = 1;
+    this.titlePageNum = 1;
+
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+
+      // if (this.currentUser !== null) {
+      //   this.listType = 'all';
+      // } else {
+      //   this.listType = 'user';
+      // }
 
       // if (this.currentUser !== null) {
       //   this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
@@ -99,7 +108,9 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.followedLists = [...this.followedLists, ...gotLists];
-        this.displayLists = this.followedLists;
+        if (this.listType === 'follow') {
+          this.displayLists = this.followedLists;
+        }
       }
     });
 
