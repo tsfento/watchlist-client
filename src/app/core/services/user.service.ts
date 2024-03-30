@@ -13,9 +13,9 @@ export class UserService {
   currentUser:User | null = null;
   currentUserBehaviorSubject = new BehaviorSubject<User | null>(null);
   currentUserWatchTitles:UserWatchTitle[] | null = [];
-  currentUserWatchTitlesSubject = new BehaviorSubject<UserWatchTitle[] | null>(null);
-  watchDates:{[key: string]: WatchTitle[]}[] | null = null;
-  watchDatesBehaviorSubject = new BehaviorSubject<{[key: string]: WatchTitle[]}[] | null>(null);
+  currentUserWatchTitlesSubject = new BehaviorSubject<UserWatchTitle[] | null>([]);
+  watchDates:{[key: string]: WatchTitle[]}[] | null = [];
+  watchDatesBehaviorSubject = new BehaviorSubject<{[key: string]: WatchTitle[]}[] | null>([]);
 
   constructor(private http:HttpClient) { }
 
@@ -47,17 +47,11 @@ export class UserService {
     }
   }
 
-  updateUserWatchTitles() {
-    if (this.currentUser !== null) {
-      this.http.get<UserWatchTitle>(`${environment.apiUrl}/users/${this.currentUser.username}/update_user_watch_titles`).subscribe({
-        next: (response:UserWatchTitle) => {
-          this.currentUserWatchTitles?.push(response);
-          this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles!.slice());
-        },
-        error: (error:any) => {
-          console.log(error);
-        }
-      });
+  updateUserWatchTitles(userWatchTitle:UserWatchTitle) {
+    if (!this.currentUserWatchTitles?.some(t => t.watch_title.tmdb_id === userWatchTitle.id)) {
+      this.currentUserWatchTitles?.push(userWatchTitle);
+      console.log(this.currentUserWatchTitles);
+      this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles!.slice());
     }
   }
 

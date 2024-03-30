@@ -5,7 +5,6 @@ import { WatchTitle } from '../../shared/models/watchtitle';
 import { environment } from '../../../environments/environment';
 import { WatchTitleSend } from '../../shared/models/watchtitlesend';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
-import { UserWatchTitle } from '../../shared/models/user-watch-title';
 import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
@@ -63,9 +62,9 @@ export class TitleService {
       runtime: title.runtime
     }).subscribe({
       next: (response:any) => {
-        console.log(response.watched);
+        // console.log(response.watched);
         if (getUserWatchTitles === true) {
-          this.userService.updateUserWatchTitles();
+          this.userService.updateUserWatchTitles(response);
         }
       },
       error: (error:any) => {
@@ -88,7 +87,7 @@ export class TitleService {
       next: (response:any) => {
         // console.log(response);
         if (getUserWatchTitles === true) {
-          this.userService.updateUserWatchTitles();
+          this.userService.updateUserWatchTitles(response);
         }
       },
       error: (error:any) => {
