@@ -47,11 +47,12 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.userService.getUserWatchDates();
-
     this.watchDatesSub = this.userService.watchDatesBehaviorSubject.subscribe((dates) => {
-      this.watchDates = dates;
-      // console.log(this.watchDates);
+      if (dates?.length !== 0) {
+        this.watchDates = dates;
+      } else {
+        this.userService.getUserWatchDates();
+      }
     });
   }
 
