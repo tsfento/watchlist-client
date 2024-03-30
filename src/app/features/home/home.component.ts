@@ -57,82 +57,97 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.tmdbService.getNowPlayingMovies();
-    this.tmdbService.getPopularMovies();
-    this.tmdbService.getPopularTV();
-    this.tmdbService.getTopRatedTV();
     this.recsIndex = 1;
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
-      this.userService.getUserWatchTitles();
     });
 
     this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
-      this.currentUserWatchTitles = user_watch_titles;
-
-      if (this.currentUserWatchTitles !== null) {
-        this.recommendations = [];
-        this.recsIterator = 0;
-
-        for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
-          console.log(this.recsIndex++);
-          if (this.recsIterator === 4) {
-            break;
-          }
-          if (this.currentUserWatchTitles[i].rating === null || this.currentUserWatchTitles[i].rating === false) {
-            this.recsIndex++;
-            continue;
-          } else if (this.currentUserWatchTitles[i].rating === true) {
-            // console.log(this.recsIterator);
-            this.recsIterator++;
-            this.recsIndex++;
-            let titleRecs:{[key: string]: any} = {};
-            let recs = [];
-
-            this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
-              next: (response:TmdbResponse) => {
-                recs = response.results;
-                if (recs.length !== 0) {
-                  recs.forEach((t) => {
-                    this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
-                      next: (response:TmdbMovie) => {
-                        t.runtime = response.runtime;
-                        t.imdb_id = response.imdb_id;
-                      },
-                      error: (error:any) => {
-                        console.error(error);
-                      }
-                    });
-                  });
-
-                  titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
-                  this.recommendations = [...this.recommendations, titleRecs];
-                }
-              },
-              error: (error:any) => {
-                console.log(error);
-              }
-            });
-          }
-        };
+      if (user_watch_titles !== null && user_watch_titles.length !== 0) {
+        this.currentUserWatchTitles = user_watch_titles;
+      } else {
+        this.userService.getUserWatchTitles();
       }
+
+      // if (this.currentUserWatchTitles !== null) {
+      //   this.recommendations = [];
+      //   this.recsIterator = 0;
+
+      //   for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
+      //     // console.log(this.recsIndex++);
+      //     if (this.recsIterator === 4) {
+      //       break;
+      //     }
+      //     if (this.currentUserWatchTitles[i].rating === null || this.currentUserWatchTitles[i].rating === false) {
+      //       this.recsIndex++;
+      //       continue;
+      //     } else if (this.currentUserWatchTitles[i].rating === true) {
+      //       // console.log(this.recsIterator);
+      //       this.recsIterator++;
+      //       this.recsIndex++;
+      //       let titleRecs:{[key: string]: any} = {};
+      //       let recs = [];
+
+      //       this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
+      //         next: (response:TmdbResponse) => {
+      //           recs = response.results;
+      //           if (recs.length !== 0) {
+      //             recs.forEach((t) => {
+      //               this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
+      //                 next: (response:TmdbMovie) => {
+      //                   t.runtime = response.runtime;
+      //                   t.imdb_id = response.imdb_id;
+      //                 },
+      //                 error: (error:any) => {
+      //                   console.error(error);
+      //                 }
+      //               });
+      //             });
+
+      //             titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
+      //             this.recommendations = [...this.recommendations, titleRecs];
+      //           }
+      //         },
+      //         error: (error:any) => {
+      //           console.log(error);
+      //         }
+      //       });
+      //     }
+      //   };
+      // }
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
-      this.nowPlayingMovies = gotTitles;
+      if (gotTitles.length !== 0) {
+        this.nowPlayingMovies = gotTitles;
+      } else {
+        this.tmdbService.getNowPlayingMovies();
+      }
     });
 
     this.gotPopularMoviesSub = this.tmdbService.gotPopularMovies.subscribe((gotTitles) => {
-      this.popularMovies = gotTitles;
+      if (gotTitles.length !== 0) {
+        this.popularMovies = gotTitles;
+      } else {
+        this.tmdbService.getPopularMovies();
+      }
     });
 
     this.gotPopularTVSub = this.tmdbService.gotPopularTV.subscribe((gotTitles) => {
-      this.popularTV = gotTitles;
+      if (gotTitles.length !== 0) {
+        this.popularTV = gotTitles;
+      } else {
+        this.tmdbService.getPopularTV();
+      }
     });
 
     this.gotTopRatedTVSub = this.tmdbService.gotTopRatedTv.subscribe((gotTitles) => {
-      this.topRatedTV = gotTitles;
+      if (gotTitles.length !== 0) {
+        this.topRatedTV = gotTitles;
+      } else {
+        this.tmdbService.getTopRatedTV();
+      }
     });
   }
 
@@ -220,49 +235,49 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadNextPageRecs() {
-    console.log(this.recsIndex);
-    this.isLoading = true;
-    if (this.currentUserWatchTitles !== null) {
-      this.recsIterator = 0;
-      for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
-        if (this.recsIterator === 4) {
-          break;
-        }
-        if (this.currentUserWatchTitles[i].rating === (null || false)) {
-          this.recsIndex++;
-        } else if (this.currentUserWatchTitles[i].rating === true) {
-          this.recsIterator++;
-          this.recsIndex++;
-          let titleRecs:{[key: string]: any} = {};
-          let recs = [];
+  //   console.log(this.recsIndex);
+  //   this.isLoading = true;
+  //   if (this.currentUserWatchTitles !== null) {
+  //     this.recsIterator = 0;
+  //     for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
+  //       if (this.recsIterator === 4) {
+  //         break;
+  //       }
+  //       if (this.currentUserWatchTitles[i].rating === (null || false)) {
+  //         this.recsIndex++;
+  //       } else if (this.currentUserWatchTitles[i].rating === true) {
+  //         this.recsIterator++;
+  //         this.recsIndex++;
+  //         let titleRecs:{[key: string]: any} = {};
+  //         let recs = [];
 
-          this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
-            next: (response:TmdbResponse) => {
-              recs = response.results;
-              if (recs.length !== 0) {
-                recs.forEach((t) => {
-                  this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
-                    next: (response:TmdbMovie) => {
-                      t.runtime = response.runtime;
-                      t.imdb_id = response.imdb_id;
-                    },
-                    error: (error:any) => {
-                      console.error(error);
-                    }
-                  });
-                });
+  //         this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
+  //           next: (response:TmdbResponse) => {
+  //             recs = response.results;
+  //             if (recs.length !== 0) {
+  //               recs.forEach((t) => {
+  //                 this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
+  //                   next: (response:TmdbMovie) => {
+  //                     t.runtime = response.runtime;
+  //                     t.imdb_id = response.imdb_id;
+  //                   },
+  //                   error: (error:any) => {
+  //                     console.error(error);
+  //                   }
+  //                 });
+  //               });
 
-                titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
-                this.recommendations = [...this.recommendations, titleRecs];
-              }
-            },
-            error: (error:any) => {
-              console.log(error);
-            }
-          });
-        }
-      };
-    }
-    this.isLoading = false;
+  //               titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
+  //               this.recommendations = [...this.recommendations, titleRecs];
+  //             }
+  //           },
+  //           error: (error:any) => {
+  //             console.log(error);
+  //           }
+  //         });
+  //       }
+  //     };
+  //   }
+  //   this.isLoading = false;
   }
 }

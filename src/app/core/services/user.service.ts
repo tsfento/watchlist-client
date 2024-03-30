@@ -12,7 +12,7 @@ import { UserWatchTitle } from '../../shared/models/user-watch-title';
 export class UserService {
   currentUser:User | null = null;
   currentUserBehaviorSubject = new BehaviorSubject<User | null>(null);
-  currentUserWatchTitles:UserWatchTitle[] | null = null;
+  currentUserWatchTitles:UserWatchTitle[] | null = [];
   currentUserWatchTitlesSubject = new BehaviorSubject<UserWatchTitle[] | null>(null);
   watchDates:{[key: string]: WatchTitle[]}[] | null = null;
   watchDatesBehaviorSubject = new BehaviorSubject<{[key: string]: WatchTitle[]}[] | null>(null);
@@ -39,6 +39,20 @@ export class UserService {
           this.currentUserWatchTitles = response;
           this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles.slice());
           // console.log(response);
+        },
+        error: (error:any) => {
+          console.log(error);
+        }
+      });
+    }
+  }
+
+  updateUserWatchTitles() {
+    if (this.currentUser !== null) {
+      this.http.get<UserWatchTitle>(`${environment.apiUrl}/users/${this.currentUser.username}/update_user_watch_titles`).subscribe({
+        next: (response:UserWatchTitle) => {
+          this.currentUserWatchTitles?.push(response);
+          this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles!.slice());
         },
         error: (error:any) => {
           console.log(error);

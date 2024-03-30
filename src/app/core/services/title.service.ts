@@ -65,7 +65,7 @@ export class TitleService {
       next: (response:any) => {
         console.log(response.watched);
         if (getUserWatchTitles === true) {
-          this.userService.getUserWatchTitles();
+          this.userService.updateUserWatchTitles();
         }
       },
       error: (error:any) => {
@@ -86,9 +86,9 @@ export class TitleService {
       rating: rating
     }).subscribe({
       next: (response:any) => {
-        console.log(response);
+        // console.log(response);
         if (getUserWatchTitles === true) {
-          this.userService.getUserWatchTitles();
+          this.userService.updateUserWatchTitles();
         }
       },
       error: (error:any) => {

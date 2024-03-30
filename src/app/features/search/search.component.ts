@@ -48,11 +48,15 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
-      this.userService.getUserWatchTitles();
     });
 
     this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
-      this.currentUserWatchTitles = user_watch_titles;
+      if (user_watch_titles !== null && user_watch_titles.length !== 0) {
+        this.currentUserWatchTitles = user_watch_titles;
+        console.log(this.currentUserWatchTitles);
+      } else {
+        this.userService.getUserWatchTitles();
+      }
     });
 
     this.searchSub = this.tmdbService.searchSubject.subscribe((search) => {
