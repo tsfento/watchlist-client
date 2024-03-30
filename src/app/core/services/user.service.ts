@@ -48,7 +48,7 @@ export class UserService {
   }
 
   updateUserWatchTitles(userWatchTitle:UserWatchTitle) {
-    if (!this.currentUserWatchTitles?.some(t => t.watch_title.tmdb_id === userWatchTitle.id)) {
+    if (!this.currentUserWatchTitles?.some(u => u.watch_title.tmdb_id === userWatchTitle.id)) {
       this.currentUserWatchTitles?.push(userWatchTitle);
       console.log(this.currentUserWatchTitles);
       this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles!.slice());

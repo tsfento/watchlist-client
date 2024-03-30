@@ -162,59 +162,65 @@
   <div class="recommendations-container">
 
     <!-- carousel -->
-    @for (recommendation of recommendations; track $index) {
-      @for (rec of recommendation | keyvalue; track $index) {
-        <div class="recommendations">
-          <div class="box-header">Because you liked {{ rec.key }}</div>
-          <div id="recsCarousel{{recommendations.indexOf(recommendation)}}" class="carousel slide">
-            <div class="carousel-inner">
-              @for (title of rec.value; track $index) {
-              <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
-                <div class="shelf">
-                  <img src="{{ med_poster_url + title.poster_path }}" alt="{{ title.title + ' poster'}}">
-                  <div class="shelf-details-container">
-                    <div class="shelf-details">
-                      <div class="details-header">
-                        <span><span class="title">{{ title.title ? title.title : title.original_name }}</span><span class="year"> ({{ title.release_date | date:'yyyy' }})</span></span>
-                        <span><span class="sub-title">Starring: So-and-so</span><span>{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes'  }}</span></span>
-                      </div>
-                      <div class="details-overview">
-                        <span class="overview-header">Overview</span>
-                        <p>{{ title.overview }}</p>
-                      </div>
-                      <div class="details-actions">
-                        <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title)">Add to List</a>
-                        <a (click)="setTitleWatched(title)">{{ this.getTmdbIdFromUserWatchTitles(title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
-                        <div class="rating-btn-container">
-                          <a (click)="setRating(false, title)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === false">
-                            thumb_down
-                          </span></a>
-                          <a (click)="setRating(true, title)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === true">
-                            thumb_up
-                          </span></a>
+    @if (recommendations.length === 0) {
+      <div class="recs-empty">
+        <span>Rate some titles to get recommendations!</span>
+      </div>
+    } @else {
+      @for (recommendation of recommendations; track $index) {
+        @for (rec of recommendation | keyvalue; track $index) {
+          <div class="recommendations">
+            <div class="box-header">Because you liked {{ rec.key }}</div>
+            <div id="recsCarousel{{recommendations.indexOf(recommendation)}}" class="carousel slide">
+              <div class="carousel-inner">
+                @for (title of rec.value; track $index) {
+                <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
+                  <div class="shelf">
+                    <img src="{{ med_poster_url + title.poster_path }}" alt="{{ title.title + ' poster'}}">
+                    <div class="shelf-details-container">
+                      <div class="shelf-details">
+                        <div class="details-header">
+                          <span><span class="title">{{ title.title ? title.title : title.original_name }}</span><span class="year"> ({{ title.release_date | date:'yyyy' }})</span></span>
+                          <span><span class="sub-title">Starring: So-and-so</span><span>{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes'  }}</span></span>
                         </div>
-                        <a data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title)">Add Watch Date</a>
+                        <div class="details-overview">
+                          <span class="overview-header">Overview</span>
+                          <p>{{ title.overview }}</p>
+                        </div>
+                        <div class="details-actions">
+                          <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title)">Add to List</a>
+                          <a (click)="setTitleWatched(title)">{{ this.getTmdbIdFromUserWatchTitles(title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                          <div class="rating-btn-container">
+                            <a (click)="setRating(false, title)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === false">
+                              thumb_down
+                            </span></a>
+                            <a (click)="setRating(true, title)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === true">
+                              thumb_up
+                            </span></a>
+                          </div>
+                          <a data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title)">Add Watch Date</a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              }
               </div>
-            }
-            </div>
-            <div class="drawer-container">
-              <div #recsDrawer class="drawer" id="recsDrawer{{ recommendations.indexOf(recommendation) }}"
-              (wheel)="onWheel($event, recsDrawer)">
-                @for (title of rec.value; track $index) {
-                  <a type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" [attr.data-bs-slide-to]="$index" (click)="setActive(recommendations.indexOf(recommendation), $index)">
-                    <img id="{{ $index }}" src="{{ small_poster_url + title.poster_path }}" alt="{{ title.title + ' poster' }}" [class.active]="$index === 0" draggable="false">
-                  </a>
-                }
+              <div class="drawer-container">
+                <div #recsDrawer class="drawer" id="recsDrawer{{ recommendations.indexOf(recommendation) }}"
+                (wheel)="onWheel($event, recsDrawer)">
+                  @for (title of rec.value; track $index) {
+                    <a type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" [attr.data-bs-slide-to]="$index" (click)="setActive(recommendations.indexOf(recommendation), $index)">
+                      <img id="{{ $index }}" src="{{ small_poster_url + title.poster_path }}" alt="{{ title.title + ' poster' }}" [class.active]="$index === 0" draggable="false">
+                    </a>
+                  }
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- end carousel -->
+          <!-- end carousel -->
+        }
       }
-    }
+  }
   </div>
 </div>

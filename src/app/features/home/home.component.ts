@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUserSub = new Subscription;
   currentUserWatchTitles:UserWatchTitle[] | null = null;
   currentUserWatchTitlesSub = new Subscription;
+  ratedPositive:UserWatchTitle[] = [];
   recommendations:{[key: string]: TmdbMovie[]}[] = [];
   recsIndex:number = 0;
   recsIterator:number = 0;
@@ -66,6 +67,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
       if (user_watch_titles !== null && user_watch_titles.length !== 0) {
         this.currentUserWatchTitles = user_watch_titles;
+        this.ratedPositive = this.currentUserWatchTitles.filter(u => u.rating === true);
+        console.log(this.ratedPositive);
       } else {
         this.userService.getUserWatchTitles();
       }
@@ -190,7 +193,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
     if (this.currentUserWatchTitles !== null) {
-      const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
+      const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
       return userWatchTitle;
     } else {
@@ -199,7 +202,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setTitleWatched(title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === title.id);
+    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.id);
 
     if (userWatchTitle !== undefined) {
       this.titleService.setTitleWatched(this.currentUser!.username, title);
@@ -210,7 +213,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setRating(rating:boolean, title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === title.id);
+    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.id);
 
     if (userWatchTitle !== undefined) {
       if (userWatchTitle!.rating === rating) {

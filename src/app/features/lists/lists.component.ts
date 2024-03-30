@@ -32,6 +32,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   allLists:WatchList[] = [];
   userLists:WatchList[] = [];
   followedLists:WatchList[] = [];
+  listsDone:boolean = false;
   titles:WatchTitle[] = [];
   beforeFilteredTitles:WatchTitle[] = [];
   filterQuery: string = '';
@@ -52,7 +53,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
     if (!this.isViewingTitles) {
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.listsDone){
         // console.log(event);
         this.loadNextPageLists();
       }
@@ -88,6 +89,9 @@ export class ListsComponent implements OnInit, OnDestroy {
       if (gotLists.length !== 0) {
         this.allLists = [...this.allLists, ...gotLists];
         this.displayLists = this.allLists;
+        this.listsDone = false;
+      } else {
+        this.listsDone = true;
       }
 
       if (this.currentUser === null) {
@@ -99,6 +103,9 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotUserListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
           this.userLists = [...this.userLists, ...gotLists];
+          this.listsDone = false;
+      } else {
+        this.listsDone = true;
       }
 
       if (this.currentUser !== null) {
@@ -110,9 +117,12 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.followedLists = [...this.followedLists, ...gotLists];
+        this.listsDone = false;
         if (this.listType === 'follow') {
           this.displayLists = this.followedLists;
         }
+      } else {
+        this.listsDone = true;
       }
     });
 
@@ -159,6 +169,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   onToggle(input:string) {
     if (input === 'all') {
       this.allLists = [];
+      this.listsDone = false;
       this.listType = 'all';
       this.listPageNum = 1;
       this.isLoading = true;
@@ -169,6 +180,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     if (input === 'user') {
       this.userLists = [];
+      this.listsDone = false;
       this.listType = 'user';
       this.listPageNum = 1;
       this.isLoading = true;
@@ -179,6 +191,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     if (input === 'follow') {
       this.followedLists = [];
+      this.listsDone = false;
       this.listType = 'follow';
       this.listPageNum = 1;
       this.isLoading = true;

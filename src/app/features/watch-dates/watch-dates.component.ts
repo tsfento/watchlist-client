@@ -63,7 +63,7 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
 
   getTmdbIdFromUserWatchTitles(tmdbId:number): boolean | undefined {
     if (this.currentUserWatchTitles !== null) {
-      const userWatchTitle = this.currentUserWatchTitles?.find(t => t.watch_title.tmdb_id === tmdbId);
+      const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
       return userWatchTitle?.watched;
     } else {

@@ -150,3 +150,14 @@
   z-index: 5;
 }
 // end drawer
+
+.recs-empty {
+  margin-bottom: 20px;
+  text-align: center;
+  span {
+    font-size: 40px;
+    font-weight: bold;
+    color: #f5f5f5;
+    opacity: 25%;
+  }
+}
