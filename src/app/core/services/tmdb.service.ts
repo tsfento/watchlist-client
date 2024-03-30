@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { BehaviorSubject } from 'rxjs';
+import { WatchTitle } from '../../shared/models/watchtitle';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,11 @@ export class TmdbService {
   gettingNextPage:boolean = false;
   pageNum:number = 1;
   totalPages:number = 1;
+
+  recommendations:{[key: string]: TmdbMovie[]}[] = [];
+  gotRecommendations = new BehaviorSubject<{[key: string]: TmdbMovie[]}[]>([]);
+  recsIndex:number = 0;
+  gotRecsIndex = new BehaviorSubject<number>(0);
 
   constructor(private http:HttpClient) { }
 
@@ -154,8 +160,44 @@ export class TmdbService {
     }
   }
 
-  getRecommendations(type:string, tmdbId:number) {
-    return this.http.get<TmdbResponse>(`${environment.apiUrl}/tmdb/${type}/${tmdbId}/recommendations`);
+  getRecommendations(type:string, watchTitle:WatchTitle, sentRecs:{[key: string]: TmdbMovie[]}[]) {
+    if (this.recommendations.length > sentRecs.length) {
+      this.gotRecommendations.next(this.recommendations.slice());
+    } else {
+      let titleRecs:{[key: string]: any} = {};
+      let recs = [];
+
+      this.http.get<TmdbResponse>(`${environment.apiUrl}/tmdb/${type}/${watchTitle.tmdb_id}/recommendations`).subscribe({
+        next: (response:TmdbResponse) => {
+          recs = response.results;
+          if (recs.length !== 0) {
+            recs.forEach((t) => {
+              this.getRecommendationDetails(t, 'movie').subscribe({
+                next: (response:TmdbMovie) => {
+                  t.runtime = response.runtime;
+                  t.imdb_id = response.imdb_id;
+                },
+                error: (error:any) => {
+                  console.error(error);
+                }
+              });
+            });
+
+            titleRecs[watchTitle.title] = response.results;
+            this.recommendations = [...this.recommendations, titleRecs];
+            this.recsIndex++;
+            this.gotRecsIndex.next(this.recsIndex);
+            this.gotRecommendations.next(this.recommendations.slice());
+          } else {
+            this.recsIndex++;
+            this.gotRecsIndex.next(this.recsIndex);
+          }
+        },
+        error: (error:any) => {
+          console.log(error);
+        }
+      });;
+    }
   }
 
   getRecommendationDetails(tmdbTitle:TmdbMovie, contentType:string) {

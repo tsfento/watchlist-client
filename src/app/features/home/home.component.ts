@@ -25,10 +25,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentUserSub = new Subscription;
   currentUserWatchTitles:UserWatchTitle[] | null = null;
   currentUserWatchTitlesSub = new Subscription;
+
   ratedPositive:UserWatchTitle[] = [];
   recommendations:{[key: string]: TmdbMovie[]}[] = [];
+  checkRecommendations:{[key: string]: TmdbMovie[]}[] = [];
+  gotRecommendationsSub = new Subscription;
+  gotRecsIndexSub = new Subscription;
   recsIndex:number = 0;
-  recsIterator:number = 0;
   isLoading:boolean = false;
 
   nowPlayingMovies:TmdbMovie[] = [];
@@ -58,8 +61,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.recsIndex = 1;
-
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
     });
@@ -68,57 +69,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (user_watch_titles !== null && user_watch_titles.length !== 0) {
         this.currentUserWatchTitles = user_watch_titles;
         this.ratedPositive = this.currentUserWatchTitles.filter(u => u.rating === true);
-        console.log(this.ratedPositive);
+
+        this.getInitialRecommendations();
       } else {
         this.userService.getUserWatchTitles();
       }
-
-      // if (this.currentUserWatchTitles !== null) {
-      //   this.recommendations = [];
-      //   this.recsIterator = 0;
-
-      //   for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
-      //     // console.log(this.recsIndex++);
-      //     if (this.recsIterator === 4) {
-      //       break;
-      //     }
-      //     if (this.currentUserWatchTitles[i].rating === null || this.currentUserWatchTitles[i].rating === false) {
-      //       this.recsIndex++;
-      //       continue;
-      //     } else if (this.currentUserWatchTitles[i].rating === true) {
-      //       // console.log(this.recsIterator);
-      //       this.recsIterator++;
-      //       this.recsIndex++;
-      //       let titleRecs:{[key: string]: any} = {};
-      //       let recs = [];
-
-      //       this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
-      //         next: (response:TmdbResponse) => {
-      //           recs = response.results;
-      //           if (recs.length !== 0) {
-      //             recs.forEach((t) => {
-      //               this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
-      //                 next: (response:TmdbMovie) => {
-      //                   t.runtime = response.runtime;
-      //                   t.imdb_id = response.imdb_id;
-      //                 },
-      //                 error: (error:any) => {
-      //                   console.error(error);
-      //                 }
-      //               });
-      //             });
-
-      //             titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
-      //             this.recommendations = [...this.recommendations, titleRecs];
-      //           }
-      //         },
-      //         error: (error:any) => {
-      //           console.log(error);
-      //         }
-      //       });
-      //     }
-      //   };
-      // }
     });
 
     this.gotNowPlayingMoviesSub = this.tmdbService.gotNowPlayingMovies.subscribe((gotTitles) => {
@@ -152,6 +107,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.tmdbService.getTopRatedTV();
       }
     });
+
+    this.gotRecommendationsSub = this.tmdbService.gotRecommendations.subscribe((recs) => {
+      if (recs?.length !== 0) {
+        this.recommendations = recs;
+      } else {
+        this.getInitialRecommendations();
+      }
+    });
+
+    this.gotRecsIndexSub = this.tmdbService.gotRecsIndex.subscribe((index) => {
+      this.recsIndex = index;
+      console.log(this.recsIndex);
+    });
   }
 
   ngOnDestroy(): void {
@@ -161,6 +129,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();
     this.gotTopRatedTVSub.unsubscribe();
+    this.gotRecommendationsSub.unsubscribe();
+    this.gotRecsIndexSub.unsubscribe();
   }
 
   changeIndex(type:string, index:number) {
@@ -233,54 +203,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     drawer.scrollLeft += event.deltaY;
   }
 
-  getRecommendations(type:string, tmdbId:number) {
-    return this.tmdbService.getRecommendations(type, tmdbId);
+  getInitialRecommendations() {
+    if (this.ratedPositive.length !== 0) {
+      this.isLoading = true;
+      for (let i = 0; i < 5; i++) {
+        if (i !== this.ratedPositive.length) {
+          this.tmdbService.getRecommendations('movie', this.ratedPositive[i].watch_title, this.recommendations);
+        }
+      }
+      this.isLoading = false;
+    }
   }
 
   loadNextPageRecs() {
-  //   console.log(this.recsIndex);
-  //   this.isLoading = true;
-  //   if (this.currentUserWatchTitles !== null) {
-  //     this.recsIterator = 0;
-  //     for (let i = this.recsIndex; i < this.currentUserWatchTitles.length; i++) {
-  //       if (this.recsIterator === 4) {
-  //         break;
-  //       }
-  //       if (this.currentUserWatchTitles[i].rating === (null || false)) {
-  //         this.recsIndex++;
-  //       } else if (this.currentUserWatchTitles[i].rating === true) {
-  //         this.recsIterator++;
-  //         this.recsIndex++;
-  //         let titleRecs:{[key: string]: any} = {};
-  //         let recs = [];
-
-  //         this.tmdbService.getRecommendations('movie', this.currentUserWatchTitles[i].watch_title.tmdb_id).subscribe({
-  //           next: (response:TmdbResponse) => {
-  //             recs = response.results;
-  //             if (recs.length !== 0) {
-  //               recs.forEach((t) => {
-  //                 this.tmdbService.getRecommendationDetails(t, 'movie').subscribe({
-  //                   next: (response:TmdbMovie) => {
-  //                     t.runtime = response.runtime;
-  //                     t.imdb_id = response.imdb_id;
-  //                   },
-  //                   error: (error:any) => {
-  //                     console.error(error);
-  //                   }
-  //                 });
-  //               });
-
-  //               titleRecs[this.currentUserWatchTitles![i].watch_title.title] = recs;
-  //               this.recommendations = [...this.recommendations, titleRecs];
-  //             }
-  //           },
-  //           error: (error:any) => {
-  //             console.log(error);
-  //           }
-  //         });
-  //       }
-  //     };
-  //   }
-  //   this.isLoading = false;
+    console.log(this.recsIndex);
+    if (this.ratedPositive.length !== 0) {
+      this.isLoading = true;
+      for (let i = this.recsIndex; i < this.recsIndex + 5; i++) {
+        if (this.recsIndex !== this.ratedPositive.length) {
+          this.tmdbService.getRecommendations('movie', this.ratedPositive[i].watch_title, this.recommendations);
+          this.recsIndex++;
+        }
+      }
+      this.isLoading = false;
+    }
   }
 }
