@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { WatchList } from '../../shared/models/watchlist';
+import { WatchTitle } from '../../shared/models/watchtitle';
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +102,17 @@ export class ListService {
         console.log(response.error);
       }
     });
+  }
+
+  searchTitlesInList(watchListId:number, searchString:string, pageNum:number) {
+    return this.http.post<WatchTitle[]>(`${environment.apiUrl}/lists/${watchListId}/search?page=${pageNum}`, {
+      search: searchString,
+      page: pageNum
+    });
+  }
+
+  getRandomTitleFromList(watchListId:number) {
+    return this.http.get<WatchTitle>(`${environment.apiUrl}/lists/${watchListId}/random`);
   }
 
   setListIdToDelete(listId:number, listIndex:number, username:string) {

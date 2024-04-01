@@ -34,8 +34,11 @@ export class ListsComponent implements OnInit, OnDestroy {
   followedLists:WatchList[] = [];
   listsDone:boolean = false;
   titles:WatchTitle[] = [];
-  beforeFilteredTitles:WatchTitle[] = [];
-  filterQuery: string = '';
+  noMoreTitles:boolean = false;
+  isSearching:boolean = false;
+  searchValue:string = '';
+  searchPageNum:number = 1;
+  noMoreResults = true;
   listType:string = '';
   isLoading:boolean = false;
   listPageNum:number = 1;
@@ -52,15 +55,19 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
+    console.log('Titles: ', this.noMoreTitles);
+    console.log('Results: ', this.noMoreResults);
+
     if (!this.isViewingTitles) {
       if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.listsDone){
         // console.log(event);
         this.loadNextPageLists();
       }
     } else if (this.isViewingTitles) {
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
-        // console.log(event);
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.noMoreTitles){
         this.loadNextPageTitles();
+      } else if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&this.isSearching&&!this.noMoreResults){
+        this.loadNextPageSearchTitles();
       }
     }
   }
@@ -127,10 +134,15 @@ export class ListsComponent implements OnInit, OnDestroy {
     });
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
-      if (gotTitles.length !== 0) {
+      if (gotTitles.length === 0) {
+        this.noMoreTitles = true;
+      } else if (gotTitles.length < 20) {
+        this.noMoreTitles = true;
+        this.titles = [...this.titles, ...gotTitles];
+      } else {
+        this.noMoreTitles = false;
         this.titles = [...this.titles, ...gotTitles];
       }
-      this.beforeFilteredTitles = this.titles;
     });
   }
 
@@ -210,7 +222,11 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.listViewingUsername = username;
   }
 
-  closeTitles() {
+  closeTitles(searchInput:HTMLInputElement) {
+    this.isSearching = false;
+    this.noMoreTitles = false;
+    this.noMoreResults = false;
+    searchInput.value = '';
     this.titles = [];
     this.titlePageNum = 1;
     switch (this.listType) {
@@ -227,42 +243,47 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.isViewingTitles = false;
   }
 
-  filterTitles() {
-    this.resetFilter();
-
-    this.titles = this.titles.filter(title =>
-      title.title.toLowerCase().includes(this.filterQuery.toLowerCase()) ||
-      title.release_date.toLowerCase().includes(this.filterQuery.toLowerCase()) ||
-      title.overview.toLowerCase().includes(this.filterQuery.toLowerCase()) ||
-      title.runtime.toString().includes(this.filterQuery.toLowerCase())
-    );
+  searchTitles(searchInput:HTMLInputElement) {
+    this.isSearching = true;
+    this.searchValue = searchInput.value;
+    this.listService.searchTitlesInList(this.listViewingId, this.searchValue, 1).subscribe({
+      next: (response:(WatchTitle[])) => {
+        if (response.length === 0) {
+          this.noMoreResults = true;
+        } else if (response.length < 20) {
+          this.noMoreResults = true;
+          this.titles = response;
+        } else {
+          this.noMoreResults = false;
+          this.titles = response;
+        }
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
   }
 
-  onFilterInput(event:any) {
-    if (event.data === null) {
-      this.filterQuery = this.filterQuery.substring(0, this.filterQuery.length - 1);
-    } else {
-      this.filterQuery += event.data;
-    }
-
-    if (this.filterQuery === '') {
-      this.resetFilter();
-    } else {
-      this.filterTitles();
-    }
+  resetSearch(searchInput:HTMLInputElement) {
+    this.isSearching = false;
+    searchInput.value = '';
+    this.titles = [];
+    this.titleService.getTitles(this.listViewingId, this.listViewingUsername, 1);
   }
 
-  resetFilter() {
-    this.titles = this.beforeFilteredTitles;
-  }
-
-  randomTitle() {
-    this.resetFilter();
-    this.titles = [this.titles[Math.floor(Math.random()*this.titles.length)]];
+  randomTitle(searchInput:HTMLInputElement) {
+    searchInput.value = '';
+    this.listService.getRandomTitleFromList(this.listViewingId).subscribe({
+      next: (response:WatchTitle) => {
+        this.titles = [response];
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    })
   }
 
   deleteList(listId:number, listIndex:number, username:string) {
-    // console.log(this.newListForm.valid);
     // this.newListForm.reset();
     this.listService.setListIdToDelete(listId, listIndex, username);
   }
@@ -293,5 +314,26 @@ export class ListsComponent implements OnInit, OnDestroy {
   loadNextPageTitles() {
     this.titleService.getTitles(this.listViewingId, this.listViewingUsername, this.titlePageNum + 1);
     this.titlePageNum++;
+  }
+
+  loadNextPageSearchTitles() {
+    this.isSearching = true;
+    this.listService.searchTitlesInList(this.listViewingId, this.searchValue, this.searchPageNum + 1).subscribe({
+      next: (response:(WatchTitle[])) => {
+        if (response.length === 0) {
+          this.noMoreResults = true;
+        } else if (response.length < 20) {
+          this.noMoreResults = true;
+          this.titles = [...this.titles, ...response];
+        } else {
+          this.noMoreResults = false;
+          this.titles = [...this.titles, ...response];
+        }
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
+    this.searchPageNum++;
   }
 }

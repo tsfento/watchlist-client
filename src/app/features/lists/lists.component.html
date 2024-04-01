@@ -14,9 +14,11 @@
   </label>
 </div>
 <div class="search-bar" [class.active]="isViewingTitles">
-  <input type="text" placeholder="Filter titles..." (input)="onFilterInput($event)">
-  <button class="random-title" (click)="randomTitle()">⚄</button>
-  <button class="close-titles" (click)="closeTitles()">
+  <!-- <input type="text" placeholder="Filter titles..." (input)="onFilterInput($event)"> -->
+  <input type="search" placeholder="Search titles..." #searchTitlesInput (keyup.enter)="searchTitles(searchTitlesInput)">
+  <button class="reset-search" (click)="resetSearch(searchTitlesInput)" [disabled]="!isSearching">Reset</button>
+  <button class="random-title" (click)="randomTitle(searchTitlesInput)">⚄</button>
+  <button class="close-titles" (click)="closeTitles(searchTitlesInput)">
     <span class="material-symbols-outlined">
       close
     </span>
@@ -29,7 +31,7 @@
         <input type="text" formControlName="title" placeholder="Create a new list...">
         <label for="private">Private?</label>
         <input type="checkbox" formControlName="private">
-        <button type="submit" class="btn-new-list">
+        <button type="submit" class="btn-new-list" [disabled]="!newListForm.valid">
           <span class="material-symbols-outlined">
             add
           </span>

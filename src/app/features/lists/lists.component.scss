@@ -1,7 +1,7 @@
 // toggle bar
 .toggle-bar {
   z-index: 2;
-  background-color: green;
+  background-color: green; // green for testing
   min-height: 40px;
   display: grid;
   width: 60%;
@@ -78,7 +78,7 @@ label.nav:hover {
   width: 60%;
   overflow: hidden;
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 50px 40px;
+  grid-template-columns: 1fr 85px 50px 40px;
   align-items: center;
   position: fixed;
   top: -65px;
@@ -91,10 +91,8 @@ label.nav:hover {
 
 .search-bar input {
   height: 40px;
-  margin-top: 10px;
-  // border-radius: 20px;
-  padding: 15px;
-  font-size: 20px;
+  padding: 0 0.5em;
+  font-size: 1.2rem;
   width: 100%;
 }
 
@@ -109,7 +107,7 @@ label.nav:hover {
   // font-size: 1.5rem;
   scale: 150%;
   color: white;
-  margin-top: 14px;
+  margin-top: 10px;
   transition: color 0.3s ease-in-out;
 }
 
@@ -121,10 +119,32 @@ label.nav:hover {
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 2rem;
-  color: white;
-  margin-top: 5px;
+  font-size: 2.5rem;
+  margin-left: 10px;
+  color: #f5f5f5;
   transition: color 0.3s ease-in-out;
+}
+
+.reset-search {
+  cursor: pointer;
+  background: #3c91f9;
+  height: 40px;
+  // margin-top: 10px;
+  margin-left: 10px;
+  width: 80px;
+  border: none;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  transition: color 0.2s ease-in-out;
+}
+
+.reset-search:hover {
+  background-color: #00b5ff;
+}
+
+.reset-search:disabled {
+  background-color: #557091;
+  color: #4a5369;
 }
 // end search bar
 
@@ -204,6 +224,7 @@ label.nav:hover {
 
 .btn-new-list:disabled {
   background-color: #557091;
+  color: #4a5369;
 }
 // end new list bar
 
