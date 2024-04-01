@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (user_watch_titles !== null && user_watch_titles.length !== 0) {
         this.currentUserWatchTitles = user_watch_titles;
         this.ratedPositive = this.currentUserWatchTitles.filter(u => u.rating === true);
+        this.ratedPositive = this.shuffle(this.ratedPositive);
 
         this.getInitialRecommendations();
       } else {
@@ -131,6 +132,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.gotTopRatedTVSub.unsubscribe();
     this.gotRecommendationsSub.unsubscribe();
     this.gotRecsIndexSub.unsubscribe();
+    console.log('Home Destroyed');
+  }
+
+  shuffle(array:UserWatchTitle[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
   }
 
   changeIndex(type:string, index:number) {
