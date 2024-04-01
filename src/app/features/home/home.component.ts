@@ -119,7 +119,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.gotRecsIndexSub = this.tmdbService.gotRecsIndex.subscribe((index) => {
       this.recsIndex = index;
-      console.log(this.recsIndex);
     });
   }
 
@@ -132,7 +131,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.gotTopRatedTVSub.unsubscribe();
     this.gotRecommendationsSub.unsubscribe();
     this.gotRecsIndexSub.unsubscribe();
-    console.log('Home Destroyed');
   }
 
   shuffle(array:UserWatchTitle[]) {

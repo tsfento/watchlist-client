@@ -55,8 +55,8 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
-    console.log('Titles: ', this.noMoreTitles);
-    console.log('Results: ', this.noMoreResults);
+    // console.log('Titles: ', this.noMoreTitles);
+    // console.log('Results: ', this.noMoreResults);
 
     if (!this.isViewingTitles) {
       if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.listsDone){
@@ -214,6 +214,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   showTitles(listId:number, username:string) {
+    this.titles = [];
     this.titleService.getTitles(listId, username, this.titlePageNum);
 
     this.isViewingTitles = true;
@@ -228,6 +229,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.noMoreResults = false;
     searchInput.value = '';
     this.titles = [];
+    this.listPageNum = 1;
     this.titlePageNum = 1;
     switch (this.listType) {
       case 'all':
@@ -244,10 +246,13 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   searchTitles(searchInput:HTMLInputElement) {
+    this.titles = [];
+    this.listPageNum = 1;
     this.isSearching = true;
     this.searchValue = searchInput.value;
     this.listService.searchTitlesInList(this.listViewingId, this.searchValue, 1).subscribe({
       next: (response:(WatchTitle[])) => {
+        // TODO flash no results
         if (response.length === 0) {
           this.noMoreResults = true;
         } else if (response.length < 20) {
@@ -265,6 +270,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   resetSearch(searchInput:HTMLInputElement) {
+    this.listPageNum = 1;
+    this.titlePageNum = 1;
     this.isSearching = false;
     searchInput.value = '';
     this.titles = [];

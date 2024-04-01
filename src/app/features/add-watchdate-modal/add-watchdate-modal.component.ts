@@ -20,11 +20,12 @@ declare var window:any;
 export class AddWatchdateModalComponent implements OnInit, OnDestroy {
   titleToAdd:WatchTitleSend = new WatchTitleSend(-1, '', '', '', '', '', -1);
   setTitleToAddSub = new Subscription;
+  todaysDate = new Date(Date.now()).toISOString().split('T')[0];
 
   addWatchDateForm:FormGroup = new FormGroup({
     // today's date formatted and split to be YYYY-MM-DD:
     // new Date(Date.now()).toISOString().split('T')[0];
-    date: new FormControl(new Date(Date.now()).toISOString().split('T')[0], Validators.required),
+    date: new FormControl(this.todaysDate, Validators.required),
   });
   currentUser:User | null = null;
   currentUserSub = new Subscription;

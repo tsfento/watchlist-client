@@ -21,7 +21,8 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
   currentUserWatchTitlesSub = new Subscription;
   poster_url:string = 'https://image.tmdb.org/t/p/w154'
 
-  watchDates:{[key: string]: WatchTitle[]}[] | null = null;
+  watchDates:{[key: string]: WatchTitle[]}[] = [];
+  datesBeforeSearch:{[key: string]: WatchTitle[]}[] = [];
   watchDatesSub = new Subscription;
   isAscendingOrder:boolean = false;
   ascOrder:any = (a: KeyValue<string,WatchTitle[]>, b: KeyValue<string,WatchTitle[]>): number => {
@@ -30,6 +31,8 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
   descOrder:any = (a: KeyValue<string,WatchTitle[]>, b: KeyValue<string,WatchTitle[]>): number => {
     return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
   };
+  todaysDate = new Date(Date.now()).toISOString().split('T')[0];
+  isSearching = false;
 
   constructor(private userService:UserService, public titleService:TitleService) {}
 
@@ -41,7 +44,6 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
     this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
       if (user_watch_titles !== null && user_watch_titles.length !== 0) {
         this.currentUserWatchTitles = user_watch_titles;
-        console.log(this.currentUserWatchTitles);
       } else {
         this.userService.getUserWatchTitles();
       }
@@ -50,6 +52,7 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
     this.watchDatesSub = this.userService.watchDatesBehaviorSubject.subscribe((dates) => {
       if (dates?.length !== 0) {
         this.watchDates = dates;
+        this.datesBeforeSearch = this.watchDates;
       } else {
         this.userService.getUserWatchDates();
       }
@@ -70,6 +73,24 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
+  }
+
+  searchDate(dateInput:HTMLInputElement) {
+    this.isSearching = true;
+    this.userService.searchUserWatchDates(dateInput.value).subscribe({
+      next: (response:any) => {
+        this.watchDates = response;
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    })
+  }
+
+  resetSearch(dateInput:HTMLInputElement) {
+    this.isSearching = false;
+    dateInput.value = this.todaysDate;
+    this.watchDates = this.datesBeforeSearch;
   }
 
   changeSort() {

@@ -14,8 +14,8 @@ export class UserService {
   currentUserBehaviorSubject = new BehaviorSubject<User | null>(null);
   currentUserWatchTitles:UserWatchTitle[] | null = [];
   currentUserWatchTitlesSubject = new BehaviorSubject<UserWatchTitle[] | null>([]);
-  watchDates:{[key: string]: WatchTitle[]}[] | null = [];
-  watchDatesBehaviorSubject = new BehaviorSubject<{[key: string]: WatchTitle[]}[] | null>([]);
+  watchDates:{[key: string]: WatchTitle[]}[] = [];
+  watchDatesBehaviorSubject = new BehaviorSubject<{[key: string]: WatchTitle[]}[]>([]);
 
   constructor(private http:HttpClient) { }
 
@@ -67,5 +67,11 @@ export class UserService {
         }
       })
     }
+  }
+
+  searchUserWatchDates(dateToSearch:string) {
+    return this.http.post(`${environment.apiUrl}/users/${this.currentUser?.username}/watch_date`, {
+      date: dateToSearch
+    });
   }
 }

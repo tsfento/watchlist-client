@@ -401,4 +401,17 @@ label.nav:hover {
 .no-poster {
   max-width: 154px;
 }
+
+.no-results {
+  margin-top: 120px;
+  min-height: 245px;
+  display: flex;
+  justify-content: center;
+  span {
+    font-size: 60px;
+    font-weight: bold;
+    color: #f5f5f5;
+    opacity: 25%;
+  }
+}
 // end titles css

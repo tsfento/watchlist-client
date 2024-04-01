@@ -1,5 +1,15 @@
+<div class="search-bar">
+  <!-- <input type="search" placeholder="Search titles..." #searchDatesInput (keyup.enter)="searchles(searchTitlesInput)"> -->
+  <input #dateInput type="date" value="{{ todaysDate }}" max="{{ todaysDate }}">
+  <button class="search-date" (click)="searchDate(dateInput)">Search</button>
+  <button class="reset-search" (click)="resetSearch(dateInput)" [disabled]="!isSearching">Reset</button>
+</div>
 <div class="history-grid">
-  @if (watchDates !== null) {
+  @if (watchDates.length === 0) {
+    <div class="no-results">
+      <span>No Results</span>
+    </div>
+  } @else if (watchDates !== null) {
     <div class="history-container">
       @for (date of watchDates[0] | keyvalue: descOrder; track $index) {
         <div class="date-grid">

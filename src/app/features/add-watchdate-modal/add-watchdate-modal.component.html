@@ -13,7 +13,7 @@
         <form [formGroup]="addWatchDateForm" (ngSubmit)="onAddWatchDate()">
           <div class="form-group">
             <label for="date">Select date</label>
-            <input type="date" formControlName="date">
+            <input type="date" value="{{ todaysDate }}" max="{{ todaysDate }}" formControlName="date">
             <!-- <select id="selected_list" formControlName="watch_list">
               <option value="">Select a list</option>
               @for (list of userLists; track $index) {
