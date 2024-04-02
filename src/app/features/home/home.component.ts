@@ -225,7 +225,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadNextPageRecs() {
-    console.log(this.recsIndex);
     if (this.ratedPositive.length !== 0) {
       this.isLoading = true;
       for (let i = this.recsIndex; i < this.recsIndex + 5; i++) {

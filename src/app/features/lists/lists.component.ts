@@ -75,30 +75,29 @@ export class ListsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.listPageNum = 1;
     this.titlePageNum = 1;
+    for (let i = 0; i < 20; i++) {
+      if (this.listService.allLists[i]) {
+        this.allLists.push(this.listService.allLists[i]);
+      }
+      if (this.listService.userLists[i]) {
+        this.userLists.push(this.listService.userLists[i]);
+      }
+      if (this.listService.followedLists[i]) {
+        this.followedLists.push(this.listService.followedLists[i]);
+      }
+    }
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
-
-      // if (this.currentUser !== null) {
-      //   this.listType = 'all';
-      // } else {
-      //   this.listType = 'user';
-      // }
-
-      // if (this.currentUser !== null) {
-      //   this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
-      //   this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum);
-      // }
-      // this.listService.getAllLists(this.listPageNum);
     });
 
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
-      if (gotLists.length !== 0) {
+      if (gotLists.length === 0) {
+        this.listsDone = false;
+      } else {
         this.allLists = [...this.allLists, ...gotLists];
         this.displayLists = this.allLists;
         this.listsDone = false;
-      } else {
-        this.listsDone = true;
       }
 
       if (this.currentUser === null) {
@@ -108,11 +107,12 @@ export class ListsComponent implements OnInit, OnDestroy {
     });
 
     this.gotUserListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
-      if (gotLists.length !== 0) {
-          this.userLists = [...this.userLists, ...gotLists];
-          this.listsDone = false;
+      if (gotLists.length === 0) {
+          this.listsDone = true;
       } else {
-        this.listsDone = true;
+        this.userLists = [...this.userLists, ...gotLists];
+        // console.log(this.userLists);
+        this.listsDone = false;
       }
 
       if (this.currentUser !== null) {
@@ -122,14 +122,14 @@ export class ListsComponent implements OnInit, OnDestroy {
     });
 
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
-      if (gotLists.length !== 0) {
+      if (gotLists.length === 0) {
+        this.listsDone = true;
+      } else {
         this.followedLists = [...this.followedLists, ...gotLists];
         this.listsDone = false;
         if (this.listType === 'follow') {
           this.displayLists = this.followedLists;
         }
-      } else {
-        this.listsDone = true;
       }
     });
 
@@ -180,33 +180,33 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   onToggle(input:string) {
     if (input === 'all') {
-      this.allLists = [];
       this.listsDone = false;
       this.listType = 'all';
       this.listPageNum = 1;
       this.isLoading = true;
+      this.allLists = [];
       this.listService.getAllLists(this.listPageNum);
       this.displayLists = this.allLists;
       this.isLoading = false;
     }
 
     if (input === 'user') {
-      this.userLists = [];
       this.listsDone = false;
       this.listType = 'user';
       this.listPageNum = 1;
       this.isLoading = true;
+      this.userLists = [];
       this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
       this.displayLists = this.userLists;
       this.isLoading = false;
     }
 
     if (input === 'follow') {
-      this.followedLists = [];
       this.listsDone = false;
       this.listType = 'follow';
       this.listPageNum = 1;
       this.isLoading = true;
+      this.followedLists = [];
       this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum);
       this.displayLists = this.followedLists;
       this.isLoading = false;

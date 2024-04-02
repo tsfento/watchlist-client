@@ -11,6 +11,7 @@ export const routes: Routes = [
   {
     path: 'welcome',
     loadComponent: () => import('./features/auth/login/login.component').then((c) => c.LoginComponent),
+    // TODO uncomment after styling
     // canActivate: [noAuthGuard]
   },
   {
