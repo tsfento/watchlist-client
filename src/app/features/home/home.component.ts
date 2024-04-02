@@ -8,6 +8,7 @@ import { UserWatchTitle } from '../../shared/models/user-watch-title';
 import { UserService } from '../../core/services/user.service';
 import { User } from '../../shared/models/user';
 import { TmdbResponse } from '../../shared/models/tmdbresponse';
+import { DailyQuote } from '../../shared/models/daily-quote';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   gotRecsIndexSub = new Subscription;
   recsIndex:number = 0;
   isLoading:boolean = false;
+
+  dailyQuote:DailyQuote | null = null;
+  dailyQuoteSub = new Subscription;
+  quoteClicked:boolean = false;
 
   nowPlayingMovies:TmdbMovie[] = [];
   nowPlayingMovieIndex:number = 0;
@@ -74,6 +79,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getInitialRecommendations();
       } else {
         this.userService.getUserWatchTitles();
+      }
+    });
+
+    this.dailyQuoteSub = this.titleService.dailyQuoteSubject.subscribe((quote) => {
+      if (quote !== null) {
+        this.dailyQuote = quote;
+      } else {
+        this.titleService.getQuote();
       }
     });
 
@@ -140,6 +153,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     return array;
+  }
+
+  clickQuote() {
+    this.quoteClicked = !this.quoteClicked;
   }
 
   changeIndex(type:string, index:number) {

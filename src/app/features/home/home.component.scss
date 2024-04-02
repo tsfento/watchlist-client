@@ -3,8 +3,59 @@
   color: #f9f9f9;
 }
 
-.movies-container {
+.quote-container {
   margin-top: 86px;
+  height: 100%;
+  position: relative;
+}
+
+.quote {
+  cursor: pointer;
+  position: relative;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out;
+  span {
+    text-align: center;
+    font-size: 40px;
+  }
+}
+
+.quote.active {
+  background-color: #4a5369;
+}
+
+.quote p {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 20px;
+}
+
+.quote:hover {
+  background-color: #4a5369;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.quote-movie {
+  max-height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.quote-movie.active {
+  max-height: 100vh;
+  visibility: visible;
+  opacity: 1;
+}
+
+.movies-container {
+  // margin-top: 86px;
+  margin-top: 20px;
 }
 
 .tv-container {
@@ -39,7 +90,8 @@
   object-fit: cover;
 }
 
-.shelf-details-container {
+.shelf-details-container,
+.quote-movie {
   background-color: #a5abbd;
   color: black;
   width: 100%;

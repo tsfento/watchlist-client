@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { WatchTitleSend } from '../../shared/models/watchtitlesend';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { UserService } from './user.service';
+import { DailyQuote } from '../../shared/models/daily-quote';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +15,8 @@ export class TitleService {
   gotListTitles = new BehaviorSubject<WatchTitle[]>([]);
 
   titleToAddSubject = new BehaviorSubject<WatchTitleSend>(new WatchTitleSend(-1, '', '', '', '', '', -1));
+
+  dailyQuoteSubject = new BehaviorSubject<DailyQuote | null>(null);
 
   constructor(private http:HttpClient, private userService:UserService) { }
 
@@ -94,5 +97,16 @@ export class TitleService {
         console.log(error);
       }
     });
+  }
+
+  getQuote() {
+    this.http.get<DailyQuote[]>(`${environment.apiUrl}/quote`).subscribe({
+      next: (response:DailyQuote[]) => {
+        this.dailyQuoteSubject.next(response[0]);
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    })
   }
 }
