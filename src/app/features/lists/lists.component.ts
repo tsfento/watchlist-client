@@ -75,17 +75,19 @@ export class ListsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.listPageNum = 1;
     this.titlePageNum = 1;
-    for (let i = 0; i < 20; i++) {
-      if (this.listService.allLists[i]) {
-        this.allLists.push(this.listService.allLists[i]);
-      }
-      if (this.listService.userLists[i]) {
-        this.userLists.push(this.listService.userLists[i]);
-      }
-      if (this.listService.followedLists[i]) {
-        this.followedLists.push(this.listService.followedLists[i]);
-      }
-    }
+    // for (let i = 0; i < 20; i++) {
+    //   if (this.listService.allLists[i]) {
+    //     this.allLists.push(this.listService.allLists[i]);
+    //   }
+    //   if (this.listService.userLists[i]) {
+    //     this.userLists.push(this.listService.userLists[i]);
+    //   }
+    //   if (this.listService.followedLists[i]) {
+    //     this.followedLists.push(this.listService.followedLists[i]);
+    //   }
+    // }
+
+    this.listService.getAllLists(this.listPageNum);
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
@@ -186,6 +188,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.allLists = [];
       this.listService.getAllLists(this.listPageNum);
+      this.displayLists = [];
       this.displayLists = this.allLists;
       this.isLoading = false;
     }
@@ -197,6 +200,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.userLists = [];
       this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
+      this.displayLists = [];
       this.displayLists = this.userLists;
       this.isLoading = false;
     }
@@ -208,6 +212,7 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.followedLists = [];
       this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum);
+      this.displayLists = [];
       this.displayLists = this.followedLists;
       this.isLoading = false;
     }
