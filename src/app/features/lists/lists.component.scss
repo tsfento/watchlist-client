@@ -1,7 +1,7 @@
 // toggle bar
 .toggle-bar {
   z-index: 2;
-  background-color: green; // green for testing
+  //background-color: green; // green for testing
   min-height: 40px;
   display: grid;
   width: 60%;
@@ -14,7 +14,6 @@
 }
 
 .toggle-bar.active {
-  // position: sticky;
   top: 66px;
 }
 
@@ -74,6 +73,7 @@ label.nav:hover {
 .search-bar {
   z-index: 5;
   min-height: 40px;
+  padding: 0px 10px;
   display: grid;
   width: 60%;
   overflow: hidden;
@@ -157,6 +157,7 @@ label.nav:hover {
 .new-list-bar {
   z-index: 1;
   min-height: 40px;
+  padding: 0px 10px;
   display: grid;
   width: 60%;
   overflow: hidden;
@@ -169,8 +170,8 @@ label.nav:hover {
 }
 
 .new-list-bar.active {
-  position: sticky;
-  width: 100%;
+  // position: sticky;
+  // width: 100%;
   top: 120px;
 }
 
@@ -184,7 +185,7 @@ label.nav:hover {
 
 .new-list-bar label {
   color: #f5f5f5;
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 1.5rem;
   margin-left: 10px;
 }
@@ -208,7 +209,7 @@ label.nav:hover {
   height: 40px;
   margin-top: 10px;
   margin-left: 10px;
-  width: 40px;
+  width: 50px;
   border: none;
   font-size: 1.5rem;
   color: #f5f5f5;
@@ -230,7 +231,7 @@ label.nav:hover {
 
 // lists css
 .list-grid {
-  margin-top: 111px;
+  margin-top: 166px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
   // TODO move justify center to media query
@@ -415,3 +416,19 @@ label.nav:hover {
   }
 }
 // end titles css
+
+@media screen and (max-width: 1200px) {
+  .toggle-bar,
+  .new-list-bar,
+  .search-bar {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .toggle-bar,
+  .new-list-bar,
+  .search-bar {
+    width: 100%;
+  }
+}

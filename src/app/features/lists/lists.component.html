@@ -25,19 +25,19 @@
   </button>
 </div>
 <!-- end list toggle bar -->
+<div class="new-list-bar" [class.active]="!isViewingTitles && currentUser !== null">
+  <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList(); user_toggle.checked = true;">
+      <input type="text" formControlName="title" placeholder="Create a new list...">
+      <label for="private">Private?</label>
+      <input type="checkbox" formControlName="private">
+      <button type="submit" class="btn-new-list" [disabled]="!newListForm.valid">
+        <span class="material-symbols-outlined">
+          add
+        </span>
+      </button>
+  </form>
+</div>
 @if (!isViewingTitles) {
-  <div class="new-list-bar" [class.active]="isUserLists && currentUser !== null">
-    <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList(); user_toggle.checked = true;">
-        <input type="text" formControlName="title" placeholder="Create a new list...">
-        <label for="private">Private?</label>
-        <input type="checkbox" formControlName="private">
-        <button type="submit" class="btn-new-list" [disabled]="!newListForm.valid">
-          <span class="material-symbols-outlined">
-            add
-          </span>
-        </button>
-    </form>
-  </div>
   <div class="list-grid" [class.no-user]="currentUser === null">
     <!-- list -->
     @for (list of displayLists; track $index) {
