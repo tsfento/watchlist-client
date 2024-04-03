@@ -102,7 +102,9 @@ export class TitleService {
   getQuote() {
     this.http.get<DailyQuote[]>(`${environment.apiUrl}/quote`).subscribe({
       next: (response:DailyQuote[]) => {
-        this.dailyQuoteSubject.next(response[0]);
+        if (response.length !== 0) {
+          this.dailyQuoteSubject.next(response[0]);
+        }
       },
       error: (error:any) => {
         console.log(error);
