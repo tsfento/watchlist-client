@@ -43,6 +43,6 @@
 
 @media (hover:none) {
   .app-container {
-    // background-color: green;
+    grid-template-columns: 0% 100% 0%;
   }
 }

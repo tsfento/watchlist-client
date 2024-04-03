@@ -27,13 +27,6 @@
   background-color: #4a5369;
 }
 
-.quote p {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 20px;
-}
-
 .quote:hover {
   background-color: #4a5369;
   transition: background-color 0.3s ease-in-out;
@@ -211,5 +204,49 @@
     font-weight: bold;
     color: #f5f5f5;
     opacity: 25%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .quote {
+    span {
+      font-size: 30px;
+    }
+  }
+
+  .shelf {
+    height: 354px;
+  }
+
+  .details-header {
+    .title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .drawer a img {
+    height: 182px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .quote {
+    span {
+      font-size: 25px;
+    }
+  }
+
+  .shelf {
+    height: 266px;
+  }
+
+  .details-header {
+    .title {
+      font-size: 2rem;
+    }
+  }
+
+  .drawer a img {
+    height: 136px;
   }
 }
