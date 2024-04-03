@@ -209,7 +209,7 @@ label.nav:hover {
   height: 40px;
   margin-top: 10px;
   margin-left: 10px;
-  width: 50px;
+  min-width: 50px;
   border: none;
   font-size: 1.5rem;
   color: #f5f5f5;
@@ -423,6 +423,28 @@ label.nav:hover {
   .search-bar {
     width: 80%;
   }
+
+  label.nav {
+    font-size: 18px;
+  }
+
+  .new-list-bar input[type=text] {
+    font-size: 18px;
+  }
+
+  .new-list-bar label {
+    margin-top: 15px;
+    font-size: 1.2rem;
+  }
+
+  .list-grid {
+    grid-template-columns: 440px;
+    justify-content: center;
+  }
+
+  .list-container {
+    width: 440px;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -430,5 +452,22 @@ label.nav:hover {
   .new-list-bar,
   .search-bar {
     width: 100%;
+  }
+
+  label.nav {
+    font-size: 16px;
+  }
+
+  .new-list-bar input[type=text] {
+    font-size: 16px;
+  }
+
+  .list-grid {
+    grid-template-columns: 330px;
+    justify-content: center;
+  }
+
+  .list-container {
+    width: 330px;
   }
 }

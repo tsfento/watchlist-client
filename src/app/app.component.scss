@@ -1,32 +1,6 @@
 .app-container {
-  // background-color: #252e42;
-  // display: flex;
-  // grid-template-areas: 'gutter main gutter';
-  // grid-template-columns: 20% 60% 20%;
-  // justify-content: space-between;
-  // width: 100%;
-  // height: 100vh;
   display: grid;
-  // grid-template-columns: 1fr 3fr 1fr;
   grid-template-columns: 20% 60% 20%;
-}
-
-.gutter {
-  // grid-area: 'gutter';
-  // width: 20%;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-}
-
-.main {
-  // grid-area: 'main';
-  // width: 60%;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // min-height: 40vh;
 }
 
 @media screen and (max-width: 1200px) {
@@ -43,6 +17,6 @@
 
 @media (hover:none) {
   .app-container {
-    grid-template-columns: 0% 100% 0%;
+    // grid-template-columns: 0% 100% 0%;
   }
 }
