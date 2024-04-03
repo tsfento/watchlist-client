@@ -134,3 +134,25 @@
     opacity: 25%;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .search-bar {
+    width: 80%;
+    scale: 80%;
+  }
+
+  .search-bar input {
+    width: 35%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .search-bar {
+    width: 100%;
+    scale: 60%;
+  }
+
+  .search-bar input {
+    width: 45%;
+  }
+}

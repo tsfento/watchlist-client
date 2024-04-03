@@ -17,29 +17,29 @@
 
   <div class="btn-container">
     @if (isLoggedIn()) {
-      <a class="nav-btn" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
+      <a class="nav-btn hover-btn" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
         <span class="material-symbols-outlined icon-btn">
           home
         </span>
       </a>
-      <a class="nav-btn" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
+      <a class="nav-btn hover-btn" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
         <span class="material-symbols-outlined icon-btn">
           list_alt
         </span>
       </a>
-      <a class="nav-btn nav-btn-calendar" routerLinkActive="active" title="Watch History" routerLink="/history" (click)="clearSearch()">
+      <a class="nav-btn nav-btn-calendar hover-btn" routerLinkActive="active" title="Watch History" routerLink="/history" (click)="clearSearch()">
         <span class="material-symbols-outlined icon-btn">
           calendar_month
         </span>
       </a>
       <a class="nav-btn nav-btn-text" (click)="logout()">Logout</a>
     } @else {
-      <a class="nav-btn" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">
+      <a class="nav-btn hover-btn" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">
         <span class="material-symbols-outlined icon-btn">
           home
         </span>
       </a>
-      <a class="nav-btn" title="Lists" routerLinkActive="active" routerLink="/lists">
+      <a class="nav-btn hover-btn" title="Lists" routerLinkActive="active" routerLink="/lists">
         <span class="material-symbols-outlined icon-btn">
           list_alt
         </span>
