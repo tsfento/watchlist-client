@@ -181,6 +181,27 @@
   color: #3c91f9;
 }
 
+.mobile-search-bar {
+  z-index: 50;
+  min-height: 40px;
+  padding: 0px 10px;
+  width: 100%;
+  position: fixed;
+  bottom: -60px;
+  transition: bottom 0.5s ease;
+}
+
+.mobile-search-bar input {
+  height: 40px;
+  padding: 0 0.5em;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.mobile-search-bar.active {
+  bottom: 70px;
+}
+
 @media screen and (max-width: 1200px) {
   .navbar {
     width: 80%;

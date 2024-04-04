@@ -67,7 +67,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   clickedMobileSearch() {
     this.mobileSearchActive = !this.mobileSearchActive;
-    console.log(this.mobileSearchActive);
   }
 
   onRoute(route:string) {
