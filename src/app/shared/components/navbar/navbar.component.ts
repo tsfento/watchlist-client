@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { User } from '../../models/user';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { UserService } from '../../../core/services/user.service';
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchElement:HTMLInputElement | null = null;
   searchSubject = new BehaviorSubject<string>('');
 
-  constructor(public router:Router, public route:ActivatedRoute, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService) {}
+  constructor(public router:Router, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService) {}
 
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {

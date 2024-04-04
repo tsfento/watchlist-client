@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
       if (user_watch_titles !== null && user_watch_titles.length !== 0) {
         this.currentUserWatchTitles = user_watch_titles;
-        console.log(this.currentUserWatchTitles);
+        // console.log(this.currentUserWatchTitles);
       } else {
         this.userService.getUserWatchTitles();
       }
