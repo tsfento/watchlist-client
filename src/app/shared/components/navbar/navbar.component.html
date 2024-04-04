@@ -65,7 +65,7 @@
       </span>
     </a>
   </div>
-  <div class="mobile-search" [class.active]="mobileSearchActive">
+  <div class="mobile-search" [class.active]="mobileSearchActive || this.router.url === '/search'">
     <a class="mobile-nav-btn mobile-nav-btn-search" [class.mobile-active]="mobileSearchActive" title="Search" (click)="clearSearch(); clickedMobileSearch()">
       <span class="material-symbols-outlined">
         search
@@ -82,6 +82,6 @@
 </div>
 
 <div class="mobile-search-bar" [class.active]="mobileSearchActive">
-  <input type="search" class="mobile-nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
+  <input type="search" class="mobile-nav-search-input" placeholder="Search for a title..." #mobileSearchInput (keyup.enter)="onSearch(mobileSearchInput)">
 </div>
 <!-- end mobile nav -->

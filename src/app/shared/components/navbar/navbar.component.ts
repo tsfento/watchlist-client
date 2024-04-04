@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchElement:HTMLInputElement | null = null;
   searchSubject = new BehaviorSubject<string>('');
 
-  constructor(public router:Router, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService) {}
+  constructor(public router:Router, public route:ActivatedRoute, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService) {}
 
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
@@ -55,6 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onSearch(search:HTMLInputElement) {
     this.searchElement = search;
+    this.mobileSearchActive = false;
 
     if (search.value) {
       this.tmdbService.setSearch(search.value);
