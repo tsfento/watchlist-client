@@ -148,8 +148,6 @@
   // padding: 10px 0;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-home,
@@ -222,23 +220,23 @@
 }
 
 // @media (hover:none) {
-// @media not all and (hover:none) {
-//   .nav-search-bar,
-//   .hover-btn {
-//     display: none;
-//   }
-//   .mobile-navbar {
-//     display: grid;
-//   }
+@media not all and (hover:none) {
+  .nav-search-bar,
+  .hover-btn {
+    display: none;
+  }
+  .mobile-navbar {
+    display: grid;
+  }
 
-//   .mobile-home,
-//   .mobile-lists,
-//   .mobile-search,
-//   .mobile-history,
-//   .mobile-search-bar {
-//     display: block;
-//   }
-// }
+  .mobile-home,
+  .mobile-lists,
+  .mobile-search,
+  .mobile-history,
+  .mobile-search-bar {
+    display: block;
+  }
+}
 
 @media (pointer:coarse) and (hover:none) {
   .nav-search-bar,
