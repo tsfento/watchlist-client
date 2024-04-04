@@ -17,6 +17,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
 
+  mobileSearchActive:boolean = false;
+
   isSearching:boolean = false;
   searchElement:HTMLInputElement | null = null;
   searchSubject = new BehaviorSubject<string>('');
@@ -61,6 +63,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.router.navigate(['/search']);
       }
     }
+  }
+
+  clickedMobileSearch() {
+    this.mobileSearchActive = !this.mobileSearchActive;
+    console.log(this.mobileSearchActive);
   }
 
   onRoute(route:string) {

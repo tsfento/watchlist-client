@@ -48,3 +48,36 @@
     }
   </div>
 </div>
+
+<!-- mobile nav -->
+<div class="mobile-navbar">
+  <div class="mobile-home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <a class="mobile-nav-btn mobile-nav-btn-home" routerLinkActive="mobile-active" [routerLinkActiveOptions]="{exact: true}" title="Home" routerLink="/" (click)="clearSearch()">
+      <span class="material-symbols-outlined icon-btn">
+        home
+      </span>
+    </a>
+  </div>
+  <div class="mobile-lists" routerLinkActive="active">
+    <a class="mobile-nav-btn mobile-nav-btn-lists" routerLinkActive="mobile-active" title="Lists" routerLink="/lists" (click)="clearSearch()">
+      <span class="material-symbols-outlined icon-btn">
+        list_alt
+      </span>
+    </a>
+  </div>
+  <div class="mobile-search" [class.active]="mobileSearchActive">
+    <a class="mobile-nav-btn mobile-nav-btn-search" [class.mobile-active]="mobileSearchActive" title="Search" (click)="clearSearch(); clickedMobileSearch()">
+      <span class="material-symbols-outlined icon-btn">
+        search
+      </span>
+    </a>
+  </div>
+  <div class="mobile-history" routerLinkActive="active">
+    <a class="mobile-nav-btn mobile-nav-btn-calendar" routerLinkActive="mobile-active" title="Watch History" routerLink="/history" (click)="clearSearch()">
+      <span class="material-symbols-outlined icon-btn">
+        calendar_month
+      </span>
+    </a>
+  </div>
+</div>
+<!-- end mobile nav -->
