@@ -233,3 +233,21 @@
     display: block;
   }
 }
+
+@media (pointer: coarse) and (hover: none) {
+  .nav-search-bar,
+  .hover-btn {
+    display: none;
+  }
+  .mobile-navbar {
+    display: grid;
+  }
+
+  .mobile-home,
+  .mobile-lists,
+  .mobile-search,
+  .mobile-history,
+  .mobile-search-bar {
+    display: block;
+  }
+}
