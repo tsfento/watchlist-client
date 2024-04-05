@@ -335,16 +335,18 @@ export class ListsComponent implements OnInit, OnDestroy {
   setRating(rating:boolean, title:TmdbMovie) {
     const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
+    console.log(userWatchTitle);
+
     if (userWatchTitle !== undefined) {
       if (userWatchTitle!.rating === rating) {
-        this.titleService.setTitleRating(this.currentUser!.username, title, null);
+        this.titleService.setTitleRating(this.currentUser!.username, title, null, false, title.tmdb_id);
         userWatchTitle!.rating = null;
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, false, title.tmdb_id);
         userWatchTitle!.rating = rating;
       }
     } else {
-      this.titleService.setTitleRating(this.currentUser!.username, title, rating, true);
+      this.titleService.setTitleRating(this.currentUser!.username, title, rating, true, title.tmdb_id);
     }
   }
 
