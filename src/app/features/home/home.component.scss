@@ -1,8 +1,10 @@
 .home-container {
   margin-top: 56px;
   color: #f9f9f9;
+  margin-bottom: 50px;
 }
 
+// quote
 .quote-container {
   margin-top: 86px;
   height: 100%;
@@ -16,6 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #252e42;
   transition: background-color 0.3s ease-in-out;
   span {
     text-align: center;
@@ -25,6 +28,14 @@
 
 .quote.active {
   background-color: #4a5369;
+}
+
+.quote.quote.is-mobile.active {
+  background-color: #4a5369;
+}
+
+.quote.is-mobile:hover {
+  background-color: #252e42;
 }
 
 .quote:hover {
@@ -45,7 +56,9 @@
   visibility: visible;
   opacity: 1;
 }
+// end quote
 
+// movies
 .movies-container {
   // margin-top: 86px;
   margin-top: 20px;
@@ -92,13 +105,17 @@
 
 .shelf-details {
   margin: 0px 20px;
-  display: grid;
-  grid-template-rows: 80px 1fr 80px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.shelf-details div:last-of-type {
+  margin-top: auto;
 }
 
 .details-header {
   display: grid;
-  grid-template-rows: 64px 16px;
   .title {
     font-size: 3rem;
     font-weight: bold;
@@ -108,9 +125,6 @@
     font-size: 3rem;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.70);
-  }
-  .sub-title {
-    margin-left: 10px;
   }
 }
 
@@ -129,6 +143,7 @@
 .details-actions {
   display: flex;
   flex-direction: row;
+  justify-content:space-evenly;
 }
 
 .details-actions a {
@@ -207,11 +222,15 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
   .quote {
     span {
       font-size: 30px;
     }
+  }
+
+  .box-header {
+    font-size: 35px;
   }
 
   .shelf {
@@ -229,11 +248,16 @@
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .quote {
+    padding: 10px;
     span {
       font-size: 25px;
     }
+  }
+
+  .box-header {
+    font-size: 30px;
   }
 
   .shelf {
@@ -248,5 +272,69 @@
 
   .drawer a img {
     height: 136px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .quote {
+    span {
+      font-size: 5vw;
+    }
+  }
+
+  .box-header {
+    font-size: 24px;
+  }
+
+  .shelf {
+    height: 200px;
+  }
+
+  .shelf-details {
+    margin: 0px 10px;
+  }
+
+  .details-header {
+    margin-top: 5px;
+    .title {
+      // font-size: 1.25rem;
+      font-size: 5vw;
+      line-height: 1;
+    }
+    .year {
+      font-size: 5vw;
+      line-height: 1;
+    }
+  }
+
+  .runtime {
+    // font-size: 0.75rem;
+    font-size: 3vw;
+    // text-align: center;
+  }
+
+  .details-overview {
+    margin-top: 0px;
+    // font-size: 0.625rem;
+    font-size: 2.75vw;
+    .overview-header {
+      // font-size: 0.75rem;
+      font-size: 3vw;
+    }
+  }
+
+  .details-actions {
+    // font-size: 0.625rem;
+    font-size: 2.5vw;
+    margin-bottom: 10px;
+  }
+
+  .pos-rating-btn,
+  .neg-rating-btn {
+    font-size: 0.75rem;
+  }
+
+  .drawer a img {
+    height: 102px;
   }
 }

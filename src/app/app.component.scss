@@ -3,20 +3,20 @@
   grid-template-columns: 20% 60% 20%;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
   .app-container {
     grid-template-columns: 10% 80% 10%;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .app-container {
     grid-template-columns: 0% 100% 0%;
   }
 }
 
-@media (hover:none) {
-  .app-container {
-    // grid-template-columns: 0% 100% 0%;
-  }
-}
+// @media (hover:none) {
+//   .app-container {
+//     grid-template-columns: 0% 100% 0%;
+//   }
+// }

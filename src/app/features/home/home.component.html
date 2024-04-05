@@ -1,7 +1,7 @@
 <div class="home-container">
   <div class="quote-container">
     @if (dailyQuote !== null && dailyQuote.watch_title !== null) {
-      <div class="quote" (click)="clickQuote()" [class.active]="quoteClicked">
+      <div class="quote" (click)="clickQuote()" [class.active]="quoteClicked" [class.is-mobile]="isMobile()">
         <span>"{{ dailyQuote.quote }}"</span>
       </div>
       <div class="quote-movie" [class.active]="quoteClicked">
@@ -11,7 +11,7 @@
             <div class="shelf-details">
               <div class="details-header">
                 <span><span class="title">{{ dailyQuote.watch_title.title }}</span><span class="year"> ({{ dailyQuote.watch_title.release_date | date:'yyyy' }})</span></span>
-                <span><span class="sub-title">Starring: So-and-so</span><span>{{ !dailyQuote.watch_title.runtime || dailyQuote.watch_title.runtime === 0 ? 'No runtime available' : dailyQuote.watch_title.runtime + ' minutes'  }}</span></span>
+                <span>{{ !dailyQuote.watch_title.runtime || dailyQuote.watch_title.runtime === 0 ? 'No runtime available' : dailyQuote.watch_title.runtime + ' minutes'  }}</span>
               </div>
               <div class="details-overview">
                 <span class="overview-header">Overview</span>
@@ -49,8 +49,8 @@
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-header">
-                    <span><span class="title">{{ nPMovie.title ? nPMovie.title : nPMovie.original_name }}</span><span class="year"> ({{ nPMovie.release_date | date:'yyyy' }})</span></span>
-                    <span><span class="sub-title">Starring: So-and-so</span><span>{{ !nPMovie.runtime || nPMovie.runtime === 0 ? 'No runtime available' : nPMovie.runtime + ' minutes'  }}</span></span>
+                    <span class="title">{{ nPMovie.title ? nPMovie.title : nPMovie.original_name }} <span class="year">({{ nPMovie.release_date | date:'yyyy' }})</span></span>
+                    <span class="runtime">{{ !nPMovie.runtime || nPMovie.runtime === 0 ? 'No runtime available' : nPMovie.runtime + ' minutes'  }}</span>
                   </div>
                   <div class="details-overview">
                     <span class="overview-header">Overview</span>
