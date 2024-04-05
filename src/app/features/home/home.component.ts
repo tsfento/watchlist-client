@@ -7,7 +7,6 @@ import { TitleService } from '../../core/services/title.service';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
 import { UserService } from '../../core/services/user.service';
 import { User } from '../../shared/models/user';
-import { TmdbResponse } from '../../shared/models/tmdbresponse';
 import { DailyQuote } from '../../shared/models/daily-quote';
 
 @Component({

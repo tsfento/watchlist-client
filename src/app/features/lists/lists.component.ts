@@ -8,6 +8,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { UserService } from '../../core/services/user.service';
 import { User } from '../../shared/models/user';
 import { Subscription } from 'rxjs';
+import { UserWatchTitle } from '../../shared/models/user-watch-title';
+import { TmdbMovie } from '../../shared/models/tmdbmovie';
 
 @Component({
   selector: 'app-lists',
@@ -19,6 +21,9 @@ import { Subscription } from 'rxjs';
 export class ListsComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
+  currentUserWatchTitles:UserWatchTitle[] | null = null;
+  currentUserWatchTitlesSub = new Subscription;
+
   newListForm:FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     private: new FormControl(false, Validators.required)
@@ -51,7 +56,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   gotFollowedListsSub = new Subscription;
   gotTitlesSub = new Subscription;
 
-  constructor(private listService:ListService, private titleService:TitleService, private userService:UserService) {}
+  constructor(private listService:ListService, public titleService:TitleService, private userService:UserService) {}
 
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
@@ -91,6 +96,14 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+    });
+
+    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
+      if (user_watch_titles !== null && user_watch_titles.length !== 0) {
+        this.currentUserWatchTitles = user_watch_titles;
+      } else {
+        this.userService.getUserWatchTitles();
+      }
     });
 
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
@@ -154,6 +167,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotUserListsSub.unsubscribe();
     this.gotFollowedListsSub.unsubscribe();
     this.gotTitlesSub.unsubscribe();
+    this.currentUserWatchTitlesSub.unsubscribe();
   }
 
   createNewList() {
@@ -293,6 +307,45 @@ export class ListsComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     })
+  }
+
+  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
+    if (this.currentUserWatchTitles !== null) {
+      const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === tmdbId);
+
+      return userWatchTitle;
+    } else {
+      return;
+    }
+  }
+
+  setTitleWatched(title:TmdbMovie) {
+    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+
+    console.log(userWatchTitle);
+
+    if (userWatchTitle !== undefined) {
+      this.titleService.setTitleWatched(this.currentUser!.username, title, false, title.tmdb_id);
+      userWatchTitle.watched = !userWatchTitle.watched;
+    } else {
+      this.titleService.setTitleWatched(this.currentUser!.username, title, true, title.tmdb_id);
+    }
+  }
+
+  setRating(rating:boolean, title:TmdbMovie) {
+    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+
+    if (userWatchTitle !== undefined) {
+      if (userWatchTitle!.rating === rating) {
+        this.titleService.setTitleRating(this.currentUser!.username, title, null);
+        userWatchTitle!.rating = null;
+      } else {
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating);
+        userWatchTitle!.rating = rating;
+      }
+    } else {
+      this.titleService.setTitleRating(this.currentUser!.username, title, rating, true);
+    }
   }
 
   deleteList(listId:number, listIndex:number, username:string) {

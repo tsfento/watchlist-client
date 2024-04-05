@@ -54,9 +54,18 @@ export class TitleService {
     ));
   }
 
-  setTitleWatched(username:string, title:TmdbMovie, getUserWatchTitles:boolean = false) {
+  setTitleWatched(username:string, title:TmdbMovie, getUserWatchTitles:boolean = false, tmdbId?:number) {
+    let id:number = 0;
+
+    if (tmdbId) {
+      id = tmdbId;
+    } else {
+      id = title.id;
+    }
+
     this.http.post(`${environment.apiUrl}/users/${username}/set_watched`, {
-      tmdb_id: title.id,
+      // tmdb_id: title.id,
+      tmdb_id: id,
       imdb_id: title.imdb_id,
       poster_path: title.poster_path,
       title: title.title,
@@ -76,9 +85,17 @@ export class TitleService {
     });
   }
 
-  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, getUserWatchTitles:boolean = false) {
+  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, getUserWatchTitles:boolean = false, tmdbId?:number) {
+    let id:number = 0;
+
+    if (tmdbId) {
+      id = tmdbId;
+    } else {
+      id = title.id;
+    }
+
     this.http.post(`${environment.apiUrl}/users/${username}/set_rating`, {
-      tmdb_id: title.id,
+      tmdb_id: id,
       imdb_id: title.imdb_id,
       poster_path: title.poster_path,
       title: title.title,

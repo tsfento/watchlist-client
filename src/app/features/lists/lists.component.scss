@@ -394,9 +394,75 @@ label.nav:hover {
 
 .title-details {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   color: black;
   background-color: #a5abbd;
+}
+
+.title-details div:last-of-type {
+  margin-top: auto;
+}
+
+.title-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.title-info {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 20px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.title-actions {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  justify-items: center;
+}
+
+.title-btn {
+  padding: 10px;
+  background-color: #3c91f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 100px;
+  color: #f9f9f9;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.title-btn:hover {
+  background-color: #00b5ff;
+}
+
+.rating-btn-container {
+  margin: auto;
+}
+
+.neg-rating-btn,
+.pos-rating-btn {
+  margin-top: 10px;
+  color: #4a5369;
+  transition: color 0.3s ease-in-out;
+}
+
+.pos-rating-btn:hover, .pos-rating-btn.active {
+  color: limegreen;
+  text-shadow: #1d811d 1px 1px;
+  font-variation-settings: 'FILL' 1;
+}
+
+.neg-rating-btn:hover, .neg-rating-btn.active {
+  color: crimson;
+  text-shadow: #874150 1px 1px;
+  font-variation-settings: 'FILL' 1;
 }
 
 .no-poster {
@@ -417,7 +483,7 @@ label.nav:hover {
 }
 // end titles css
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
   .toggle-bar,
   .new-list-bar,
   .search-bar {
@@ -438,16 +504,16 @@ label.nav:hover {
   }
 
   .list-grid {
-    grid-template-columns: 440px;
     justify-content: center;
   }
 
-  .list-container {
-    width: 440px;
+  .titles-grid {
+    // grid-template-columns: 440px;
+    justify-content: center;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
   .toggle-bar,
   .new-list-bar,
   .search-bar {
@@ -463,11 +529,40 @@ label.nav:hover {
   }
 
   .list-grid {
+    justify-content: center;
+  }
+
+  .titles-grid {
+    justify-content: center;
+  }
+
+  .title-poster {
+    margin: 10px;
+    img {
+      height: 102px;
+    }
+  }
+
+  .title-actions {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .list-grid {
     grid-template-columns: 330px;
     justify-content: center;
   }
 
   .list-container {
     width: 330px;
+  }
+
+  .titles-grid {
+    justify-content: center;
+  }
+
+  .title-container {
+    width: 100%;
   }
 }
