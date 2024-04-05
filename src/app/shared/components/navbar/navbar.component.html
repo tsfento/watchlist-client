@@ -1,87 +1,89 @@
-<div class="navbar">
-  <div class="branding">
-    <a routerLink="/" (click)="clearSearch()">WeWatch</a>
+<div class="wrapper">
+  <div class="navbar">
+    <div class="branding">
+      <a routerLink="/" (click)="clearSearch()">WeWatch</a>
+    </div>
+
+    @if (isLoggedIn()) {
+      <div class="nav-search-bar" [class.is-mobile]="isMobile()">
+        <input type="search" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
+        <!-- <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)"> -->
+        <button type="submit" class="nav-search-submit">
+          <span class="material-symbols-outlined icon-btn">
+            search
+          </span>
+        </button>
+      </div>
+    }
+
+    <div class="btn-container">
+      @if (isLoggedIn()) {
+        <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
+          <span class="material-symbols-outlined icon-btn">
+            home
+          </span>
+        </a>
+        <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
+          <span class="material-symbols-outlined icon-btn">
+            list_alt
+          </span>
+        </a>
+        <a class="nav-btn nav-btn-calendar hover-btn" [class.is-mobile]="isMobile()" routerLinkActive="active" title="Watch History" routerLink="/history" (click)="clearSearch()">
+          <span class="material-symbols-outlined icon-btn">
+            calendar_month
+          </span>
+        </a>
+        <a class="nav-btn nav-btn-text" (click)="logout()">Logout</a>
+      } @else {
+        <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">
+          <span class="material-symbols-outlined icon-btn">
+            home
+          </span>
+        </a>
+        <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists">
+          <span class="material-symbols-outlined icon-btn">
+            list_alt
+          </span>
+        </a>
+        <a class="nav-btn nav-btn-text" routerLinkActive="active" routerLink="/welcome">Login/Sign Up</a>
+      }
+    </div>
   </div>
 
-  @if (isLoggedIn()) {
-    <div class="nav-search-bar" [class.is-mobile]="isMobile()">
-      <input type="search" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
-      <!-- <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)"> -->
-      <button type="submit" class="nav-search-submit">
-        <span class="material-symbols-outlined icon-btn">
-          search
-        </span>
-      </button>
-    </div>
-  }
-
-  <div class="btn-container">
-    @if (isLoggedIn()) {
-      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
-        <span class="material-symbols-outlined icon-btn">
+  <!-- mobile nav -->
+  <div class="mobile-navbar" [class.is-mobile]="isMobile()">
+    <div class="mobile-home" [class.is-mobile]="isMobile()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a class="mobile-nav-btn mobile-nav-btn-home" routerLinkActive="mobile-active" [routerLinkActiveOptions]="{exact: true}" title="Home" routerLink="/" (click)="clearSearch()">
+        <span class="material-symbols-outlined">
           home
         </span>
       </a>
-      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
-        <span class="material-symbols-outlined icon-btn">
+    </div>
+    <div class="mobile-lists" [class.is-mobile]="isMobile()" routerLinkActive="active">
+      <a class="mobile-nav-btn mobile-nav-btn-lists" routerLinkActive="mobile-active" title="Lists" routerLink="/lists" (click)="clearSearch()">
+        <span class="material-symbols-outlined">
           list_alt
         </span>
       </a>
-      <a class="nav-btn nav-btn-calendar hover-btn" [class.is-mobile]="isMobile()" routerLinkActive="active" title="Watch History" routerLink="/history" (click)="clearSearch()">
-        <span class="material-symbols-outlined icon-btn">
+    </div>
+    <div class="mobile-search" [class.is-mobile]="isMobile()" [class.active]="mobileSearchActive || this.router.url === '/search'">
+      <a class="mobile-nav-btn mobile-nav-btn-search" [class.mobile-active]="mobileSearchActive" title="Search" (click)="clearSearch(); clickedMobileSearch()">
+        <span class="material-symbols-outlined">
+          search
+        </span>
+      </a>
+    </div>
+    <div class="mobile-history" [class.is-mobile]="isMobile()" routerLinkActive="active">
+      <a class="mobile-nav-btn mobile-nav-btn-calendar" routerLinkActive="mobile-active" title="Watch History" routerLink="/history" (click)="clearSearch()">
+        <span class="material-symbols-outlined">
           calendar_month
         </span>
       </a>
-      <a class="nav-btn nav-btn-text" (click)="logout()">Logout</a>
-    } @else {
-      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">
-        <span class="material-symbols-outlined icon-btn">
-          home
-        </span>
-      </a>
-      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists">
-        <span class="material-symbols-outlined icon-btn">
-          list_alt
-        </span>
-      </a>
-      <a class="nav-btn nav-btn-text" routerLinkActive="active" routerLink="/welcome">Login/Sign Up</a>
-    }
+    </div>
   </div>
-</div>
 
-<!-- mobile nav -->
-<div class="mobile-navbar" [class.is-mobile]="isMobile()">
-  <div class="mobile-home" [class.is-mobile]="isMobile()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-    <a class="mobile-nav-btn mobile-nav-btn-home" routerLinkActive="mobile-active" [routerLinkActiveOptions]="{exact: true}" title="Home" routerLink="/" (click)="clearSearch()">
-      <span class="material-symbols-outlined">
-        home
-      </span>
-    </a>
+  <div class="mobile-search-bar" [class.is-mobile]="isMobile()" [class.active]="mobileSearchActive">
+    <input type="search" class="mobile-nav-search-input" placeholder="Search for a title..." #mobileSearchInput (keyup.enter)="onSearch(mobileSearchInput)">
   </div>
-  <div class="mobile-lists" [class.is-mobile]="isMobile()" routerLinkActive="active">
-    <a class="mobile-nav-btn mobile-nav-btn-lists" routerLinkActive="mobile-active" title="Lists" routerLink="/lists" (click)="clearSearch()">
-      <span class="material-symbols-outlined">
-        list_alt
-      </span>
-    </a>
-  </div>
-  <div class="mobile-search" [class.is-mobile]="isMobile()" [class.active]="mobileSearchActive || this.router.url === '/search'">
-    <a class="mobile-nav-btn mobile-nav-btn-search" [class.mobile-active]="mobileSearchActive" title="Search" (click)="clearSearch(); clickedMobileSearch()">
-      <span class="material-symbols-outlined">
-        search
-      </span>
-    </a>
-  </div>
-  <div class="mobile-history" [class.is-mobile]="isMobile()" routerLinkActive="active">
-    <a class="mobile-nav-btn mobile-nav-btn-calendar" routerLinkActive="mobile-active" title="Watch History" routerLink="/history" (click)="clearSearch()">
-      <span class="material-symbols-outlined">
-        calendar_month
-      </span>
-    </a>
-  </div>
+  <!-- end mobile nav -->
 </div>
-
-<div class="mobile-search-bar" [class.is-mobile]="isMobile()" [class.active]="mobileSearchActive">
-  <input type="search" class="mobile-nav-search-input" placeholder="Search for a title..." #mobileSearchInput (keyup.enter)="onSearch(mobileSearchInput)">
-</div>
-<!-- end mobile nav -->
