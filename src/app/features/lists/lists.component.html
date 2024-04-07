@@ -130,7 +130,7 @@
                 thumb_up
               </span></a>
             </div>
-            <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title)" [class.is-mobile]="isMobile()">Add Watch Date</a>
+            <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title, title.tmdb_id)" [class.is-mobile]="isMobile()">Add Watch Date</a>
           </div>
         </div>
       }

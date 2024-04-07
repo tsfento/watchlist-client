@@ -6,6 +6,7 @@ import { DatePipe, KeyValue, KeyValuePipe } from '@angular/common';
 import { TitleService } from '../../core/services/title.service';
 import { User } from '../../shared/models/user';
 import { UserWatchTitle } from '../../shared/models/user-watch-title';
+import { TmdbMovie } from '../../shared/models/tmdbmovie';
 
 @Component({
   selector: 'app-watch-dates',
@@ -37,6 +38,10 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+
+      if (this.currentUser !== null) {
+        this.userService.getUserWatchDates();
+      }
     });
 
     this.watchDatesSub = this.userService.watchDatesBehaviorSubject.subscribe((dates) => {
@@ -54,6 +59,13 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
     this.watchDatesSub.unsubscribe();
   }
 
+  isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // return true;
+    // return false;
+  }
+
+
   getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
@@ -61,6 +73,37 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
       return userWatchTitle;
     } else {
       return;
+    }
+  }
+
+  setTitleWatched(title:TmdbMovie) {
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+
+      if (userWatchTitle !== undefined) {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, title.tmdb_id);
+        userWatchTitle.watched = !userWatchTitle.watched;
+      } else {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, title.tmdb_id);
+      }
+    }
+  }
+
+  setRating(rating:boolean, title:TmdbMovie) {
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+    const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+
+      if (userWatchTitle !== undefined) {
+        if (userWatchTitle!.rating === rating) {
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, title.tmdb_id);
+          userWatchTitle!.rating = null;
+        } else {
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, title.tmdb_id);
+          userWatchTitle!.rating = rating;
+        }
+      } else {
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, title.tmdb_id);
+      }
     }
   }
 

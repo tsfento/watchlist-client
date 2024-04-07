@@ -16,6 +16,7 @@ export class TitleService {
   gotListTitles = new BehaviorSubject<WatchTitle[]>([]);
 
   titleToAddSubject = new BehaviorSubject<WatchTitleSend>(new WatchTitleSend(-1, '', '', '', '', '', -1));
+  titleTmdbId:number = 0;
 
   dailyQuoteSubject = new BehaviorSubject<DailyQuote | null>(null);
 
@@ -43,9 +44,15 @@ export class TitleService {
     this.gotListTitles.next(this.listTitles.slice());
   }
 
-  setTitleToAdd(title:TmdbMovie) {
+  setTitleToAdd(title:TmdbMovie, tmdbId?:number) {
+    if (tmdbId) {
+      this.titleTmdbId = tmdbId;
+    } else {
+      this.titleTmdbId = title.id;
+    }
+
     this.titleToAddSubject.next(new WatchTitleSend(
-      title.id,
+      this.titleTmdbId,
       title.imdb_id,
       title.poster_path,
       title.title,

@@ -37,13 +37,13 @@ export class UserService {
       console.log(!this.currentUser.user_watch_titles.includes(userWatchTitle));
 
       if (!this.currentUser.user_watch_titles.includes(userWatchTitle)) {
-        this.currentUser.user_watch_titles.unshift(userWatchTitle);
+        this.currentUser.user_watch_titles.push(userWatchTitle);
       }
     }
   }
 
   addWatchDate(watchDate:{[key: string]: WatchTitle[]}) {
-    this.watchDates.push(watchDate);
+    // this.watchDates.unshift(watchDate);
   }
 
   getUserWatchDates() {
