@@ -147,6 +147,12 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotTitlesSub.unsubscribe();
   }
 
+  isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // return true;
+    // return false;
+  }
+
   createNewList() {
     if (this.newListForm.valid) {
       this.listService.createList(this.currentUser!.username, this.newListForm.value);

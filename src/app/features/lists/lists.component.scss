@@ -378,6 +378,13 @@ label.nav:hover {
   padding: 1rem;
 }
 
+.title-actions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .title-container {
   position: relative;
   background-color: #4a5369;
@@ -418,39 +425,68 @@ label.nav:hover {
   justify-content: space-between;
 }
 
-.title-actions {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  justify-items: center;
-}
-
-.title-btn {
-  padding: 10px;
-  background-color: #3c91f9;
+// actions bar
+.actions-bar {
+  width: 75%;
+  padding: 10px 0;
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  height: 40px;
-  width: 100px;
+  background-color: #4a5369;
+  border-top: #3c91f9 2px solid;
+  // border-bottom: #3c91f9 2px solid;
+}
+
+.actions-bar a {
+  cursor: pointer;
+}
+
+.text-action {
   color: #f9f9f9;
-  transition: background-color 0.3s ease-in-out;
+  text-decoration: none;
 }
 
-.title-btn:hover {
-  background-color: #00b5ff;
+.text-action:hover {
+  color: #3c91f9;
+  transition: color 0.3s ease-in-out;
 }
 
-.rating-btn-container {
-  margin: auto;
+.text-action.is-mobile:hover {
+  color: #f9f9f9
+}
+
+.neg-rating-btn {
+  margin-right: 10px;
 }
 
 .neg-rating-btn,
 .pos-rating-btn {
-  margin-top: 10px;
-  color: #4a5369;
+  color: #f9f9f9;
+  vertical-align: bottom;
   transition: color 0.3s ease-in-out;
+}
+
+.neg-rating-btn.is-mobile,
+.pos-rating-btn.is-mobile {
+  pointer-events: none;
+}
+
+.neg-rating-btn:hover, .neg-rating-btn.active {
+  color: crimson;
+  text-shadow: #874150 1px 1px;
+  font-variation-settings: 'FILL' 1;
+}
+
+.neg-rating-btn.inactive {
+  color: #f9f9f9;
+  font-variation-settings: 'FILL' 0;
+}
+
+.neg-rating-btn.inactive:hover {
+  color: crimson;
+  text-shadow: #874150 1px 1px;
+  font-variation-settings: 'FILL' 1;
 }
 
 .pos-rating-btn:hover, .pos-rating-btn.active {
@@ -459,11 +495,17 @@ label.nav:hover {
   font-variation-settings: 'FILL' 1;
 }
 
-.neg-rating-btn:hover, .neg-rating-btn.active {
-  color: crimson;
-  text-shadow: #874150 1px 1px;
+.pos-rating-btn.inactive {
+  color: #f9f9f9;
+  font-variation-settings: 'FILL' 0;
+}
+
+.pos-rating-btn.inactive:hover {
+  color: limegreen;
+  text-shadow: #1d811d 1px 1px;
   font-variation-settings: 'FILL' 1;
 }
+// end actions bar
 
 .no-poster {
   max-width: 154px;
@@ -563,6 +605,10 @@ label.nav:hover {
   }
 
   .title-container {
+    width: 100%;
+  }
+
+  .actions-bar {
     width: 100%;
   }
 }

@@ -57,7 +57,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     });
 
     this.searchResultsSub = this.tmdbService.gotSearchResults.subscribe((results) => {
-      // console.log(results);
       this.searchResults = [...this.searchResults, ...results];
     });
   }
