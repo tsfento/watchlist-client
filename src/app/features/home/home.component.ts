@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   currentUser:User | null = null;
   currentUserSub = new Subscription;
-  currentUserWatchTitles:UserWatchTitle[] | null = null;
-  currentUserWatchTitlesSub = new Subscription;
+  // currentUserWatchTitles:UserWatchTitle[] | null = null;
+  // currentUserWatchTitlesSub = new Subscription;
 
   ratedPositive:UserWatchTitle[] = [];
   recommendations:{[key: string]: TmdbMovie[]}[] = [];
@@ -67,19 +67,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
-    });
 
-    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
-      if (user_watch_titles !== null && user_watch_titles.length !== 0) {
-        this.currentUserWatchTitles = user_watch_titles;
-        this.ratedPositive = this.currentUserWatchTitles.filter(u => u.rating === true);
+      if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+        this.ratedPositive = this.currentUser.user_watch_titles.filter(u => u.rating === true);
         this.ratedPositive = this.shuffle(this.ratedPositive);
-
-        this.getInitialRecommendations();
-      } else {
-        this.userService.getUserWatchTitles();
       }
     });
+
+    // this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
+    //   if (user_watch_titles !== null && user_watch_titles.length !== 0) {
+    //     this.currentUserWatchTitles = user_watch_titles;
+    //     this.ratedPositive = this.currentUserWatchTitles.filter(u => u.rating === true);
+    //     this.ratedPositive = this.shuffle(this.ratedPositive);
+
+    //     this.getInitialRecommendations();
+    //   } else {
+    //     this.userService.getUserWatchTitles();
+    //   }
+    // });
 
     this.dailyQuoteSub = this.titleService.dailyQuoteSubject.subscribe((quote) => {
       if (quote !== null) {
@@ -136,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
-    this.currentUserWatchTitlesSub.unsubscribe();
+    // this.currentUserWatchTitlesSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();
@@ -192,8 +197,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
-    if (this.currentUserWatchTitles !== null) {
-      const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === tmdbId);
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
       return userWatchTitle;
     } else {
@@ -202,29 +207,33 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setTitleWatched(title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.id);
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
 
-    if (userWatchTitle !== undefined) {
-      this.titleService.setTitleWatched(this.currentUser!.username, title);
-      userWatchTitle.watched = !userWatchTitle.watched;
-    } else {
-      this.titleService.setTitleWatched(this.currentUser!.username, title, true);
+      if (userWatchTitle !== undefined) {
+        this.titleService.setTitleWatched(this.currentUser!.username, title);
+        userWatchTitle.watched = !userWatchTitle.watched;
+      } else {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, true);
+      }
     }
   }
 
   setRating(rating:boolean, title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.id);
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
 
-    if (userWatchTitle !== undefined) {
-      if (userWatchTitle!.rating === rating) {
-        this.titleService.setTitleRating(this.currentUser!.username, title, null);
-        userWatchTitle!.rating = null;
+      if (userWatchTitle !== undefined) {
+        if (userWatchTitle!.rating === rating) {
+          this.titleService.setTitleRating(this.currentUser!.username, title, null);
+          userWatchTitle!.rating = null;
+        } else {
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating);
+          userWatchTitle!.rating = rating;
+        }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating);
-        userWatchTitle!.rating = rating;
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, true);
       }
-    } else {
-      this.titleService.setTitleRating(this.currentUser!.username, title, rating, true);
     }
   }
 
