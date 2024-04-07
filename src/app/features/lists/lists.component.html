@@ -110,19 +110,6 @@
                 <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes' }}</div>
               </div>
               <div class="title-overview">{{ title.overview }}</div>
-              <!-- <div class="title-actions">
-                <a class="title-btn" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title)">Add to List</a>
-                <div class="rating-btn-container">
-                  <a (click)="setRating(false, title)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === false">
-                    thumb_down
-                  </span></a>
-                  <a (click)="setRating(true, title)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === true">
-                    thumb_up
-                  </span></a>
-                </div>
-                <a class="title-btn" (click)="setTitleWatched(title)">{{ this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.watched ? 'Watched' : 'Unwatched' }}</a>
-                <a class="title-btn" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title)">Add Date</a>
-              </div> -->
             </div>
             @if (checkIfUserList(listViewingId)) {
               <a class="title-delete-btn" title="Delete Title" (click)="deleteTitle(title.tmdb_id); $event.stopPropagation();">

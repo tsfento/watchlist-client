@@ -232,6 +232,7 @@ label.nav:hover {
 // lists css
 .list-grid {
   margin-top: 166px;
+  margin-bottom: 80px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
   // TODO move justify center to media query
@@ -371,6 +372,7 @@ label.nav:hover {
 // titles css
 .titles-grid {
   margin-top: 111px;
+  margin-bottom: 80px;
   display: grid;
   grid-template-columns: 1;
   justify-items: start;
