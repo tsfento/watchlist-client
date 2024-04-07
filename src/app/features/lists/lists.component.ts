@@ -301,10 +301,10 @@ export class ListsComponent implements OnInit, OnDestroy {
       const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
       if (userWatchTitle !== undefined) {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, false, title.tmdb_id);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, title.tmdb_id);
         userWatchTitle.watched = !userWatchTitle.watched;
       } else {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, true, title.tmdb_id);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, title.tmdb_id);
       }
     }
   }
@@ -315,14 +315,14 @@ export class ListsComponent implements OnInit, OnDestroy {
 
       if (userWatchTitle !== undefined) {
         if (userWatchTitle!.rating === rating) {
-          this.titleService.setTitleRating(this.currentUser!.username, title, null, false, title.tmdb_id);
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, title.tmdb_id);
           userWatchTitle!.rating = null;
         } else {
-          this.titleService.setTitleRating(this.currentUser!.username, title, rating, false, title.tmdb_id);
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, title.tmdb_id);
           userWatchTitle!.rating = rating;
         }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating, true, title.tmdb_id);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, title.tmdb_id);
       }
     }
   }

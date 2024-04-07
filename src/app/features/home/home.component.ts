@@ -207,7 +207,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.titleService.setTitleWatched(this.currentUser!.username, title);
         userWatchTitle.watched = !userWatchTitle.watched;
       } else {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, true);
+        this.titleService.setTitleWatched(this.currentUser!.username, title);
       }
     }
   }
@@ -225,7 +225,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           userWatchTitle!.rating = rating;
         }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating, true);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating);
       }
     }
   }

@@ -55,7 +55,7 @@ export class TitleService {
     ));
   }
 
-  setTitleWatched(username:string, title:TmdbMovie, getUserWatchTitle:boolean = false, tmdbId?:number) {
+  setTitleWatched(username:string, title:TmdbMovie, tmdbId?:number) {
     let id:number = 0;
 
     if (tmdbId) {
@@ -76,9 +76,7 @@ export class TitleService {
     }).subscribe({
       next: (response:UserWatchTitle) => {
         // console.log(response.watched);
-        if (getUserWatchTitle === true) {
-          this.userService.addUserWatchTitle(response)
-        }
+        this.userService.addUserWatchTitle(response);
       },
       error: (error:any) => {
         console.log(error);
@@ -86,7 +84,7 @@ export class TitleService {
     });
   }
 
-  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, getUserWatchTitle:boolean = false, tmdbId?:number) {
+  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, tmdbId?:number) {
     let id:number = 0;
 
     if (tmdbId) {
@@ -107,9 +105,7 @@ export class TitleService {
     }).subscribe({
       next: (response:UserWatchTitle) => {
         // console.log(response);
-        if (getUserWatchTitle === true) {
-          this.userService.addUserWatchTitle(response);
-        }
+        this.userService.addUserWatchTitle(response);
       },
       error: (error:any) => {
         console.log(error);
