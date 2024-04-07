@@ -58,11 +58,14 @@
                   </div>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#nPMovieCarousel" data-bs-slide="prev">
+              <button class="carousel-control-prev" type="button" data-bs-target="#nPMovieCarousel" (click)="setDefaultActive('nPMovieCarousel', ($index - 1) < 0 ? nowPlayingMovies.length - 1 : $index - 1)"
+              data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#nPMovieCarousel" data-bs-slide="next">
+              <button class="carousel-control-next" type="button" data-bs-target="#nPMovieCarousel"
+              (click)="setDefaultActive('nPMovieCarousel', ($index + 1) > nowPlayingMovies.length - 1 ? 0 : $index + 1)"
+              data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
@@ -235,11 +238,11 @@
                           </div>
                         </div>
                       </div>
-                      <button class="carousel-control-prev" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setRecsActive(recommendations.indexOf(recommendation), (rec.value.indexOf(title) - 1) < 0 ? rec.value.length - 1 : rec.value.indexOf(title) - 1)" data-bs-slide="prev">
+                      <button class="carousel-control-prev" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setRecsActive('recsDrawer' + recommendations.indexOf(recommendation), (rec.value.indexOf(title) - 1) < 0 ? rec.value.length - 1 : rec.value.indexOf(title) - 1, $event)" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                       </button>
-                      <button class="carousel-control-next" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setRecsActive(recommendations.indexOf(recommendation), (rec.value.indexOf(title) + 1) > rec.value.length - 1 ? 0 : rec.value.indexOf(title) + 1)" data-bs-slide="next">
+                      <button class="carousel-control-next" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setRecsActive('recsDrawer' + recommendations.indexOf(recommendation), (rec.value.indexOf(title) + 1) > rec.value.length - 1 ? 0 : rec.value.indexOf(title) + 1, $event)" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                       </button>
@@ -264,7 +267,7 @@
                   <div #recsDrawer class="drawer" id="recsDrawer{{ recommendations.indexOf(recommendation) }}"
                   (wheel)="onWheel($event, recsDrawer)">
                     @for (title of rec.value; track $index) {
-                      <a type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" [attr.data-bs-slide-to]="$index" (click)="setRecsActive(recommendations.indexOf(recommendation), $index)">
+                      <a type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" [attr.data-bs-slide-to]="$index" (click)="setRecsActive('recsDrawer' + recommendations.indexOf(recommendation), $index)">
                         <img id="{{ $index }}" src="{{ small_poster_url + title.poster_path }}" alt="{{ title.title + ' poster' }}" [class.active]="$index === 0" draggable="false">
                       </a>
                     }
