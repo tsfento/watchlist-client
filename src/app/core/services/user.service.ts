@@ -32,28 +32,38 @@ export class UserService {
     );
   }
 
-  getUserWatchTitles() {
+  addUserWatchTitle(userWatchTitle:UserWatchTitle) {
     if (this.currentUser !== null) {
-      this.http.get<UserWatchTitle[]>(`${environment.apiUrl}/users/${this.currentUser.username}/user_watch_titles`).subscribe({
-        next: (response:UserWatchTitle[]) => {
-          this.currentUserWatchTitles = response;
-          this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles.slice());
-          // console.log(response);
-        },
-        error: (error:any) => {
-          console.log(error);
-        }
-      });
+      this.currentUser.user_watch_titles.unshift(userWatchTitle);
     }
   }
 
-  updateUserWatchTitles(userWatchTitle:UserWatchTitle) {
-    if (!this.currentUserWatchTitles?.some(u => u.watch_title.tmdb_id === userWatchTitle.id)) {
-      this.currentUserWatchTitles?.push(userWatchTitle);
-      console.log(this.currentUserWatchTitles);
-      this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles!.slice());
-    }
+  addWatchDate(watchDate:{[key: string]: WatchTitle[]}) {
+    this.watchDates.push(watchDate);
   }
+
+  // getUserWatchTitles() {
+  //   if (this.currentUser !== null) {
+  //     this.http.get<UserWatchTitle[]>(`${environment.apiUrl}/users/${this.currentUser.username}/user_watch_titles`).subscribe({
+  //       next: (response:UserWatchTitle[]) => {
+  //         this.currentUserWatchTitles = response;
+  //         this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles.slice());
+  //         // console.log(response);
+  //       },
+  //       error: (error:any) => {
+  //         console.log(error);
+  //       }
+  //     });
+  //   }
+  // }
+
+  // updateUserWatchTitles(userWatchTitle:UserWatchTitle) {
+  //   if (!this.currentUserWatchTitles?.some(u => u.watch_title.tmdb_id === userWatchTitle.id)) {
+  //     this.currentUserWatchTitles?.push(userWatchTitle);
+  //     console.log(this.currentUserWatchTitles);
+  //     this.currentUserWatchTitlesSubject.next(this.currentUserWatchTitles!.slice());
+  //   }
+  // }
 
   getUserWatchDates() {
     if (this.currentUser !== null) {

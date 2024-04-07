@@ -7,6 +7,7 @@ import { WatchTitleSend } from '../../shared/models/watchtitlesend';
 import { TmdbMovie } from '../../shared/models/tmdbmovie';
 import { UserService } from './user.service';
 import { DailyQuote } from '../../shared/models/daily-quote';
+import { UserWatchTitle } from '../../shared/models/user-watch-title';
 @Injectable({
   providedIn: 'root'
 })
@@ -63,7 +64,7 @@ export class TitleService {
       id = title.id;
     }
 
-    this.http.post(`${environment.apiUrl}/users/${username}/set_watched`, {
+    this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_watched`, {
       // tmdb_id: title.id,
       tmdb_id: id,
       imdb_id: title.imdb_id,
@@ -73,10 +74,10 @@ export class TitleService {
       overview: title.overview,
       runtime: title.runtime
     }).subscribe({
-      next: (response:any) => {
+      next: (response:UserWatchTitle) => {
         // console.log(response.watched);
         if (getUserWatchTitle === true) {
-          this.userService.updateUserWatchTitles(response);
+          this.userService.addUserWatchTitle(response)
         }
       },
       error: (error:any) => {
@@ -94,7 +95,7 @@ export class TitleService {
       id = title.id;
     }
 
-    this.http.post(`${environment.apiUrl}/users/${username}/set_rating`, {
+    this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_rating`, {
       tmdb_id: id,
       imdb_id: title.imdb_id,
       poster_path: title.poster_path,
@@ -104,10 +105,10 @@ export class TitleService {
       runtime: title.runtime,
       rating: rating
     }).subscribe({
-      next: (response:any) => {
+      next: (response:UserWatchTitle) => {
         // console.log(response);
         if (getUserWatchTitle === true) {
-          this.userService.updateUserWatchTitles(response);
+          this.userService.addUserWatchTitle(response);
         }
       },
       error: (error:any) => {

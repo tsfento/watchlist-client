@@ -50,15 +50,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.currentUser = user;
     });
 
-    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
-      if (user_watch_titles !== null && user_watch_titles.length !== 0) {
-        this.currentUserWatchTitles = user_watch_titles;
-        // console.log(this.currentUserWatchTitles);
-      } else {
-        this.userService.getUserWatchTitles();
-      }
-    });
-
     this.searchSub = this.tmdbService.searchSubject.subscribe((search) => {
       this.searchValue = search;
       this.searchResults = [];
@@ -78,13 +69,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchResultsSub.unsubscribe();
   }
 
-  getTmdbIdFromUserWatchTitles(tmdbId:number): boolean | undefined {
-    if (this.currentUserWatchTitles !== null) {
-      const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === tmdbId);
+  getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
-      return userWatchTitle?.watched;
+      return userWatchTitle;
     } else {
-      return false;
+      return;
     }
   }
 
