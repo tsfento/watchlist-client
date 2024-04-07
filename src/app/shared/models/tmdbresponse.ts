@@ -1,8 +1,9 @@
+import { TmdbMovie } from "./tmdbmovie";
 import { WatchTitle } from "./watchtitle";
 
 export class TmdbResponse {
   page:number;
-  results:WatchTitle[];
+  results:TmdbMovie[];
   total_pages:number;
 
   constructor(response:any) {

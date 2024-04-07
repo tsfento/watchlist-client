@@ -58,13 +58,13 @@
                   </div>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#nPMovieCarousel" (click)="setDefaultActive('nPMovieCarousel', ($index - 1) < 0 ? nowPlayingMovies.length - 1 : $index - 1)"
+              <button class="carousel-control-prev" type="button" data-bs-target="#nPMovieCarousel" (click)="setActive('nPMovieDrawer', ($index - 1) < 0 ? nowPlayingMovies.length - 1 : $index - 1)"
               data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
               <button class="carousel-control-next" type="button" data-bs-target="#nPMovieCarousel"
-              (click)="setDefaultActive('nPMovieCarousel', ($index + 1) > nowPlayingMovies.length - 1 ? 0 : $index + 1)"
+              (click)="setActive('nPMovieDrawer', ($index + 1) > nowPlayingMovies.length - 1 ? 0 : $index + 1)"
               data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
@@ -87,7 +87,7 @@
         }
         </div>
         <div class="drawer-container">
-          <div #nPMovieDrawer class="drawer" id="drawer"
+          <div #nPMovieDrawer class="drawer" id="nPMovieDrawer"
           (wheel)="onWheel($event, nPMovieDrawer)">
             @for (nowPlayingMovie of nowPlayingMovies; track $index) {
               <a type="button" data-bs-target="#nPMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('nPMovie', $index)">
@@ -105,25 +105,52 @@
       <div id="popMovieCarousel" class="carousel slide">
         <div class="carousel-inner">
           @for (popMovie of popularMovies; track $index) {
-          <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
-            <div class="shelf">
-              <img src="{{ med_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}">
-              <div class="shelf-details-container">
-                <div class="shelf-details">
-                  <div class="details-title">
-                    {{ popMovie.title }}
-                  </div>
-                  <div class="details-overview">
-                    {{ popMovie.overview }}
+            <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
+              <div class="shelf">
+                <img src="{{ med_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}">
+                <div class="shelf-details-container">
+                  <div class="shelf-details">
+                    <div class="details-header">
+                      <span class="title">{{ popMovie.title ? popMovie.title : popMovie.original_name }} <span class="year">({{ popMovie.release_date | date:'yyyy' }})</span></span>
+                      <span class="runtime">{{ !popMovie.runtime || popMovie.runtime === 0 ? 'No runtime available' : popMovie.runtime + ' minutes'  }}</span>
+                    </div>
+                    <div class="details-overview">
+                      <span class="overview-header">Overview</span>
+                      <p>{{ popMovie.overview }}</p>
+                    </div>
                   </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#popMovieCarousel" (click)="setActive('popMovieDrawer', ($index - 1) < 0 ? popularMovies.length - 1 : $index - 1)"
+                data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#popMovieCarousel"
+                (click)="setActive('popMovieDrawer', ($index + 1) > popularMovies.length - 1 ? 0 : $index + 1)"
+                data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+              <div class="actions-bar">
+                <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(popMovie)" [class.is-mobile]="isMobile()">Add to List</a>
+                <a class="text-action" (click)="setTitleWatched(popMovie)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(popMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                <div class="rating-btn-container">
+                  <a (click)="setRating(false, popMovie)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
+                    thumb_down
+                  </span></a>
+                  <a (click)="setRating(true, popMovie)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
+                    thumb_up
+                  </span></a>
+                </div>
+                <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(popMovie)" [class.is-mobile]="isMobile()">Add Watch Date</a>
               </div>
             </div>
-          </div>
         }
         </div>
         <div class="drawer-container">
-          <div #popMovieDrawer class="drawer" (wheel)="onWheel($event, popMovieDrawer)">
+          <div #popMovieDrawer class="drawer" id="popMovieDrawer"
+          (wheel)="onWheel($event, popMovieDrawer)">
             @for (popMovie of popularMovies; track $index) {
               <a type="button" data-bs-target="#popMovieCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popMovie', $index)">
                 <img src="{{ small_poster_url + popMovie.poster_path }}" alt="{{ popMovie.title + ' poster'}}" [class.active]="popularMovieIndex == $index" draggable="false">
@@ -142,27 +169,54 @@
       <div id="popTVCarousel" class="carousel slide">
         <div class="carousel-inner">
           @for (popTV of popularTV; track $index) {
-          <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
-            <div class="shelf">
-              <img src="{{ med_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}">
-              <div class="shelf-details-container">
-                <div class="shelf-details">
-                  <div class="details-title">
-                    {{ popTV.title }}
-                  </div>
-                  <div class="details-overview">
-                    {{ popTV.overview }}
+            <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
+              <div class="shelf">
+                <img src="{{ med_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}">
+                <div class="shelf-details-container">
+                  <div class="shelf-details">
+                    <div class="details-header">
+                      <span class="title">{{ popTV.title ? popTV.title : popTV.original_name }} <span class="year">{{ popTV.first_air_date ? "(" + (popTV.first_air_date | date:'yyyy') + ")" : '' }}</span></span>
+                      <span class="runtime">{{ !popTV.runtime || popTV.runtime === 0 ? '' : popTV.runtime + ' minutes'  }}</span>
+                    </div>
+                    <div class="details-overview">
+                      <span class="overview-header">Overview</span>
+                      <p>{{ popTV.overview }}</p>
+                    </div>
                   </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#popTVCarousel" (click)="setActive('popTVDrawer', ($index - 1) < 0 ? popularTV.length - 1 : $index - 1)"
+                data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#popTVCarousel"
+                (click)="setActive('popTVDrawer', ($index + 1) > popularTV.length - 1 ? 0 : $index + 1)"
+                data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+              <div class="actions-bar">
+                <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(popTV)" [class.is-mobile]="isMobile()">Add to List</a>
+                <a class="text-action" (click)="setTitleWatched(popTV)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(popTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                <div class="rating-btn-container">
+                  <a (click)="setRating(false, popTV)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                    thumb_down
+                  </span></a>
+                  <a (click)="setRating(true, popTV)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                    thumb_up
+                  </span></a>
+                </div>
+                <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(popTV)" [class.is-mobile]="isMobile()">Add Watch Date</a>
               </div>
             </div>
-          </div>
         }
         </div>
         <div class="drawer-container">
-          <div #popTVDrawer class="drawer" (wheel)="onWheel($event, popTVDrawer)">
+          <div #popTVDrawer class="drawer" id="popTVDrawer"
+          (wheel)="onWheel($event, popTVDrawer)">
             @for (popTV of popularTV; track $index) {
-              <a type="button" data-bs-target="#popTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popTV', $index)">
+              <a type="button" data-bs-target="#popTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popMovie', $index)">
                 <img src="{{ small_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}" [class.active]="popularTVIndex == $index" draggable="false">
               </a>
             }
@@ -177,27 +231,54 @@
       <div id="topTVCarousel" class="carousel slide">
         <div class="carousel-inner">
           @for (topTV of topRatedTV; track $index) {
-          <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
-            <div class="shelf">
-              <img src="{{ med_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}">
-              <div class="shelf-details-container">
-                <div class="shelf-details">
-                  <div class="details-title">
-                    {{ topTV.title }}
-                  </div>
-                  <div class="details-overview">
-                    {{ topTV.overview }}
+            <div class="carousel-item" [ngClass]="$index === 0 ? 'active' : ''">
+              <div class="shelf">
+                <img src="{{ med_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}">
+                <div class="shelf-details-container">
+                  <div class="shelf-details">
+                    <div class="details-header">
+                      <span class="title">{{ topTV.title ? topTV.title : topTV.original_name }} <span class="year">{{ topTV.first_air_date ? "(" + (topTV.first_air_date | date:'yyyy') + ")" : '' }}</span></span>
+                      <span class="runtime">{{ !topTV.runtime || topTV.runtime === 0 ? '' : topTV.runtime + ' minutes'  }}</span>
+                    </div>
+                    <div class="details-overview">
+                      <span class="overview-header">Overview</span>
+                      <p>{{ topTV.overview }}</p>
+                    </div>
                   </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#topTVCarousel" (click)="setActive('topTVDrawer', ($index - 1) < 0 ? topRatedTV.length - 1 : $index - 1)"
+                data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#topTVCarousel"
+                (click)="setActive('topTVDrawer', ($index + 1) > topRatedTV.length - 1 ? 0 : $index + 1)"
+                data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+              <div class="actions-bar">
+                <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(topTV)" [class.is-mobile]="isMobile()">Add to List</a>
+                <a class="text-action" (click)="setTitleWatched(topTV)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(topTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                <div class="rating-btn-container">
+                  <a (click)="setRating(false, topTV)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                    thumb_down
+                  </span></a>
+                  <a (click)="setRating(true, topTV)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                    thumb_up
+                  </span></a>
+                </div>
+                <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(topTV)" [class.is-mobile]="isMobile()">Add Watch Date</a>
               </div>
             </div>
-          </div>
         }
         </div>
         <div class="drawer-container">
-          <div #topTVDrawer class="drawer" (wheel)="onWheel($event, topTVDrawer)">
+          <div #topTVDrawer class="drawer" id="topTVDrawer"
+          (wheel)="onWheel($event, topTVDrawer)">
             @for (topTV of topRatedTV; track $index) {
-              <a type="button" data-bs-target="#topTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('topTV', $index)">
+              <a type="button" data-bs-target="#topTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('topMovie', $index)">
                 <img src="{{ small_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}" [class.active]="topRatedTVIndex == $index" draggable="false">
               </a>
             }
@@ -238,11 +319,11 @@
                           </div>
                         </div>
                       </div>
-                      <button class="carousel-control-prev" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setRecsActive('recsDrawer' + recommendations.indexOf(recommendation), (rec.value.indexOf(title) - 1) < 0 ? rec.value.length - 1 : rec.value.indexOf(title) - 1, $event)" data-bs-slide="prev">
+                      <button class="carousel-control-prev" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setActive('recsDrawer' + recommendations.indexOf(recommendation), (rec.value.indexOf(title) - 1) < 0 ? rec.value.length - 1 : rec.value.indexOf(title) - 1, $event)" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                       </button>
-                      <button class="carousel-control-next" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setRecsActive('recsDrawer' + recommendations.indexOf(recommendation), (rec.value.indexOf(title) + 1) > rec.value.length - 1 ? 0 : rec.value.indexOf(title) + 1, $event)" data-bs-slide="next">
+                      <button class="carousel-control-next" type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" (click)="setActive('recsDrawer' + recommendations.indexOf(recommendation), (rec.value.indexOf(title) + 1) > rec.value.length - 1 ? 0 : rec.value.indexOf(title) + 1, $event)" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                       </button>
@@ -267,7 +348,7 @@
                   <div #recsDrawer class="drawer" id="recsDrawer{{ recommendations.indexOf(recommendation) }}"
                   (wheel)="onWheel($event, recsDrawer)">
                     @for (title of rec.value; track $index) {
-                      <a type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" [attr.data-bs-slide-to]="$index" (click)="setRecsActive('recsDrawer' + recommendations.indexOf(recommendation), $index)">
+                      <a type="button" attr.data-bs-target="#recsCarousel{{ recommendations.indexOf(recommendation) }}" [attr.data-bs-slide-to]="$index" (click)="setActive('recsDrawer' + recommendations.indexOf(recommendation), $index)">
                         <img id="{{ $index }}" src="{{ small_poster_url + title.poster_path }}" alt="{{ title.title + ' poster' }}" [class.active]="$index === 0" draggable="false">
                       </a>
                     }

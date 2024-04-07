@@ -8,6 +8,7 @@ export class TmdbMovie {
   original_name:string;
   overview:string;
   runtime:number;
+  first_air_date:string;
 
   constructor(tmdbmovie:any) {
     this.id = tmdbmovie.id || -1;
@@ -19,5 +20,6 @@ export class TmdbMovie {
     this.original_name = tmdbmovie.original_name || '';
     this.overview = tmdbmovie.overview || '';
     this.runtime = tmdbmovie.runtime || -1;
+    this.first_air_date = tmdbmovie.first_air_date || '';
   }
 }

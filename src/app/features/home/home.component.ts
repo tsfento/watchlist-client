@@ -174,23 +174,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setDefaultActive(drawer:string, index:number) {
-    // TODO fix scrollIntoView
-    const drawerChildren = document.getElementById(drawer)?.children;
-
-    console.log(drawerChildren);
-
-    if (drawerChildren) {
-      for (let i = 0; i < drawerChildren?.length; i++) {
-        drawerChildren[i].children[0].classList.remove('active');
-      }
-      drawerChildren[index].children[0].classList.add('active');
-      drawerChildren[index].children[0].scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
-    }
-  }
-
-  setRecsActive(drawer:string, index:number, event?:any) {
-    // TODO fix scrollIntoView
+  setActive(drawer:string, index:number, event?:any) {
+    // TODO fix scrollIntoView for chrome desktop
     const drawerChildren = document.getElementById(drawer)?.children;
 
     console.log(drawerChildren);
