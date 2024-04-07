@@ -23,8 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   currentUser:User | null = null;
   currentUserSub = new Subscription;
-  // currentUserWatchTitles:UserWatchTitle[] | null = null;
-  // currentUserWatchTitlesSub = new Subscription;
 
   ratedPositive:UserWatchTitle[] = [];
   recommendations:{[key: string]: TmdbMovie[]}[] = [];
@@ -59,7 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
     if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
-      // console.log(event);
       this.loadNextPageRecs();
     }
   }
@@ -73,18 +70,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.ratedPositive = this.shuffle(this.ratedPositive);
       }
     });
-
-    // this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
-    //   if (user_watch_titles !== null && user_watch_titles.length !== 0) {
-    //     this.currentUserWatchTitles = user_watch_titles;
-    //     this.ratedPositive = this.currentUserWatchTitles.filter(u => u.rating === true);
-    //     this.ratedPositive = this.shuffle(this.ratedPositive);
-
-    //     this.getInitialRecommendations();
-    //   } else {
-    //     this.userService.getUserWatchTitles();
-    //   }
-    // });
 
     this.dailyQuoteSub = this.titleService.dailyQuoteSubject.subscribe((quote) => {
       if (quote !== null) {
@@ -141,7 +126,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
-    // this.currentUserWatchTitlesSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
     this.gotPopularTVSub.unsubscribe();

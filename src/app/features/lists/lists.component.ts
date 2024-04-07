@@ -21,8 +21,6 @@ import { TmdbMovie } from '../../shared/models/tmdbmovie';
 export class ListsComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
-  currentUserWatchTitles:UserWatchTitle[] | null = null;
-  currentUserWatchTitlesSub = new Subscription;
 
   newListForm:FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -80,30 +78,11 @@ export class ListsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.listPageNum = 1;
     this.titlePageNum = 1;
-    // for (let i = 0; i < 20; i++) {
-    //   if (this.listService.allLists[i]) {
-    //     this.allLists.push(this.listService.allLists[i]);
-    //   }
-    //   if (this.listService.userLists[i]) {
-    //     this.userLists.push(this.listService.userLists[i]);
-    //   }
-    //   if (this.listService.followedLists[i]) {
-    //     this.followedLists.push(this.listService.followedLists[i]);
-    //   }
-    // }
 
     this.listService.getAllLists(this.listPageNum);
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
-    });
-
-    this.currentUserWatchTitlesSub = this.userService.currentUserWatchTitlesSubject.subscribe((user_watch_titles) => {
-      if (user_watch_titles !== null && user_watch_titles.length !== 0) {
-        this.currentUserWatchTitles = user_watch_titles;
-      } else {
-        this.userService.getUserWatchTitles();
-      }
     });
 
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
@@ -126,7 +105,6 @@ export class ListsComponent implements OnInit, OnDestroy {
           this.listsDone = true;
       } else {
         this.userLists = [...this.userLists, ...gotLists];
-        // console.log(this.userLists);
         this.listsDone = false;
       }
 
@@ -167,7 +145,6 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotUserListsSub.unsubscribe();
     this.gotFollowedListsSub.unsubscribe();
     this.gotTitlesSub.unsubscribe();
-    this.currentUserWatchTitlesSub.unsubscribe();
   }
 
   createNewList() {
@@ -310,8 +287,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
-    if (this.currentUserWatchTitles !== null) {
-      const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === tmdbId);
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === tmdbId);
 
       return userWatchTitle;
     } else {
@@ -320,38 +297,38 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   setTitleWatched(title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
-    console.log(userWatchTitle);
-
-    if (userWatchTitle !== undefined) {
-      this.titleService.setTitleWatched(this.currentUser!.username, title, false, title.tmdb_id);
-      userWatchTitle.watched = !userWatchTitle.watched;
-    } else {
-      this.titleService.setTitleWatched(this.currentUser!.username, title, true, title.tmdb_id);
+      if (userWatchTitle !== undefined) {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, false, title.tmdb_id);
+        userWatchTitle.watched = !userWatchTitle.watched;
+      } else {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, true, title.tmdb_id);
+      }
     }
   }
 
   setRating(rating:boolean, title:TmdbMovie) {
-    const userWatchTitle = this.currentUserWatchTitles?.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+    const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
-    console.log(userWatchTitle);
-
-    if (userWatchTitle !== undefined) {
-      if (userWatchTitle!.rating === rating) {
-        this.titleService.setTitleRating(this.currentUser!.username, title, null, false, title.tmdb_id);
-        userWatchTitle!.rating = null;
+      if (userWatchTitle !== undefined) {
+        if (userWatchTitle!.rating === rating) {
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, false, title.tmdb_id);
+          userWatchTitle!.rating = null;
+        } else {
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, false, title.tmdb_id);
+          userWatchTitle!.rating = rating;
+        }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating, false, title.tmdb_id);
-        userWatchTitle!.rating = rating;
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, true, title.tmdb_id);
       }
-    } else {
-      this.titleService.setTitleRating(this.currentUser!.username, title, rating, true, title.tmdb_id);
     }
   }
 
   deleteList(listId:number, listIndex:number, username:string) {
-    // this.newListForm.reset();
+    // TODO delete from local list
     this.listService.setListIdToDelete(listId, listIndex, username);
   }
 
