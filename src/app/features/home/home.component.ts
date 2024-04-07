@@ -178,8 +178,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     // TODO fix scrollIntoView for chrome desktop
     const drawerChildren = document.getElementById(drawer)?.children;
 
-    console.log(drawerChildren);
-
     if (drawerChildren) {
       for (let i = 0; i < drawerChildren?.length; i++) {
         drawerChildren[i].children[0].classList.remove('active');

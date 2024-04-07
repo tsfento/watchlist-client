@@ -136,11 +136,16 @@
     margin-top: 5px;
   }
 }
+
+.carousel-control-prev,
+.carousel-control-next {
+  height: 50%;
+  align-self: center;
+}
 // end shelf
 
 // actions bar
 .actions-bar {
-  z-index: 5;
   padding: 10px 0;
   display: flex;
   flex-direction: row;
