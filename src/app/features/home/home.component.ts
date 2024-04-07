@@ -139,8 +139,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     // return true;
+    return false;
   }
 
   shuffle(array:UserWatchTitle[]) {
@@ -173,7 +174,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setActive(drawerId:number, index:number) {
+  setDefaultActive(drawerId:number, index:number) {
+    // TODO scrollIntoView
+  }
+
+  setRecsActive(drawerId:number, index:number) {
+    // TODO fix scrollIntoView
     const drawerChildren = document.getElementById("recsDrawer" + drawerId)?.children;
 
     if (drawerChildren) {
@@ -181,6 +187,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         drawerChildren[i].children[0].classList.remove('active');
       }
       drawerChildren[index].children[0].classList.add('active');
+      drawerChildren[index].children[0].scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
     }
   }
 

@@ -110,10 +110,6 @@
   height: 100%;
 }
 
-// .shelf-details div:last-of-type {
-//   margin-top: auto;
-// }
-
 .details-header {
   display: grid;
   .title {
@@ -129,6 +125,7 @@
 }
 
 .details-overview {
+  overflow-y: scroll;
   margin-top: 10px;
   font-size: 1.25rem;
   .overview-header {
@@ -140,14 +137,9 @@
   }
 }
 
-// .details-actions {
-//   display: flex;
-//   flex-direction: row;
-//   justify-content:space-evenly;
-// }
-
-// .details-actions a {
-//   cursor: pointer;
+// .carousel-control-prev,
+// .carousel-control-next {
+//   margin-bottom: 227px;
 // }
 // end shelf
 
@@ -238,9 +230,7 @@
 }
 
 .drawer {
-  // overflow: auto;
-  // overflow-x: hidden;
-  overflow: scroll;
+  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -372,34 +362,24 @@
   }
 
   .runtime {
-    // font-size: 0.75rem;
     font-size: 3vw;
-    // text-align: center;
   }
 
   .details-overview {
     margin-top: 0px;
-    // font-size: 0.625rem;
     font-size: 2.75vw;
     .overview-header {
-      // font-size: 0.75rem;
       font-size: 3vw;
     }
   }
 
-  .details-actions {
-    // font-size: 0.625rem;
-    font-size: 2.5vw;
-    margin-bottom: 10px;
-  }
-
   .actions-bar {
-    font-size: 4vw;
+    padding: 5px 0;
+    font-size: 2.75vw;
   }
 
   .pos-rating-btn,
   .neg-rating-btn {
-    pointer-events: none;
     font-size: 1rem;
     vertical-align: middle;
   }
