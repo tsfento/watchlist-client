@@ -302,7 +302,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTitleWatched(title:TmdbMovie, contentType:string = 'movie') {
+  setTitleWatched(title:TmdbMovie, contentType:string) {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
@@ -315,7 +315,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     }
   }
 
-  setRating(rating:boolean, title:TmdbMovie, contentType:string = 'movie') {
+  setRating(rating:boolean, title:TmdbMovie, contentType:string) {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
     const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 

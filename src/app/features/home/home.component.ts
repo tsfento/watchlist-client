@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dailyQuoteSub = this.titleService.dailyQuoteSubject.subscribe((quote) => {
       if (quote !== null) {
         this.dailyQuote = quote;
+        console.log(this.dailyQuote);
       } else {
         this.titleService.getQuote();
       }
@@ -197,7 +198,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTitleWatched(title:TmdbMovie, contentType:string = 'movie') {
+  setTitleWatched(title:TmdbMovie, contentType:string) {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
 
@@ -210,7 +211,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setRating(rating:boolean, title:TmdbMovie, contentType:string = 'movie') {
+  setRating(rating:boolean, title:TmdbMovie, contentType:string) {
     console.log(title);
 
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {

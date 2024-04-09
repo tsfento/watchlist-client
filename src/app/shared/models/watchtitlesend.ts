@@ -7,6 +7,7 @@ export class WatchTitleSend {
     public release_date:string,
     public overview:string,
     public runtime:number,
+    public content_type:string
     ) {
   }
 }

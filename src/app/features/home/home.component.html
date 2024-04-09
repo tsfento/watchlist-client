@@ -21,13 +21,13 @@
           </div>
         </div>
         <div class="actions-bar">
-          <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(dailyQuote.watch_title)" [class.is-mobile]="isMobile()">Add to List</a>
-          <a class="text-action" (click)="setTitleWatched(dailyQuote.watch_title)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+          <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(dailyQuote.watch_title, dailyQuote.watch_title.content_type)" [class.is-mobile]="isMobile()">Add to List</a>
+          <a class="text-action" (click)="setTitleWatched(dailyQuote.watch_title, dailyQuote.watch_title.content_type)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
           <div class="rating-btn-container">
-            <a (click)="setRating(false, dailyQuote.watch_title)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === null" [class.is-mobile]="isMobile()">
+            <a (click)="setRating(false, dailyQuote.watch_title, dailyQuote.watch_title.content_type)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === null" [class.is-mobile]="isMobile()">
               thumb_down
             </span></a>
-            <a (click)="setRating(true, dailyQuote.watch_title)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === null" [class.is-mobile]="isMobile()">
+            <a (click)="setRating(true, dailyQuote.watch_title, dailyQuote.watch_title.content_type)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === null" [class.is-mobile]="isMobile()">
               thumb_up
             </span></a>
           </div>
@@ -72,12 +72,12 @@
             </div>
             <div class="actions-bar">
               <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(nPMovie)" [class.is-mobile]="isMobile()">Add to List</a>
-              <a class="text-action" (click)="setTitleWatched(nPMovie)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+              <a class="text-action" (click)="setTitleWatched(nPMovie, 'movie')" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
               <div class="rating-btn-container">
-                <a (click)="setRating(false, nPMovie)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
+                <a (click)="setRating(false, nPMovie, 'movie')"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
                   thumb_down
                 </span></a>
-                <a (click)="setRating(true, nPMovie)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
+                <a (click)="setRating(true, nPMovie, 'movie')"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(nPMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
                   thumb_up
                 </span></a>
               </div>
@@ -134,12 +134,12 @@
               </div>
               <div class="actions-bar">
                 <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(popMovie)" [class.is-mobile]="isMobile()">Add to List</a>
-                <a class="text-action" (click)="setTitleWatched(popMovie)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(popMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                <a class="text-action" (click)="setTitleWatched(popMovie, 'movie')" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(popMovie.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
                 <div class="rating-btn-container">
-                  <a (click)="setRating(false, popMovie)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
+                  <a (click)="setRating(false, popMovie, 'movie')"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
                     thumb_down
                   </span></a>
-                  <a (click)="setRating(true, popMovie)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
+                  <a (click)="setRating(true, popMovie, 'movie')"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popMovie.id)?.rating === null" [class.is-mobile]="isMobile()">
                     thumb_up
                   </span></a>
                 </div>
@@ -330,12 +330,12 @@
                     </div>
                     <div class="actions-bar">
                       <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title)" [class.is-mobile]="isMobile()">Add to List</a>
-                      <a class="text-action" (click)="setTitleWatched(title)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                      <a class="text-action" (click)="setTitleWatched(title, title.content_type)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
                       <div class="rating-btn-container">
-                        <a (click)="setRating(false, title)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === null" [class.is-mobile]="isMobile()">
+                        <a (click)="setRating(false, title, title.content_type)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === null" [class.is-mobile]="isMobile()">
                           thumb_down
                         </span></a>
-                        <a (click)="setRating(true, title)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === null" [class.is-mobile]="isMobile()">
+                        <a (click)="setRating(true, title, title.content_type)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.id)?.rating === null" [class.is-mobile]="isMobile()">
                           thumb_up
                         </span></a>
                       </div>

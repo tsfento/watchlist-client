@@ -20,7 +20,7 @@ declare var window:any;
   styleUrl: './add-title-modal.component.scss'
 })
 export class AddTitleModalComponent implements OnInit, OnDestroy {
-  titleToAdd:WatchTitleSend = new WatchTitleSend(-1, '', '', '', '', '', -1);
+  titleToAdd:WatchTitleSend = new WatchTitleSend(-1, '', '', '', '', '', -1, '');
   setTitleToAddSub = new Subscription;
 
   addTitleForm:FormGroup = new FormGroup({
