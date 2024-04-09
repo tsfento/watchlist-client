@@ -6,12 +6,14 @@ export class WatchTitle {
   imdb_id:string;
   poster_path:string;
   title:string;
+  name:string;
   original_name:string;
   release_date:string;
   overview:string;
   runtime:number;
   first_air_date:string;
   current_user_watch_titles:UserWatchTitle[];
+  content_type:string;
 
   constructor(watchTitle:any) {
     this.id = watchTitle.id;
@@ -19,11 +21,13 @@ export class WatchTitle {
     this.imdb_id = watchTitle.imdb_id;
     this.poster_path = watchTitle.poster_path;
     this.title = watchTitle.title;
+    this.name = watchTitle.name || '';
     this.original_name = watchTitle.original_name;
     this.release_date = watchTitle.release_date;
     this.overview = watchTitle.overview;
     this.runtime = watchTitle.runtime;
     this.first_air_date = watchTitle.first_air_date;
     this.current_user_watch_titles = watchTitle.current_user_watch_titles;
+    this.content_type = watchTitle.content_type || 'movie';
   }
 }

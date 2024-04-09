@@ -198,12 +198,12 @@
               </div>
               <div class="actions-bar">
                 <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(popTV)" [class.is-mobile]="isMobile()">Add to List</a>
-                <a class="text-action" (click)="setTitleWatched(popTV)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(popTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                <a class="text-action" (click)="setTitleWatched(popTV, 'tv')" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(popTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
                 <div class="rating-btn-container">
-                  <a (click)="setRating(false, popTV)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                  <a (click)="setRating(false, popTV, 'tv')"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === null" [class.is-mobile]="isMobile()">
                     thumb_down
                   </span></a>
-                  <a (click)="setRating(true, popTV)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                  <a (click)="setRating(true, popTV, 'tv')"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(popTV.id)?.rating === null" [class.is-mobile]="isMobile()">
                     thumb_up
                   </span></a>
                 </div>
@@ -216,7 +216,7 @@
           <div #popTVDrawer class="drawer" id="popTVDrawer"
           (wheel)="onWheel($event, popTVDrawer)">
             @for (popTV of popularTV; track $index) {
-              <a type="button" data-bs-target="#popTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popMovie', $index)">
+              <a type="button" data-bs-target="#popTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('popTV', $index)">
                 <img src="{{ small_poster_url + popTV.poster_path }}" alt="{{ popTV.title + ' poster'}}" [class.active]="popularTVIndex == $index" draggable="false">
               </a>
             }
@@ -260,12 +260,12 @@
               </div>
               <div class="actions-bar">
                 <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(topTV)" [class.is-mobile]="isMobile()">Add to List</a>
-                <a class="text-action" (click)="setTitleWatched(topTV)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(topTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+                <a class="text-action" (click)="setTitleWatched(topTV, 'tv')" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(topTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
                 <div class="rating-btn-container">
-                  <a (click)="setRating(false, topTV)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                  <a (click)="setRating(false, topTV, 'tv')"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === null" [class.is-mobile]="isMobile()">
                     thumb_down
                   </span></a>
-                  <a (click)="setRating(true, topTV)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === null" [class.is-mobile]="isMobile()">
+                  <a (click)="setRating(true, topTV, 'tv')"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(topTV.id)?.rating === null" [class.is-mobile]="isMobile()">
                     thumb_up
                   </span></a>
                 </div>
@@ -278,7 +278,7 @@
           <div #topTVDrawer class="drawer" id="topTVDrawer"
           (wheel)="onWheel($event, topTVDrawer)">
             @for (topTV of topRatedTV; track $index) {
-              <a type="button" data-bs-target="#topTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('topMovie', $index)">
+              <a type="button" data-bs-target="#topTVCarousel" [attr.data-bs-slide-to]="$index" [ngClass]="$index === 0 ? 'active' : ''" (click)="changeIndex('topTV', $index)">
                 <img src="{{ small_poster_url + topTV.poster_path }}" alt="{{ topTV.title + ' poster'}}" [class.active]="topRatedTVIndex == $index" draggable="false">
               </a>
             }
@@ -310,7 +310,7 @@
                       <div class="shelf-details-container">
                         <div class="shelf-details">
                           <div class="details-header">
-                            <span><span class="title">{{ title.title ? title.title : title.original_name }}</span><span class="year"> ({{ title.release_date | date:'yyyy' }})</span></span>
+                            <span><span class="title">{{ title.title ? title.title : title.original_name }}</span><span class="year"> ({{ (title.release_date ? title.release_date : title.first_air_date) | date:'yyyy'}})</span></span>
                             <span><span class="sub-title">Starring: So-and-so</span><span>{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes'  }}</span></span>
                           </div>
                           <div class="details-overview">

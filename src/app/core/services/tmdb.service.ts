@@ -94,7 +94,6 @@ export class TmdbService {
     return this.http.get<any>(`${environment.apiUrl}/tmdb/top_rated_tv`).subscribe({
       next: (response:TmdbResponse) => {
         const tempTopRatedTV = response.results;
-        console.log(response.results);
 
         tempTopRatedTV.forEach((m:TmdbMovie) => {
           this.getTitleDetails(m, 'tv');
@@ -114,7 +113,7 @@ export class TmdbService {
         if (contentType === 'movie') {
           tmdbTitle.runtime = response.runtime;
           tmdbTitle.imdb_id = response.imdb_id;
-        } else if ( contentType === 'tv') {
+        } else if (contentType === 'tv') {
           tmdbTitle.imdb_id = response.imdb_id;
           tmdbTitle.first_air_date = response.first_air_date;
         }
@@ -178,10 +177,18 @@ export class TmdbService {
           recs = response.results;
           if (recs.length !== 0) {
             recs.forEach((t) => {
-              this.getRecommendationDetails(t, 'movie').subscribe({
+              this.getRecommendationDetails(t, type).subscribe({
                 next: (response:TmdbMovie) => {
-                  t.runtime = response.runtime;
-                  t.imdb_id = response.imdb_id;
+                  // t.runtime = response.runtime;
+                  // t.imdb_id = response.imdb_id;
+
+                  if (t.content_type === 'movie') {
+                    t.runtime = response.runtime;
+                    t.imdb_id = response.imdb_id;
+                  } else if (t.content_type === 'tv') {
+                    t.imdb_id = response.imdb_id;
+                    t.first_air_date = response.first_air_date;
+                  }
                 },
                 error: (error:any) => {
                   console.error(error);

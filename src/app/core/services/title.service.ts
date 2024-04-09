@@ -62,8 +62,9 @@ export class TitleService {
     ));
   }
 
-  setTitleWatched(username:string, title:TmdbMovie, tmdbId?:number) {
+  setTitleWatched(username:string, title:TmdbMovie, contentType:string, tmdbId?:number) {
     let id:number = 0;
+    let postBody = {};
 
     if (tmdbId) {
       id = tmdbId;
@@ -71,16 +72,30 @@ export class TitleService {
       id = title.id;
     }
 
-    this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_watched`, {
-      // tmdb_id: title.id,
-      tmdb_id: id,
-      imdb_id: title.imdb_id,
-      poster_path: title.poster_path,
-      title: title.title,
-      release_date: title.release_date,
-      overview: title.overview,
-      runtime: title.runtime
-    }).subscribe({
+    if (contentType === 'movie') {
+      postBody = {
+        tmdb_id: id,
+        imdb_id: title.imdb_id,
+        poster_path: title.poster_path,
+        title: title.title,
+        release_date: title.release_date,
+        overview: title.overview,
+        runtime: title.runtime
+      }
+    } else if (contentType === 'tv') {
+      postBody = {
+        tmdb_id: id,
+        imdb_id: title.imdb_id,
+        poster_path: title.poster_path,
+        title: title.name,
+        release_date: title.first_air_date,
+        overview: title.overview,
+        runtime: title.runtime || 0,
+        content_type: title.content_type || 'tv'
+      }
+    }
+
+    this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_watched`, postBody).subscribe({
       next: (response:UserWatchTitle) => {
         // console.log(response.watched);
         this.userService.addUserWatchTitle(response);
@@ -91,8 +106,9 @@ export class TitleService {
     });
   }
 
-  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, tmdbId?:number) {
+  setTitleRating(username:string, title:TmdbMovie, rating:boolean | null, contentType:string, tmdbId?:number) {
     let id:number = 0;
+    let postBody = {};
 
     if (tmdbId) {
       id = tmdbId;
@@ -100,16 +116,32 @@ export class TitleService {
       id = title.id;
     }
 
-    this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_rating`, {
-      tmdb_id: id,
-      imdb_id: title.imdb_id,
-      poster_path: title.poster_path,
-      title: title.title,
-      release_date: title.release_date,
-      overview: title.overview,
-      runtime: title.runtime,
-      rating: rating
-    }).subscribe({
+    if (contentType === 'movie') {
+      postBody = {
+        tmdb_id: id,
+        imdb_id: title.imdb_id,
+        poster_path: title.poster_path,
+        title: title.title,
+        release_date: title.release_date,
+        overview: title.overview,
+        runtime: title.runtime,
+        rating: rating
+      }
+    } else if (contentType === 'tv') {
+      postBody = {
+        tmdb_id: id,
+        imdb_id: title.imdb_id,
+        poster_path: title.poster_path,
+        title: title.name,
+        release_date: title.first_air_date,
+        overview: title.overview,
+        runtime: title.runtime || 0,
+        content_type: title.content_type || 'tv',
+        rating: rating
+      }
+    }
+
+    this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_rating`, postBody).subscribe({
       next: (response:UserWatchTitle) => {
         // console.log(response);
         this.userService.addUserWatchTitle(response);

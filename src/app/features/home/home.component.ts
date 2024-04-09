@@ -197,33 +197,35 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTitleWatched(title:TmdbMovie) {
+  setTitleWatched(title:TmdbMovie, contentType:string = 'movie') {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
 
       if (userWatchTitle !== undefined) {
-        this.titleService.setTitleWatched(this.currentUser!.username, title);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType);
         userWatchTitle.watched = !userWatchTitle.watched;
       } else {
-        this.titleService.setTitleWatched(this.currentUser!.username, title);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType);
       }
     }
   }
 
-  setRating(rating:boolean, title:TmdbMovie) {
+  setRating(rating:boolean, title:TmdbMovie, contentType:string = 'movie') {
+    console.log(title);
+
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
 
       if (userWatchTitle !== undefined) {
         if (userWatchTitle!.rating === rating) {
-          this.titleService.setTitleRating(this.currentUser!.username, title, null);
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, contentType);
           userWatchTitle!.rating = null;
         } else {
-          this.titleService.setTitleRating(this.currentUser!.username, title, rating);
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType);
           userWatchTitle!.rating = rating;
         }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType);
       }
     }
   }
@@ -238,7 +240,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       for (let i = 0; i < 5; i++) {
         if (i !== this.ratedPositive.length) {
-          this.tmdbService.getRecommendations('movie', this.ratedPositive[i].watch_title, this.recommendations);
+          this.tmdbService.getRecommendations(this.ratedPositive[i].watch_title.content_type, this.ratedPositive[i].watch_title, this.recommendations);
         }
       }
       this.isLoading = false;
@@ -250,7 +252,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       for (let i = this.recsIndex; i < this.recsIndex + 5; i++) {
         if (this.recsIndex !== this.ratedPositive.length) {
-          this.tmdbService.getRecommendations('movie', this.ratedPositive[i].watch_title, this.recommendations);
+          this.tmdbService.getRecommendations(this.ratedPositive[i].watch_title.content_type, this.ratedPositive[i].watch_title, this.recommendations);
           this.recsIndex++;
         }
       }

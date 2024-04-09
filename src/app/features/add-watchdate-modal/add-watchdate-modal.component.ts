@@ -61,7 +61,8 @@ export class AddWatchdateModalComponent implements OnInit, OnDestroy {
     // spread titleToAdd and addWatchDateForm.value into single object
     // {...this.titleToAdd, ...this.addWatchDateForm.value}
 
-    console.log(this.titleToAdd, this.addWatchDateForm.value);
+    // console.log(this.titleToAdd, this.addWatchDateForm.value);
+    // console.log(this.addWatchDateForm.value.date)
 
     this.http.post<WatchTitleSend>(`${environment.apiUrl}/users/${this.currentUser?.username}/add_watch_date`, {
       ...this.titleToAdd,

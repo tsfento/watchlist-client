@@ -34,7 +34,6 @@ export class UserService {
 
   addUserWatchTitle(userWatchTitle:UserWatchTitle) {
     if (this.currentUser !== null) {
-      console.log(!this.currentUser.user_watch_titles.includes(userWatchTitle));
 
       if (!this.currentUser.user_watch_titles.includes(userWatchTitle)) {
         this.currentUser.user_watch_titles.push(userWatchTitle);

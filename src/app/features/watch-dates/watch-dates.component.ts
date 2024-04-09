@@ -76,33 +76,33 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
     }
   }
 
-  setTitleWatched(title:TmdbMovie) {
+  setTitleWatched(title:TmdbMovie, contentType:string = 'movie') {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
       if (userWatchTitle !== undefined) {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, title.tmdb_id);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, title.tmdb_id);
         userWatchTitle.watched = !userWatchTitle.watched;
       } else {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, title.tmdb_id);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, title.tmdb_id);
       }
     }
   }
 
-  setRating(rating:boolean, title:TmdbMovie) {
+  setRating(rating:boolean, title:TmdbMovie, contentType:string = 'movie') {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
     const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
 
       if (userWatchTitle !== undefined) {
         if (userWatchTitle!.rating === rating) {
-          this.titleService.setTitleRating(this.currentUser!.username, title, null, title.tmdb_id);
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, contentType, title.tmdb_id);
           userWatchTitle!.rating = null;
         } else {
-          this.titleService.setTitleRating(this.currentUser!.username, title, rating, title.tmdb_id);
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType, title.tmdb_id);
           userWatchTitle!.rating = rating;
         }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating, title.tmdb_id);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType, title.tmdb_id);
       }
     }
   }
