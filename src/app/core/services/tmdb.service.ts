@@ -179,13 +179,10 @@ export class TmdbService {
             recs.forEach((t) => {
               this.getRecommendationDetails(t, type).subscribe({
                 next: (response:TmdbMovie) => {
-                  // t.runtime = response.runtime;
-                  // t.imdb_id = response.imdb_id;
-
-                  if (t.content_type === 'movie') {
+                  if (type === 'movie') {
                     t.runtime = response.runtime;
                     t.imdb_id = response.imdb_id;
-                  } else if (t.content_type === 'tv') {
+                  } else if (type === 'tv') {
                     t.imdb_id = response.imdb_id;
                     t.first_air_date = response.first_air_date;
                   }

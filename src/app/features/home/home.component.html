@@ -310,8 +310,8 @@
                       <div class="shelf-details-container">
                         <div class="shelf-details">
                           <div class="details-header">
-                            <span><span class="title">{{ title.title ? title.title : title.original_name }}</span><span class="year"> ({{ (title.release_date ? title.release_date : title.first_air_date) | date:'yyyy'}})</span></span>
-                            <span><span class="sub-title">Starring: So-and-so</span><span>{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes'  }}</span></span>
+                            <span class="title">{{ title.title ? title.title : title.original_name }} <span class="year">({{ (title.release_date ? title.release_date : title.first_air_date) | date:'yyyy' }})</span></span>
+                            <span class="runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes'  }}</span>
                           </div>
                           <div class="details-overview">
                             <span class="overview-header">Overview</span>
