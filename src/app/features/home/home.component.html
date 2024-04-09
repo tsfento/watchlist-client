@@ -11,7 +11,7 @@
             <div class="shelf-details">
               <div class="details-header">
                 <span class="title">{{ dailyQuote.watch_title.title ? dailyQuote.watch_title.title : dailyQuote.watch_title.original_name }} <span class="year">({{ dailyQuote.watch_title.release_date | date:'yyyy' }})</span></span>
-                <span class="runtime">{{ !dailyQuote.watch_title.runtime || dailyQuote.watch_title.runtime === 0 ? 'No runtime available' : dailyQuote.watch_title.runtime + ' minutes'  }}</span>
+                <span class="runtime">{{ !dailyQuote.watch_title.runtime || dailyQuote.watch_title.runtime === 0 ? '' : dailyQuote.watch_title.runtime + ' minutes'  }}</span>
               </div>
               <div class="details-overview">
                 <span class="overview-header">Overview</span>

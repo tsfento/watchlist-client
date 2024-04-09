@@ -32,7 +32,7 @@
                   <div class="title-title">{{ title.title ? title.title : title.original_name }}</div>
                   <div class="title-info">
                     <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
-                    <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes'  }}</div>
+                    <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes'  }}</div>
                   </div>
                   <div class="title-overview">{{ title.overview }}</div>
                 </div>

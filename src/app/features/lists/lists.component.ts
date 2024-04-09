@@ -282,6 +282,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   randomTitle(searchInput:HTMLInputElement) {
     searchInput.value = '';
+    this.isSearching = true;
     this.listService.getRandomTitleFromList(this.listViewingId).subscribe({
       next: (response:WatchTitle) => {
         this.titles = [response];

@@ -14,10 +14,10 @@
   </label>
 </div>
 <div class="search-bar" [class.active]="isViewingTitles">
-  <!-- <input type="text" placeholder="Filter titles..." (input)="onFilterInput($event)"> -->
-  <input type="search" placeholder="Search titles..." #searchTitlesInput (keyup.enter)="searchTitles(searchTitlesInput)">
-  <button class="reset-search" (click)="resetSearch(searchTitlesInput)" [disabled]="!isSearching">Reset</button>
   <button class="random-title" (click)="randomTitle(searchTitlesInput)">⚄</button>
+  <input type="search" placeholder="Search titles..." #searchTitlesInput (keyup.enter)="searchTitles(searchTitlesInput)">
+  <button class="submit-search" (click)="searchTitles(searchTitlesInput)">Search</button>
+  <button class="reset-search" (click)="resetSearch(searchTitlesInput)" [disabled]="!isSearching">Reset</button>
   <button class="close-titles" (click)="closeTitles(searchTitlesInput)">
     <span class="material-symbols-outlined">
       close
@@ -107,7 +107,7 @@
               <div class="title-title">{{ title.title }}</div>
               <div class="title-info">
                 <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
-                <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? 'No runtime available' : title.runtime + ' minutes' }}</div>
+                <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes' }}</div>
               </div>
               <div class="title-overview">{{ title.overview }}</div>
             </div>
