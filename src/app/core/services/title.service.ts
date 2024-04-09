@@ -44,7 +44,7 @@ export class TitleService {
     this.gotListTitles.next(this.listTitles.slice());
   }
 
-  setTitleToAdd(title:TmdbMovie, contentType:string = 'movie', tmdbId?:number) {
+  setTitleToAdd(title:TmdbMovie, contentType:string, tmdbId?:number) {
     if (tmdbId) {
       this.titleTmdbId = tmdbId;
     } else {

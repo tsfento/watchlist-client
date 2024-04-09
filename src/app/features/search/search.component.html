@@ -44,7 +44,7 @@
         <div class="title-runtime">{{ !result.runtime || result.runtime === 0 ? 'No runtime available' : result.runtime + ' minutes'  }}</div>
         <div class="title-overview">{{ result.overview }}</div>
         <div class="actions">
-          <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result)">Add to List</a>
+          <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result, searchType)">Add to List</a>
           <a>{{ this.getTmdbIdFromUserWatchTitles(result.id) ? 'Watched' : 'Unwatched' }}</a>
         </div>
       </div>

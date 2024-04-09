@@ -44,13 +44,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   popularMovieIndex:number = 0;
   gotPopularMoviesSub = new Subscription;
 
-  popularTV:TmdbMovie[] = [];
-  popularTVIndex:number = 0;
-  gotPopularTVSub = new Subscription;
+  trendingTV:TmdbMovie[] = [];
+  trendingTVIndex:number = 0;
+  gotTrendingTVSub = new Subscription;
 
-  topRatedTV:TmdbMovie[] = [];
-  topRatedTVIndex:number = 0;
-  gotTopRatedTVSub = new Subscription;
+  thisWeekTV:TmdbMovie[] = [];
+  thisWeekTVIndex:number = 0;
+  gotThisWeekTVSub = new Subscription;
 
   constructor(private tmdbService:TmdbService, public titleService:TitleService, private userService:UserService) {}
 
@@ -78,7 +78,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dailyQuoteSub = this.titleService.dailyQuoteSubject.subscribe((quote) => {
       if (quote !== null) {
         this.dailyQuote = quote;
-        console.log(this.dailyQuote);
       } else {
         this.titleService.getQuote();
       }
@@ -100,19 +99,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.gotPopularTVSub = this.tmdbService.gotPopularTV.subscribe((gotTitles) => {
+    this.gotTrendingTVSub = this.tmdbService.gotTrendingTV.subscribe((gotTitles) => {
       if (gotTitles.length !== 0) {
-        this.popularTV = gotTitles;
+        this.trendingTV = gotTitles;
       } else {
-        this.tmdbService.getPopularTV();
+        this.tmdbService.getTrendingTV();
       }
     });
 
-    this.gotTopRatedTVSub = this.tmdbService.gotTopRatedTv.subscribe((gotTitles) => {
+    this.gotThisWeekTVSub = this.tmdbService.gotThisWeekTV.subscribe((gotTitles) => {
       if (gotTitles.length !== 0) {
-        this.topRatedTV = gotTitles;
+        this.thisWeekTV = gotTitles;
       } else {
-        this.tmdbService.getTopRatedTV();
+        this.tmdbService.getThisWeekTV();
       }
     });
 
@@ -133,8 +132,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentUserSub.unsubscribe();
     this.gotNowPlayingMoviesSub.unsubscribe();
     this.gotPopularMoviesSub.unsubscribe();
-    this.gotPopularTVSub.unsubscribe();
-    this.gotTopRatedTVSub.unsubscribe();
+    this.gotTrendingTVSub.unsubscribe();
+    this.gotThisWeekTVSub.unsubscribe();
     this.gotRecommendationsSub.unsubscribe();
     this.gotRecsIndexSub.unsubscribe();
   }
@@ -166,11 +165,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       case 'popMovie':
         this.popularMovieIndex = index;
         break;
-      case 'popTV':
-        this.popularTVIndex = index;
+      case 'trendingTV':
+        this.trendingTVIndex = index;
         break;
-      case 'topTV':
-        this.topRatedTVIndex = index;
+      case 'thisWeekTV':
+        this.thisWeekTVIndex = index;
         break;
     }
   }

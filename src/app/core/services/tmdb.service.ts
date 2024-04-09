@@ -16,11 +16,11 @@ export class TmdbService {
   popularMovies:TmdbMovie[] = [];
   gotPopularMovies = new BehaviorSubject<TmdbMovie[]>([]);
 
-  popularTV:TmdbMovie[] = [];
-  gotPopularTV = new BehaviorSubject<TmdbMovie[]>([]);
+  trendingTV:TmdbMovie[] = [];
+  gotTrendingTV = new BehaviorSubject<TmdbMovie[]>([]);
 
-  topRatedTV:TmdbMovie[] = [];
-  gotTopRatedTv = new BehaviorSubject<TmdbMovie[]>([]);
+  thisWeekTV:TmdbMovie[] = [];
+  gotThisWeekTV = new BehaviorSubject<TmdbMovie[]>([]);
 
   searchValue:string = '';
   searchSubject = new BehaviorSubject<string>('');
@@ -73,16 +73,16 @@ export class TmdbService {
     });
   }
 
-  getPopularTV() {
-    return this.http.get<any>(`${environment.apiUrl}/tmdb/popular_tv`).subscribe({
+  getTrendingTV() {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/trending_tv`).subscribe({
       next: (response:TmdbResponse) => {
-        const tempPopularTV = response.results;
+        const tempTrendingTV = response.results;
 
-        tempPopularTV.forEach((m:TmdbMovie) => {
+        tempTrendingTV.forEach((m:TmdbMovie) => {
           this.getTitleDetails(m, 'tv');
         });
-        this.popularTV = tempPopularTV;
-        this.gotPopularTV.next(this.popularTV.slice());
+        this.trendingTV = tempTrendingTV;
+        this.gotTrendingTV.next(this.trendingTV.slice());
       },
       error: (error:any) => {
         console.error(error);
@@ -90,16 +90,16 @@ export class TmdbService {
     });
   }
 
-  getTopRatedTV() {
-    return this.http.get<any>(`${environment.apiUrl}/tmdb/top_rated_tv`).subscribe({
+  getThisWeekTV() {
+    return this.http.get<any>(`${environment.apiUrl}/tmdb/this_week_tv`).subscribe({
       next: (response:TmdbResponse) => {
-        const tempTopRatedTV = response.results;
+        const tempThisWeekTV = response.results;
 
-        tempTopRatedTV.forEach((m:TmdbMovie) => {
+        tempThisWeekTV.forEach((m:TmdbMovie) => {
           this.getTitleDetails(m, 'tv');
         });
-        this.topRatedTV = tempTopRatedTV;
-        this.gotTopRatedTv.next(this.topRatedTV.slice());
+        this.thisWeekTV = tempThisWeekTV;
+        this.gotThisWeekTV.next(this.thisWeekTV.slice());
       },
       error: (error:any) => {
         console.error(error);
@@ -182,9 +182,11 @@ export class TmdbService {
                   if (type === 'movie') {
                     t.runtime = response.runtime;
                     t.imdb_id = response.imdb_id;
+                    t.content_type = 'movie'
                   } else if (type === 'tv') {
                     t.imdb_id = response.imdb_id;
                     t.first_air_date = response.first_air_date;
+                    t.content_type = 'tv'
                   }
                 },
                 error: (error:any) => {
