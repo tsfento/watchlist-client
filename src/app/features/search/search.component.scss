@@ -128,13 +128,12 @@ label.type:hover {
 // titles css
 .titles-grid {
   // margin-top: 111px;
-  margin-top: 61px;
+  margin-top: 75px;
   margin-bottom: 80px;
   display: grid;
   grid-template-columns: 1;
   justify-items: start;
   gap: 1rem;
-  padding: 1rem;
 }
 
 .title-actions-container {
@@ -154,15 +153,12 @@ label.type:hover {
   color: #f9f9f9;
 }
 
-.title-poster {
-  margin: 15px;
-}
-
 .title-details {
   padding: 10px;
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-height: 231px;
   color: black;
   background-color: #a5abbd;
 }
@@ -175,9 +171,12 @@ label.type:hover {
 .title-info {
   display: flex;
   flex-direction: row;
-  margin: 0px 20px;
-  margin-bottom: 10px;
+  margin: 5px 20px;
   justify-content: space-between;
+}
+
+.title-overview {
+  overflow-y: scroll;
 }
 // end titles css
 
@@ -283,34 +282,25 @@ label.type:hover {
 // end titles css
 
 @media screen and (max-width: 1280px) {
-  // .toggle-bar,
-  // .new-list-bar,
-  // .search-bar {
-  //   width: 80%;
-  // }
-
   .titles-grid {
     justify-content: center;
   }
 }
 
 @media screen and (max-width: 1024px) {
-  // .toggle-bar,
-  // .new-list-bar,
-  // .search-bar {
-  //   width: 100%;
-  // }
-
   .titles-grid {
     justify-content: center;
   }
 
   .no-poster,
   .title-poster {
-    margin: 10px;
     img {
-      height: 102px;
+      height: 200px;
     }
+  }
+
+  .title-details {
+    max-height: 200px;
   }
 }
 
@@ -341,6 +331,23 @@ label.type:hover {
 
   .title-container {
     width: 100%;
+  }
+
+  .title-details {
+    max-height: 200px;
+
+    .title-title {
+      font-size: 5vw;
+      line-height: 1;
+    }
+
+    .title-info {
+      font-size: 3vw;
+    }
+
+    .title-overview {
+      font-size: 3vw;
+    }
   }
 
   .actions-bar {
