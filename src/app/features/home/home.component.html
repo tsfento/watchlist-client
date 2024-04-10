@@ -17,7 +17,7 @@
           <div class="shelf-details-container">
             <div class="shelf-details">
               <div class="details-header">
-                <span class="title">{{ dailyQuote.watch_title.title ? dailyQuote.watch_title.title : dailyQuote.watch_title.original_name }} <span class="year">({{ dailyQuote.watch_title.release_date | date:'yyyy' }})</span></span>
+                <span class="title">{{ dailyQuote.watch_title.title }} <span class="year">({{ dailyQuote.watch_title.release_date | date:'yyyy' }})</span></span>
                 <span class="runtime">{{ !dailyQuote.watch_title.runtime || dailyQuote.watch_title.runtime === 0 ? '' : dailyQuote.watch_title.runtime + ' minutes'  }}</span>
               </div>
               <div class="details-overview">
@@ -56,7 +56,7 @@
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-header">
-                    <span class="title">{{ nPMovie.title ? nPMovie.title : nPMovie.original_name }} <span class="year">({{ nPMovie.release_date | date:'yyyy' }})</span></span>
+                    <span class="title">{{ nPMovie.title }} <span class="year">({{ nPMovie.release_date | date:'yyyy' }})</span></span>
                     <span class="runtime">{{ !nPMovie.runtime || nPMovie.runtime === 0 ? 'No runtime available' : nPMovie.runtime + ' minutes'  }}</span>
                   </div>
                   <div class="details-overview">
@@ -118,7 +118,7 @@
                 <div class="shelf-details-container">
                   <div class="shelf-details">
                     <div class="details-header">
-                      <span class="title">{{ popMovie.title ? popMovie.title : popMovie.original_name }} <span class="year">({{ popMovie.release_date | date:'yyyy' }})</span></span>
+                      <span class="title">{{ popMovie.title }} <span class="year">({{ popMovie.release_date | date:'yyyy' }})</span></span>
                       <span class="runtime">{{ !popMovie.runtime || popMovie.runtime === 0 ? 'No runtime available' : popMovie.runtime + ' minutes'  }}</span>
                     </div>
                     <div class="details-overview">
@@ -182,7 +182,7 @@
                 <div class="shelf-details-container">
                   <div class="shelf-details">
                     <div class="details-header">
-                      <span class="title">{{ trendTV.title ? trendTV.title : trendTV.original_name }} <span class="year">{{ trendTV.first_air_date ? "(" + (trendTV.first_air_date | date:'yyyy') + ")" : '' }}</span></span>
+                      <span class="title">{{ trendTV.title ? trendTV.title : trendTV.name }} <span class="year">{{ trendTV.first_air_date ? "(" + (trendTV.first_air_date | date:'yyyy') + ")" : '' }}</span></span>
                       <span class="runtime">{{ !trendTV.runtime || trendTV.runtime === 0 ? '' : trendTV.runtime + ' minutes'  }}</span>
                     </div>
                     <div class="details-overview">
@@ -244,7 +244,7 @@
                 <div class="shelf-details-container">
                   <div class="shelf-details">
                     <div class="details-header">
-                      <span class="title">{{ weekTV.title ? weekTV.title : weekTV.original_name }} <span class="year">{{ weekTV.first_air_date ? "(" + (weekTV.first_air_date | date:'yyyy') + ")" : '' }}</span></span>
+                      <span class="title">{{ weekTV.title ? weekTV.title : weekTV.name }} <span class="year">{{ weekTV.first_air_date ? "(" + (weekTV.first_air_date | date:'yyyy') + ")" : '' }}</span></span>
                       <span class="runtime">{{ !weekTV.runtime || weekTV.runtime === 0 ? '' : weekTV.runtime + ' minutes'  }}</span>
                     </div>
                     <div class="details-overview">
@@ -317,7 +317,7 @@
                       <div class="shelf-details-container">
                         <div class="shelf-details">
                           <div class="details-header">
-                            <span class="title">{{ title.title ? title.title : title.original_name }} <span class="year">({{ (title.release_date ? title.release_date : title.first_air_date) | date:'yyyy' }})</span></span>
+                            <span class="title">{{ title.title ? title.title : title.name }} <span class="year">({{ (title.release_date ? title.release_date : title.first_air_date) | date:'yyyy' }})</span></span>
                             <span class="runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes'  }}</span>
                           </div>
                           <div class="details-overview">

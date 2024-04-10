@@ -29,7 +29,7 @@
                   }
                 </div>
                 <div class="title-details">
-                  <div class="title-title">{{ title.title ? title.title : title.original_name }}</div>
+                  <div class="title-title">{{ title.title }}</div>
                   <div class="title-info">
                     <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
                     <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes'  }}</div>
