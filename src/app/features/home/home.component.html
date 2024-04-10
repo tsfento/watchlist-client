@@ -1,4 +1,11 @@
 <div class="home-container">
+  <div class="about-icon">
+    <a>
+      <span class="material-symbols-outlined">
+        help
+      </span>
+    </a>
+  </div>
   <div class="quote-container">
     @if (dailyQuote !== null && dailyQuote.watch_title !== null) {
       <div class="quote" (click)="clickQuote()" [class.active]="quoteClicked" [class.is-mobile]="isMobile()">
