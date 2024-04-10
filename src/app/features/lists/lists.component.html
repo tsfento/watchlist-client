@@ -15,8 +15,10 @@
 </div>
 <div class="search-bar" [class.active]="isViewingTitles">
   <button class="random-title" (click)="randomTitle(searchTitlesInput)">⚄</button>
-  <input type="search" placeholder="Search..." #searchTitlesInput (keyup.enter)="searchTitles(searchTitlesInput)">
-  <button class="submit-search" (click)="searchTitles(searchTitlesInput)">Search</button>
+  <div class="input-btn">
+    <input type="search" placeholder="Search..." #searchTitlesInput (keyup.enter)="searchTitles(searchTitlesInput)">
+    <button class="submit-search" (click)="searchTitles(searchTitlesInput)">Search</button>
+  </div>
   <button class="reset-search" (click)="resetSearch(searchTitlesInput)" [disabled]="!isSearching">Reset</button>
   <button class="close-titles" (click)="closeTitles(searchTitlesInput)">
     <span class="material-symbols-outlined">

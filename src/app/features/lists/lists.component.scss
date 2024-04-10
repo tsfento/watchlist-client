@@ -78,12 +78,17 @@ label.nav:hover {
   width: 60%;
   overflow: hidden;
   grid-template-rows: 1fr;
-  grid-template-columns: 50px 1fr 100px 90px 50px;
+  grid-template-columns: 50px 1fr 90px 50px;
   gap: 10px;
   align-items: center;
   position: fixed;
   top: -65px;
   transition: top 0.5s ease;
+}
+
+.input-btn {
+  display: flex;
+  flex-direction: row;
 }
 
 .search-bar.active {
@@ -95,7 +100,6 @@ label.nav:hover {
   padding: 0 0.5em;
   font-size: 1.2rem;
   width: 100%;
-  // margin-left: 10px;
 }
 
 .search-bar input:focus {
@@ -132,6 +136,7 @@ label.nav:hover {
   cursor: pointer;
   background-color: #3c91f9;
   height: 40px;
+  width: 100px;
   border: none;
   font-size: 1.5rem;
   color: #f5f5f5;
@@ -597,17 +602,20 @@ label.nav:hover {
 @media screen and (max-width: 640px) {
   .search-bar {
     width: 100%;
-    grid-template-columns: 40px 1fr 60px 60px 40px;
+    grid-template-columns: 40px 1fr 50px 40px;
   }
 
   .search-bar input {
     font-size: 4vw;
   }
 
-  .submit-search,
+  .submit-search {
+    font-size: 4.5vw;
+  }
+
   .reset-search {
     font-size: 4.5vw;
-    width: 60px;
+    width: 50px;
   }
 
   .list-grid {
