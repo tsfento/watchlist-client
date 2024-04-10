@@ -79,6 +79,7 @@ label.nav:hover {
   overflow: hidden;
   grid-template-rows: 1fr;
   grid-template-columns: 50px 1fr 100px 90px 50px;
+  gap: 10px;
   align-items: center;
   position: fixed;
   top: -65px;
@@ -94,6 +95,7 @@ label.nav:hover {
   padding: 0 0.5em;
   font-size: 1.2rem;
   width: 100%;
+  // margin-left: 10px;
 }
 
 .search-bar input:focus {
@@ -104,11 +106,13 @@ label.nav:hover {
   cursor: pointer;
   background: none;
   border: none;
-  // font-size: 1.5rem;
-  scale: 150%;
-  color: white;
-  margin-top: 10px;
+  color: #f9f9f9;
   transition: color 0.3s ease-in-out;
+
+  span {
+    font-size: 2.65rem;
+    margin-top: 5px;
+  }
 }
 
 .close-titles:hover, .random-title:hover {
@@ -119,9 +123,8 @@ label.nav:hover {
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 2.5rem;
-  margin-left: 10px;
-  color: #f5f5f5;
+  font-size: 3rem;
+  color: #f9f9f9;
   transition: color 0.3s ease-in-out;
 }
 
@@ -129,8 +132,6 @@ label.nav:hover {
   cursor: pointer;
   background-color: #3c91f9;
   height: 40px;
-  margin-left: 10px;
-  width: 90px;
   border: none;
   font-size: 1.5rem;
   color: #f5f5f5;
@@ -142,9 +143,6 @@ label.nav:hover {
   cursor: pointer;
   background-color: #3c91f9;
   height: 40px;
-  // margin-top: 10px;
-  margin-left: 10px;
-  width: 80px;
   border: none;
   font-size: 1.5rem;
   color: #f5f5f5;
@@ -387,13 +385,12 @@ label.nav:hover {
 
 // titles css
 .titles-grid {
-  margin-top: 111px;
+  margin-top: 130px;
   margin-bottom: 80px;
   display: grid;
   grid-template-columns: 1;
   justify-items: start;
   gap: 1rem;
-  padding: 1rem;
 }
 
 .title-actions-container {
@@ -404,7 +401,6 @@ label.nav:hover {
 }
 
 .title-container {
-  position: relative;
   background-color: #4a5369;
   width: 75%;
   display: flex;
@@ -413,15 +409,12 @@ label.nav:hover {
   color: #f9f9f9;
 }
 
-.title-poster {
-  margin: 15px;
-}
-
 .title-details {
   padding: 10px;
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-height: 231px;
   color: black;
   background-color: #a5abbd;
 }
@@ -434,9 +427,12 @@ label.nav:hover {
 .title-info {
   display: flex;
   flex-direction: row;
-  margin: 0px 20px;
-  margin-bottom: 10px;
+  margin: 5px 20px;
   justify-content: space-between;
+}
+
+.title-overview {
+  overflow-y: scroll;
 }
 
 // actions bar
@@ -449,7 +445,6 @@ label.nav:hover {
   align-items: center;
   background-color: #4a5369;
   border-top: #3c91f9 2px solid;
-  // border-bottom: #3c91f9 2px solid;
 }
 
 .actions-bar a {
@@ -593,14 +588,28 @@ label.nav:hover {
   }
 
   .title-poster {
-    margin: 10px;
     img {
-      height: 102px;
+      height: 200px;
     }
   }
 }
 
 @media screen and (max-width: 640px) {
+  .search-bar {
+    width: 100%;
+    grid-template-columns: 40px 1fr 60px 60px 40px;
+  }
+
+  .search-bar input {
+    font-size: 4vw;
+  }
+
+  .submit-search,
+  .reset-search {
+    font-size: 4.5vw;
+    width: 60px;
+  }
+
   .list-grid {
     grid-template-columns: 330px;
     justify-content: center;
@@ -616,6 +625,23 @@ label.nav:hover {
 
   .title-container {
     width: 100%;
+  }
+
+  .title-details {
+    max-height: 200px;
+
+    .title-title {
+      font-size: 5vw;
+      line-height: 1;
+    }
+
+    .title-info {
+      font-size: 3vw;
+    }
+
+    .title-overview {
+      font-size: 3vw;
+    }
   }
 
   .actions-bar {

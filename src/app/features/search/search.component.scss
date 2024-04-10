@@ -315,6 +315,26 @@ label.type:hover {
 }
 
 @media screen and (max-width: 640px) {
+  .filter-bar {
+    padding: 0 10px;
+  }
+
+  .info-label {
+    display: none;
+  }
+
+  .toggle-bar {
+    grid-template-columns: 75px 75px;
+  }
+
+  .btn-filter {
+    padding: 0 10px;
+  }
+
+  .lang-select {
+    width: 100px;
+  }
+
   .titles-grid {
     justify-content: center;
   }
