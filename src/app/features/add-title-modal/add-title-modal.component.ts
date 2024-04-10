@@ -46,7 +46,8 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
       this.titleToAdd = gotTitle;
     });
 
-    this.showAddTitleModal();
+    // auto-open for testing/styling
+    // this.showAddTitleModal();
   }
 
   ngOnDestroy(): void {
@@ -54,6 +55,7 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
     this.setTitleToAddSub.unsubscribe();
   }
 
+  // auto-open for testing/styling
   showAddTitleModal() {
     const addTitleModal:any = new window.bootstrap.Modal(document.getElementById('addTitleModal'));
 

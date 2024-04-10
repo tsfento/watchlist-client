@@ -41,6 +41,7 @@ export class AddWatchdateModalComponent implements OnInit, OnDestroy {
       this.currentUser = user;
     });
 
+    // auto-open for testing/styling
     // this.showAddWatchDateModal();
   }
 
@@ -49,6 +50,7 @@ export class AddWatchdateModalComponent implements OnInit, OnDestroy {
     this.setTitleToAddSub.unsubscribe();
   }
 
+  // auto-open for testing/styling
   showAddWatchDateModal() {
     const watchDateModal:any = new window.bootstrap.Modal(document.getElementById('addWatchDateModal'));
 
