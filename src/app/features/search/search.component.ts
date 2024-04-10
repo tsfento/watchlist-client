@@ -68,6 +68,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchResultsSub.unsubscribe();
   }
 
+  isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // return true;
+    // return false;
+  }
+
   getTmdbIdFromUserWatchTitles(tmdbId:number): UserWatchTitle | undefined {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
@@ -75,6 +81,37 @@ export class SearchComponent implements OnInit, OnDestroy {
       return userWatchTitle;
     } else {
       return;
+    }
+  }
+
+  setTitleWatched(title:TmdbMovie, contentType:string) {
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+      const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+
+      if (userWatchTitle !== undefined) {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, title.tmdb_id);
+        userWatchTitle.watched = !userWatchTitle.watched;
+      } else {
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, title.tmdb_id);
+      }
+    }
+  }
+
+  setRating(rating:boolean, title:TmdbMovie, contentType:string) {
+    if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
+    const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+
+      if (userWatchTitle !== undefined) {
+        if (userWatchTitle!.rating === rating) {
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, contentType, title.tmdb_id);
+          userWatchTitle!.rating = null;
+        } else {
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType, title.tmdb_id);
+          userWatchTitle!.rating = rating;
+        }
+      } else {
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType, title.tmdb_id);
+      }
     }
   }
 

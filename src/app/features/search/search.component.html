@@ -30,23 +30,38 @@
 <div class="titles-grid">
   <!-- titles -->
   @for (result of searchResults; track result.id) {
-    <div class="title-container">
-      <div class="title-poster">
-        @if (result.poster_path !== null) {
-          <img src="{{ poster_url + result.poster_path }}" alt="{{ result.title }} poster">
-        } @else {
-          <img src="./assets/images/no_poster.png" alt="No poster available for {{ result.title }}" width="154">
-        }
-      </div>
-      <div class="title-details">
-        <div class="title-title">{{ result.title ? result.title : result.original_name }}</div>
-        <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
-        <div class="title-runtime">{{ !result.runtime || result.runtime === 0 ? '' : result.runtime + ' minutes'  }}</div>
-        <div class="title-overview">{{ result.overview }}</div>
-        <div class="actions">
-          <a data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result, searchType)">Add to List</a>
-          <a>{{ this.getTmdbIdFromUserWatchTitles(result.id) ? 'Watched' : 'Unwatched' }}</a>
+    <div class="title-actions-container">
+      <div class="title-container">
+          @if (result.poster_path !== null) {
+            <div class="title-poster">
+              <img src="{{ poster_url + result.poster_path }}" alt="{{ result.title }} poster">
+            </div>
+          } @else {
+            <div class="no-poster">
+              <img src="./assets/images/no_poster.png" alt="No poster available for {{ result.title }}">
+            </div>
+          }
+        <div class="title-details">
+          <div class="title-title">{{ result.title ? result.title : result.original_name }}</div>
+              <div class="title-info">
+                <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
+                <div class="title-runtime">{{ !result.runtime || result.runtime === 0 ? '' : result.runtime + ' minutes' }}</div>
+              </div>
+              <div class="title-overview">{{ result.overview }}</div>
         </div>
+      </div>
+      <div class="actions-bar">
+        <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result, searchType)" [class.is-mobile]="isMobile()">Add to List</a>
+        <a class="text-action" (click)="setTitleWatched(result, searchType)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(result.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+        <div class="rating-btn-container">
+          <a (click)="setRating(false, result, searchType)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
+            thumb_down
+          </span></a>
+          <a (click)="setRating(true, result, searchType)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
+            thumb_up
+          </span></a>
+        </div>
+        <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(result, searchType, result.id)" [class.is-mobile]="isMobile()">Add Watch Date</a>
       </div>
     </div>
   }
