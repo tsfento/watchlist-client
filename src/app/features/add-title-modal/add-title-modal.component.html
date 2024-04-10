@@ -12,16 +12,17 @@
       <div class="modal-body">
         <form [formGroup]="addTitleForm" (ngSubmit)="onAddTitle()">
           <div class="form-group">
-            <label for="selected_list">Select list</label>
-            <select id="selected_list" formControlName="watch_list">
-              <option value="">Select a list</option>
+            <select id="selectList" formControlName="watch_list">
+              <option value="">Select a list...</option>
               @for (list of userLists; track $index) {
                 <option [ngValue]="list.id">{{ list.title }}</option>
               }
             </select>
           </div>
-          <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn-add" data-bs-dismiss="modal" [disabled]="!addTitleForm.valid">Add to List</button>
+          <div class="btn-container">
+            <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-add" data-bs-dismiss="modal" [disabled]="!addTitleForm.valid">Add to List</button>
+          </div>
         </form>
       </div>
       <div class="modal-footer">

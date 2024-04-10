@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ListService } from '../../core/services/list.service';
 import { WatchList } from '../../shared/models/watchlist';
@@ -30,7 +30,6 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
   currentUserSub = new Subscription;
 
   userLists:WatchList[] = [];
-  userListsSub = new Subscription;
 
   constructor(private listService:ListService, private userService:UserService, private http:HttpClient, private titleService:TitleService) {}
 
@@ -39,24 +38,19 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
       this.currentUser = user;
 
       if (this.currentUser !== null) {
-        this.listService.getUserLists(this.currentUser.username, 1);
+        this.getLists();
       }
-    });
-
-    this.userListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
-      this.userLists = gotLists;
     });
 
     this.setTitleToAddSub = this.titleService.titleToAddSubject.subscribe((gotTitle) => {
       this.titleToAdd = gotTitle;
     });
 
-    // this.showAddTitleModal();
+    this.showAddTitleModal();
   }
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
-    this.userListsSub.unsubscribe();
     this.setTitleToAddSub.unsubscribe();
   }
 
@@ -70,5 +64,16 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
     const watchListId = this.addTitleForm.value.watch_list;
 
     this.http.post<WatchTitleSend>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists/${watchListId}`, this.titleToAdd).subscribe();
+  }
+
+  getLists() {
+    this.listService.getUserListsForAdding(this.currentUser!.username).subscribe({
+      next: (response:WatchList[]) => {
+        this.userLists = response;
+      },
+      error: (error:any) => {
+        console.error(error);
+      }
+    })
   }
 }

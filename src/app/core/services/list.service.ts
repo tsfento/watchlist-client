@@ -54,6 +54,10 @@ export class ListService {
     }
   }
 
+  getUserListsForAdding(username:string) {
+    return this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists?page=-1`);
+  }
+
   getFollowedLists(username:string, pageNum:number) {
     if (username !== '') {
       this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists?page=${pageNum}`).subscribe({
