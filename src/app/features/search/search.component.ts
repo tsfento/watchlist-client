@@ -119,7 +119,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   setSearchLang(lang:string) {
     this.searchLang = lang;
-    console.log(this.searchLang);
   }
 
   filterResults() {

@@ -264,6 +264,9 @@ label.type:hover {
 
 .no-poster {
   max-width: 154px;
+  img {
+    max-height: 231px;
+  }
   // object-fit: contain;
 }
 

@@ -36,9 +36,7 @@ export class UserService {
     if (this.currentUser !== null) {
 
       if (!this.currentUser.user_watch_titles.includes(userWatchTitle)) {
-        console.log(this.currentUser.user_watch_titles);
         this.currentUser.user_watch_titles.push(userWatchTitle);
-        console.log(this.currentUser.user_watch_titles);
       }
     }
   }
