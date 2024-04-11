@@ -36,6 +36,11 @@
                   </div>
                   <div class="title-overview">{{ title.overview }}</div>
                 </div>
+                <a class="date-delete-btn" title="Delete Date" (click)="deleteDate(title.tmdb_id, date.key, $index); $event.stopPropagation();">
+                  <span class="material-symbols-outlined icon-btn">
+                    delete
+                  </span>
+                </a>
               </div>
               <div class="actions-bar">
                 <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title, title.content_type)" [class.is-mobile]="isMobile()">Add to List</a>

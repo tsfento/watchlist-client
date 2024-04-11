@@ -125,6 +125,18 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
     this.watchDates = this.datesBeforeSearch;
   }
 
+  deleteDate(tmdbId:number, date:string, index:number) {
+    this.userService.deleteWatchDate(this.currentUser!.username, tmdbId, date).subscribe({
+      next: (response:any) => {
+        // console.log(response);
+        this.watchDates[0][date].splice(index, 1);
+      },
+      error: (error:any) =>{
+        console.log(error);
+      }
+    });
+  }
+
   changeSort() {
     this.isAscendingOrder = !this.isAscendingOrder;
   }

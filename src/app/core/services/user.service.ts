@@ -45,6 +45,12 @@ export class UserService {
     // this.watchDates.unshift(watchDate);
   }
 
+  deleteWatchDate(username:string, tmdbId:number, date:string) {
+    console.log(tmdbId);
+
+    return this.http.delete<any>(`${environment.apiUrl}/users/${username}/watch_date/${tmdbId}/${date}`);
+  }
+
   getUserWatchDates() {
     if (this.currentUser !== null) {
       this.http.get(`${environment.apiUrl}/users/${this.currentUser?.username}/watch_dates`).subscribe({
