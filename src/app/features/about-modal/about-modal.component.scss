@@ -44,6 +44,11 @@
   background-color: #a5abbd;
 }
 
+.code-labs.is-mobile,
+.tmdb.is-mobile {
+  pointer-events: none;
+}
+
 .close-about-modal {
   cursor: pointer;
   background: none;

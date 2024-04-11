@@ -12,7 +12,11 @@ declare var window:any;
 export class AboutModalComponent implements OnInit {
   ngOnInit(): void {
     // auto-open for testing/styling
-    this.showAboutModal();
+    // this.showAboutModal();
+  }
+
+  isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
   // auto-open for testing/styling
