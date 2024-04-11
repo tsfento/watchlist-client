@@ -215,4 +215,9 @@ export class TmdbService {
   getRecommendationDetails(tmdbTitle:TmdbMovie, contentType:string) {
     return this.http.get<any>(`${environment.apiUrl}/tmdb/${contentType}/details/${tmdbTitle.id}`);
   }
+
+  resetRecommendations() {
+    this.recommendations = [];
+    this.gotRecommendations.next(this.recommendations.slice());
+  }
 }
