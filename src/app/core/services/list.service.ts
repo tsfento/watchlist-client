@@ -134,6 +134,10 @@ export class ListService {
     this.currentUserUsername = username;
   }
 
+  setListPrivacy(username:string, listId:number) {
+    return this.http.get<WatchList>(`${environment.apiUrl}/users/${username}/${listId}/set_privacy`);
+  }
+
   deleteList() {
     this.http.delete(`${environment.apiUrl}/users/${this.currentUserUsername}/lists/${this.listIdToDelete}`).subscribe();
     this.userLists.splice(this.listIndexToDelete, 1);

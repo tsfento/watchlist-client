@@ -332,6 +332,27 @@ export class ListsComponent implements OnInit, OnDestroy {
     }
   }
 
+  setListPrivacy(listId:number) {
+    const privacyElement:HTMLSpanElement | null = document.getElementById(`privacy${listId}`);
+
+    this.listService.setListPrivacy(this.currentUser!.username, listId).subscribe({
+      next: (response:WatchList) => {
+        if (response.private === true) {
+          privacyElement!.innerText = 'visibility_off';
+        } else if (response.private === false) {
+          privacyElement!.innerText = 'visibility';
+        }
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
+  }
+
+  checkListPrivacy(listIndex:number) {
+    return this.displayLists[listIndex].private;
+  }
+
   deleteList(listId:number, listIndex:number, username:string) {
     // TODO delete from local list
     this.listService.setListIdToDelete(listId, listIndex, username);

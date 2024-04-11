@@ -46,7 +46,10 @@
       <div class="list-container" (click)="list.watch_titles_count === 0 ? $event.stopPropagation() : showTitles(list.id, list.user.username)">
         <div class="list-header">
           <span class="list-title">{{ list.title }}</span>
-          <span><span class="created-by">created by:</span><span class="list-username">&nbsp;{{ list.user.username }}</span></span>
+          <div class="created-by">
+            <span>created by:</span>
+            <span class="list-username">&nbsp;{{ list.user.username }}</span>
+          </div>
         </div>
         @if (list.watch_titles_count !== 0) {
           <div class="list-posters">
@@ -63,6 +66,11 @@
           </div>
         }
         @if (list.user_id === currentUser?.id) {
+          <a class="list-private-btn" title="List Privacy" (click)="setListPrivacy(list.id); $event.stopPropagation();">
+            <span class="material-symbols-outlined icon-btn" id="privacy{{ list.id }}">
+              {{ list.private ? 'visibility_off' : 'visibility' }}
+            </span>
+          </a>
           <a class="list-delete-btn" title="Delete List" data-bs-toggle="modal" data-bs-target="#deleteListModal" (click)="deleteList(list.id, $index, currentUser!.username); $event.stopPropagation();">
             <span class="material-symbols-outlined icon-btn">
               delete

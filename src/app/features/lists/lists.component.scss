@@ -305,7 +305,6 @@ label.nav:hover {
   font-size: 15px;
   font-weight: bold;
   color: #f5f5f5;
-  margin-top: 10px;
 }
 
 .list-posters {
@@ -344,6 +343,20 @@ label.nav:hover {
     color: #f5f5f5;
     opacity: 25%;
   }
+}
+
+.list-private-btn {
+  z-index: 5;
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  scale: 115%;
+  color: #252e42;
+  transition: color 0.2s ease-in-out;
+}
+
+.list-private-btn:hover {
+  color: #3c91f9;
 }
 
 .list-delete-btn,
