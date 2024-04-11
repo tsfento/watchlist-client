@@ -29,6 +29,11 @@
 </div>
 <div class="titles-grid">
   <!-- titles -->
+  @if (searchResults.length === 0) {
+    <div class="no-results">
+      <span>No Results</span>
+    </div>
+  }
   @for (result of searchResults; track result.id) {
     <div class="title-actions-container">
       <div class="title-container">
