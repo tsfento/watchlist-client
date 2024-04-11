@@ -48,6 +48,7 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
       if (dates?.length !== 0) {
         this.watchDates = dates;
         this.datesBeforeSearch = this.watchDates;
+        // console.log(this.watchDates);
       } else {
         this.userService.getUserWatchDates();
       }
@@ -130,6 +131,9 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
       next: (response:any) => {
         // console.log(response);
         this.watchDates[0][date].splice(index, 1);
+        if (this.watchDates[0][date].length === 0) {
+          delete this.watchDates[0][date];
+        }
       },
       error: (error:any) =>{
         console.log(error);

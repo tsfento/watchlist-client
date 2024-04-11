@@ -46,8 +46,6 @@ export class UserService {
   }
 
   deleteWatchDate(username:string, tmdbId:number, date:string) {
-    console.log(tmdbId);
-
     return this.http.delete<any>(`${environment.apiUrl}/users/${username}/watch_date/${tmdbId}/${date}`);
   }
 
