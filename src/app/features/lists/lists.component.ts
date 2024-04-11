@@ -79,24 +79,27 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.listPageNum = 1;
     this.titlePageNum = 1;
 
-    this.listService.getAllLists(this.listPageNum);
+    // this.listService.getAllLists(this.listPageNum);
 
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
+
+      if (this.currentUser !== null) {
+        this.onToggle('user');
+      } else {
+        this.onToggle('all');
+      }
     });
 
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
       if (gotLists.length === 0) {
-        this.listsDone = false;
+        this.listsDone = true;
       } else {
         this.allLists = [...this.allLists, ...gotLists];
-        this.displayLists = this.allLists;
         this.listsDone = false;
-      }
-
-      if (this.currentUser === null) {
-        this.listType = 'all';
-        this.displayLists = this.allLists;
+        if (this.listType === 'all') {
+          this.displayLists = this.allLists;
+        }
       }
     });
 
@@ -106,11 +109,9 @@ export class ListsComponent implements OnInit, OnDestroy {
       } else {
         this.userLists = [...this.userLists, ...gotLists];
         this.listsDone = false;
-      }
-
-      if (this.currentUser !== null) {
-        this.listType = 'user';
-        this.displayLists = this.userLists;
+        if (this.listType === 'user') {
+          this.displayLists = this.userLists;
+        }
       }
     });
 
@@ -140,6 +141,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.listService.resetLists();
     this.currentUserSub.unsubscribe();
     this.gotAllListsSub.unsubscribe();
     this.gotUserListsSub.unsubscribe();
@@ -185,7 +187,6 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.allLists = [];
       this.listService.getAllLists(this.listPageNum);
-      this.displayLists = [];
       this.displayLists = this.allLists;
       this.isLoading = false;
     }
@@ -197,7 +198,6 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.userLists = [];
       this.listService.getUserLists(this.currentUser!.username, this.listPageNum);
-      this.displayLists = [];
       this.displayLists = this.userLists;
       this.isLoading = false;
     }
@@ -209,7 +209,6 @@ export class ListsComponent implements OnInit, OnDestroy {
       this.isLoading = true;
       this.followedLists = [];
       this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum);
-      this.displayLists = [];
       this.displayLists = this.followedLists;
       this.isLoading = false;
     }
@@ -254,7 +253,6 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.searchValue = searchInput.value;
     this.listService.searchTitlesInList(this.listViewingId, this.searchValue, 1).subscribe({
       next: (response:(WatchTitle[])) => {
-        // TODO flash no results
         if (response.length === 0) {
           this.noMoreResults = true;
         } else if (response.length < 20) {

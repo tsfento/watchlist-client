@@ -75,6 +75,15 @@ export class ListService {
     }
   }
 
+  resetLists() {
+    this.allLists = [];
+    this.userLists = [];
+    this.followedLists = [];
+    this.gotAllLists.next(this.allLists);
+    this.gotUserLists.next(this.userLists);
+    this.gotFollowedLists.next(this.followedLists);
+  }
+
   createList(username:string, form:FormData) {
     this.http.post<WatchList>(`${environment.apiUrl}/users/${username}/lists`, form).subscribe({
       next: (response:any) => {

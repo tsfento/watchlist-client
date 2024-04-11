@@ -526,10 +526,10 @@ label.nav:hover {
 }
 
 .no-results {
-  margin-top: 120px;
   min-height: 245px;
   display: flex;
-  justify-content: center;
+  justify-self: center;
+  align-items: center;
   span {
     font-size: 60px;
     font-weight: bold;

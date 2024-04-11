@@ -88,12 +88,12 @@
   </div>
   <!-- end list -->
 } @else {
-  @if (titles.length === 0) {
-    <div class="no-results">
-      <span>No Results</span>
-    </div>
-  } @else {
     <div class="titles-grid">
+      @if (titles.length === 0) {
+        <div class="no-results">
+          <span>No Results</span>
+        </div>
+      }
       <!-- titles -->
       @for (title of titles; track title.id) {
         <div class="title-actions-container">
@@ -141,4 +141,4 @@
       <!-- end titles -->
     </div>
   }
-}
+
