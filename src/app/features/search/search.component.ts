@@ -24,8 +24,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   currentUser:User | null = null;
   currentUserSub = new Subscription;
-  currentUserWatchTitles:UserWatchTitle[] | null = null;
-  currentUserWatchTitlesSub = new Subscription;
 
   searchValue:string = '';
   searchSub = new Subscription;
@@ -63,7 +61,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.currentUserSub.unsubscribe();
-    this.currentUserWatchTitlesSub.unsubscribe();
     this.searchSub.unsubscribe();
     this.searchResultsSub.unsubscribe();
   }
@@ -86,13 +83,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   setTitleWatched(title:TmdbMovie, contentType:string) {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
-      const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.tmdb_id);
+      const userWatchTitle = this.currentUser.user_watch_titles.find(u => u.watch_title.tmdb_id === title.id);
 
       if (userWatchTitle !== undefined) {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, title.tmdb_id);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType);
         userWatchTitle.watched = !userWatchTitle.watched;
       } else {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, title.tmdb_id);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType);
       }
     }
   }

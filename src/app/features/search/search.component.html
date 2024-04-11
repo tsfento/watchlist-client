@@ -54,7 +54,7 @@
         <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(result, searchType)" [class.is-mobile]="isMobile()">Add to List</a>
         <a class="text-action" (click)="setTitleWatched(result, searchType)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(result.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
         <div class="rating-btn-container">
-          <a (click)="setRating(false, result, searchType)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
+          <a (click)="setRating(false, result, searchType)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.id)?.rating === null" [class.is-mobile]="isMobile()">
             thumb_down
           </span></a>
           <a (click)="setRating(true, result, searchType)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">

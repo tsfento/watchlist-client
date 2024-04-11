@@ -121,19 +121,21 @@
               </a>
             }
           </div>
-          <div class="actions-bar">
-            <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title, title.content_type)" [class.is-mobile]="isMobile()">Add to List</a>
-            <a class="text-action" (click)="setTitleWatched(title, title.content_type)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.watched ? 'Watched' : 'Unwatched' }}</a>
-            <div class="rating-btn-container">
-              <a (click)="setRating(false, title, title.content_type)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
-                thumb_down
-              </span></a>
-              <a (click)="setRating(true, title, title.content_type)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
-                thumb_up
-              </span></a>
+          @if (currentUser !== null) {
+            <div class="actions-bar">
+              <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(title, title.content_type)" [class.is-mobile]="isMobile()">Add to List</a>
+              <a class="text-action" (click)="setTitleWatched(title, title.content_type)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+              <div class="rating-btn-container">
+                <a (click)="setRating(false, title, title.content_type)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
+                  thumb_down
+                </span></a>
+                <a (click)="setRating(true, title, title.content_type)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(title.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
+                  thumb_up
+                </span></a>
+              </div>
+              <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title, title.content_type, title.tmdb_id)" [class.is-mobile]="isMobile()">Add Watch Date</a>
             </div>
-            <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(title, title.content_type, title.tmdb_id)" [class.is-mobile]="isMobile()">Add Watch Date</a>
-          </div>
+          }
         </div>
       }
       <!-- end titles -->
