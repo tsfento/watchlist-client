@@ -246,6 +246,15 @@ label.nav:hover {
   background-color: #557091;
   color: #4a5369;
 }
+
+.list-error {
+  border-color: rgb(241, 174, 181);
+  background-color: rgb(248, 215, 218);
+}
+
+.list-error::placeholder {
+  color: red;
+}
 // end new list bar
 
 // lists css

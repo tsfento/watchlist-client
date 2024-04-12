@@ -29,14 +29,18 @@
 <!-- end list toggle bar -->
 <div class="new-list-bar" [class.active]="!isViewingTitles && currentUser !== null">
   <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList(); user_toggle.checked = true;">
+    @if (listTitleError !== '') {
+      <input class="list-error" type="text" formControlName="title" placeholder="List title already exists">
+    } @else {
       <input type="text" formControlName="title" placeholder="Create a new list...">
-      <label for="private">Private?</label>
-      <input type="checkbox" formControlName="private">
-      <button type="submit" class="btn-new-list" [disabled]="!newListForm.valid">
-        <span class="material-symbols-outlined">
-          add
-        </span>
-      </button>
+    }
+    <label for="private">Private?</label>
+    <input type="checkbox" formControlName="private">
+    <button type="submit" class="btn-new-list" [disabled]="!newListForm.valid">
+      <span class="material-symbols-outlined">
+        add
+      </span>
+    </button>
   </form>
 </div>
 @if (!isViewingTitles) {

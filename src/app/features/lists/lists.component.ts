@@ -44,8 +44,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   noMoreResults = true;
   listType:string = '';
   isLoading:boolean = false;
-  pageX:number = 0;
-  pageY:number = 0;
+  listTitleError:string = '';
+  gotListErrorSub = new Subscription;
 
   gotAllListsSub = new Subscription;
   gotUserListsSub = new Subscription;
@@ -116,6 +116,15 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
       if (gotTitles.length !== 0) {
         this.titles = gotTitles;
+      }
+    });
+
+    this.gotListErrorSub = this.listService.listErrorSubject.subscribe((error) => {
+      if (error !== '') {
+        this.listTitleError = 'List ' + error;
+        setTimeout(() => {
+          this.listTitleError = '';
+        }, 2000);
       }
     });
   }

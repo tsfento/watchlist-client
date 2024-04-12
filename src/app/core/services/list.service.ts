@@ -15,7 +15,7 @@ export class ListService {
   gotUserLists = new BehaviorSubject<WatchList[]>([]);
   followedLists:WatchList[] = [];
   gotFollowedLists = new BehaviorSubject<WatchList[]>([]);
-  // resetUserListsSubject = new BehaviorSubject<boolean>(false);
+  listErrorSubject = new BehaviorSubject<string>('');
 
   listIdToDelete:number = 0;
   listIndexToDelete:number = 0;
@@ -87,7 +87,8 @@ export class ListService {
         this.gotUserLists.next(this.userLists.slice());
       },
       error: (response:any) => {
-        console.log(response.error);
+        // console.log(response.error['title'][0]);
+        this.listErrorSubject.next(response.error['title'][0]);
       }
     });
   }
