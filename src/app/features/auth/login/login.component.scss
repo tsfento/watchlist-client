@@ -119,17 +119,20 @@ label.nav:hover {
 }
 // end toggle bar
 
-@media screen and (max-width: 1200px) {
+.alert {
+  border-radius: 0;
+  padding: 5px;
+  text-align: center;
+}
+
+@media screen and (max-width: 1280px) {
   .login-container {
     scale: 80%;
   }
 }
 
-@media screen and (max-width: 992px) {
-  .login-container {
-    scale: 60%;
-  }
-}
-
-@media (hover:none) {
-}
+// @media screen and (max-width: 1024px) {
+//   .login-container {
+//     scale: 60%;
+//   }
+// }

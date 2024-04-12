@@ -24,6 +24,11 @@
         <label for="password">Password</label>
         <input type="password" formControlName="password">
       </div>
+      @if (loginError !== '') {
+        <div class="alert alert-danger error">
+          <span>{{ loginError }}</span>
+        </div>
+      }
       <button type="submit" [disabled]="!loginForm.valid">Login</button>
     </form>
     <!-- end login -->
@@ -36,18 +41,38 @@
         <label for="email">Email</label>
         <input type="text" formControlName="email">
       </div>
+      @if (emailError !== '') {
+        <div class="alert alert-danger error">
+          <span>{{ emailError }}</span>
+        </div>
+      }
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" formControlName="username">
       </div>
+      @if (usernameError !== '') {
+        <div class="alert alert-danger error">
+          <span>{{ usernameError }}</span>
+        </div>
+      }
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" formControlName="password">
       </div>
+      @if (passwordError !== '') {
+        <div class="alert alert-danger error">
+          <span>{{ passwordError }}</span>
+        </div>
+      }
       <div class="form-group">
         <label for="password_confirmation">Confirm Password</label>
         <input type="password" formControlName="password_confirmation">
       </div>
+      @if (confirmationError !== '') {
+        <div class="alert alert-danger error">
+          <span>{{ confirmationError }}</span>
+        </div>
+      }
       <button type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
     </form>
     <!-- end sign up -->

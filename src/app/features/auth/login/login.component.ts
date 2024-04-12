@@ -23,6 +23,12 @@ export class LoginComponent {
     password_confirmation: new FormControl('', Validators.required)
   });
 
+  emailError:string ='';
+  usernameError:string ='';
+  passwordError:string ='';
+  confirmationError:string ='';
+  loginError:string = '';
+
   constructor(private authService:AuthenticationService, private router:Router) {}
 
   login() {
@@ -32,11 +38,12 @@ export class LoginComponent {
 
       this.authService.login(username, password).subscribe({
         next: (response:any) => {
-          // console.log(response);
           this.router.navigate(['/lists']);
         },
         error: (error:any) => {
-          console.log('Error logging in', error);
+          if (error.error['error'] === 'unauthorized') {
+            this.loginError = 'Invalid Credentials'
+          }
         }
       });
     }
@@ -54,7 +61,13 @@ export class LoginComponent {
           this.isLoggingIn = true;
         },
         error: (error:any) => {
-          console.log('Error signing up', error);
+          // if (error.error['email'][0] === 'has already been taken') {
+          //   this.emailError = 'Email is forbidden';
+          // } else {
+          this.emailError = 'Email ' + error.error['email'][0] || '';
+          this.usernameError = 'Username ' + error.error['username'][0] || '';
+          this.passwordError = 'Password ' + error.error['password'][0] || '';
+          this.confirmationError = 'Confirmation ' + error.error['password_confirmation'][0] || '';
         }
       });
     }
@@ -64,9 +77,12 @@ export class LoginComponent {
     switch (option) {
       case 'login':
         this.isLoggingIn = true;
+        this.signUpForm.reset();
         break;
       case 'signup':
         this.isLoggingIn = false;
+        this.loginForm.reset()
+        this.loginError = '';
         break;
     }
   }
