@@ -87,7 +87,6 @@ export class ListService {
         this.gotUserLists.next(this.userLists.slice());
       },
       error: (response:any) => {
-        // console.log(response.error['title'][0]);
         this.listErrorSubject.next(response.error['title'][0]);
       }
     });

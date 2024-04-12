@@ -134,12 +134,26 @@
   .title {
     font-size: 3rem;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.70);
   }
   .year {
     font-size: 3rem;
     font-weight: 500;
+  }
+  span {
     color: rgba(0, 0, 0, 0.70);
+    transition: color 0.2s ease-in-out;
+  }
+}
+
+.details-header a {
+  text-decoration: none;
+}
+
+.details-header:hover {
+  .title,
+  .year {
+    color: rgba(60, 145, 249, 1);
+    transition: color 0.2s ease-in-out;
   }
 }
 
