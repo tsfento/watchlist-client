@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.gotRecommendationsSub = this.tmdbService.gotRecommendations.subscribe((recs) => {
-      if (recs?.length !== 0) {
+      if (recs.length !== 0) {
         this.recommendations = recs;
       } else {
         this.getInitialRecommendations();
