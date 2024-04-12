@@ -80,26 +80,11 @@ export class ListService {
     }
   }
 
-  // resetAllLists() {
-  //   this.allLists = [];
-  //   this.gotAllLists.next(this.allLists.slice());
-  // }
-
-  // resetUserLists() {
-  //   this.userLists = [];
-  //   this.gotUserLists.next(this.userLists.slice());
-  // }
-
-  // resetFollowedLists() {
-  //   this.followedLists = [];
-  //   this.gotFollowedLists.next(this.followedLists.slice());
-  // }
-
   createList(username:string, form:FormData) {
     this.http.post<WatchList>(`${environment.apiUrl}/users/${username}/lists`, form).subscribe({
       next: (response:WatchList) => {
-        // this.resetUserLists();
-        // this.resetUserListsSubject.next(true);
+        this.userLists.push(response);
+        this.gotUserLists.next(this.userLists.slice());
       },
       error: (response:any) => {
         console.log(response.error);
