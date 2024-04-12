@@ -30,10 +30,9 @@ export class ListService {
   getAllLists() {
     this.http.get<WatchList[]>(`${environment.apiUrl}/lists?page=${this.allListsPageNum}`).subscribe({
       next: (response:WatchList[]) => {
-        this.allLists = [...this.allLists, ...response];
-
         if (response.length !== 0) {
-          this.gotAllLists.next(response);
+          this.allLists = [...this.allLists, ...response];
+          this.gotAllLists.next(this.allLists.slice());
           this.allListsPageNum++
         }
       },
@@ -44,11 +43,9 @@ export class ListService {
   }
 
   getUserLists(username:string) {
-    console.log(this.userListsPageNum);
     if (username !== '') {
       this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/lists?page=${this.userListsPageNum}`).subscribe({
         next: (response:WatchList[]) => {
-          console.log(response);
           if (response.length !== 0) {
             this.userLists = [...this.userLists, ...response];
             this.gotUserLists.next(this.userLists.slice());
@@ -70,10 +67,9 @@ export class ListService {
     if (username !== '') {
       this.http.get<WatchList[]>(`${environment.apiUrl}/users/${username}/followed_lists?page=${this.followedListsPageNum}`).subscribe({
         next: (response:WatchList[]) => {
-          this.followedLists = [...this.followedLists, ...response];
-
           if (response.length !== 0) {
-            this.gotFollowedLists.next(response);
+            this.followedLists = [...this.followedLists, ...response];
+            this.gotFollowedLists.next(this.followedLists.slice());
             this.followedListsPageNum++
           }
         },

@@ -14,6 +14,8 @@ import { UserWatchTitle } from '../../shared/models/user-watch-title';
 export class TitleService {
   listTitles:WatchTitle[] = [];
   gotListTitles = new BehaviorSubject<WatchTitle[]>([]);
+  listTitlesPageNum:number = 1;
+  currentListId:number = 0;
 
   titleToAddSubject = new BehaviorSubject<WatchTitleSend>(new WatchTitleSend(-1, '', '', '', '', '', -1, ''));
   titleTmdbId:number = 0;
@@ -22,19 +24,32 @@ export class TitleService {
 
   constructor(private http:HttpClient, private userService:UserService) { }
 
-  getTitles(id:number, username:string, pageNum:number) {
-    this.http.get<WatchTitle[]>(`${environment.apiUrl}/users/${username}/lists/${id}?page=${pageNum}`).subscribe({
+  getTitles(id:number, username:string) {
+    if (this.currentListId !== id) {
+      this.resetTitles();
+      this.currentListId = id;
+    }
+
+    this.http.get<WatchTitle[]>(`${environment.apiUrl}/users/${username}/lists/${id}?page=${this.listTitlesPageNum}`).subscribe({
       next: (response:WatchTitle[]) => {
-        this.listTitles = response;
-        // console.log(response);
+        if (response !== null) {
+          if (response.length !== 0) {
+            this.listTitles = [...this.listTitles, ...response];
+            this.gotListTitles.next(this.listTitles.slice());
+            this.listTitlesPageNum++
+          }
+        }
       },
       error: (error:any) => {
         console.error(error);
-      },
-      complete: () => {
-        this.gotListTitles.next(this.listTitles.slice());
       }
     });
+  }
+
+  resetTitles() {
+    this.listTitles = [];
+    this.listTitlesPageNum = 1;
+    this.currentListId = 0;
   }
 
   deleteTitle(username:string, listId:number, tmdbId:number) {
@@ -111,7 +126,6 @@ export class TitleService {
 
     this.http.post<UserWatchTitle>(`${environment.apiUrl}/users/${username}/set_watched`, postBody).subscribe({
       next: (response:UserWatchTitle) => {
-        // console.log(response.watched);
         this.userService.addUserWatchTitle(response);
       },
       error: (error:any) => {

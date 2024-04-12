@@ -35,8 +35,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   allLists:WatchList[] = [];
   userLists:WatchList[] = [];
   followedLists:WatchList[] = [];
-  listsDone:boolean = false;
   titles:WatchTitle[] = [];
+  titlesBeforeSearching:WatchTitle[] = [];
   noMoreTitles:boolean = false;
   isSearching:boolean = false;
   searchValue:string = '';
@@ -44,7 +44,6 @@ export class ListsComponent implements OnInit, OnDestroy {
   noMoreResults = true;
   listType:string = '';
   isLoading:boolean = false;
-  titlePageNum:number = 1;
   pageX:number = 0;
   pageY:number = 0;
 
@@ -58,7 +57,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
     if (!this.isViewingTitles) {
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.listsDone){
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
         this.loadNextPageLists();
       }
     } else if (this.isViewingTitles) {
@@ -87,56 +86,42 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.allLists = gotLists;
-        this.listsDone = false;
 
         if (this.listType === 'all') {
           this.displayLists = this.allLists;
         }
-      } else {
-        this.listsDone = true;
       }
     });
 
     this.gotUserListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.userLists = gotLists;
-        this.listsDone = false;
 
         if (this.listType === 'user') {
           this.displayLists = this.userLists;
         }
-      } else {
-        this.listsDone = true;
       }
     });
 
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
       if (gotLists.length !== 0) {
         this.followedLists = gotLists;
-        this.listsDone = false;
 
         if (this.listType === 'follow') {
           this.displayLists = this.followedLists;
         }
-      } else {
-        this.listsDone = true;
       }
     });
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
-      if (gotTitles.length === 0) {
-        this.noMoreTitles = true;
-      } else if (gotTitles.length < 20) {
-        this.noMoreTitles = true;
-        this.titles = [...this.titles, ...gotTitles];
-      } else {
-        this.noMoreTitles = false;
-        this.titles = [...this.titles, ...gotTitles];
+      if (gotTitles.length !== 0) {
+        this.titles = gotTitles;
       }
     });
   }
 
   ngOnDestroy(): void {
+    this.titleService.resetTitles();
     this.currentUserSub.unsubscribe();
     this.gotAllListsSub.unsubscribe();
     this.gotUserListsSub.unsubscribe();
@@ -193,7 +178,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   showTitles(listId:number, username:string) {
     this.titles = [];
-    this.titleService.getTitles(listId, username, this.titlePageNum);
+    this.titleService.getTitles(listId, username);
 
     this.isViewingTitles = true;
     this.displayLists = [];
@@ -202,12 +187,9 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   closeTitles(searchInput:HTMLInputElement) {
-    // this.isSearching = false;
-    // this.noMoreTitles = false;
-    // this.noMoreResults = false;
+    this.isSearching = false;
     searchInput.value = '';
-    this.titles = [];
-    // this.titlePageNum = 1;
+    this.titleService.resetTitles();
     switch (this.listType) {
       case 'all':
         this.onToggle('all');
@@ -223,6 +205,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   searchTitles(searchInput:HTMLInputElement) {
+    this.titlesBeforeSearching = this.titles;
     this.titles = [];
     this.isSearching = true;
     this.searchValue = searchInput.value;
@@ -245,11 +228,9 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   resetSearch(searchInput:HTMLInputElement) {
-    this.titlePageNum = 1;
     this.isSearching = false;
     searchInput.value = '';
-    this.titles = [];
-    this.titleService.getTitles(this.listViewingId, this.listViewingUsername, 1);
+    this.titles = this.titlesBeforeSearching;
   }
 
   randomTitle(searchInput:HTMLInputElement) {
@@ -328,7 +309,6 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   deleteList(listId:number, listIndex:number, username:string) {
-    // TODO delete from local list
     this.listService.setListIdToDelete(listId, listIndex, username);
   }
 
@@ -337,32 +317,25 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   loadNextPageLists() {
-    console.log(this.listType);
     this.isLoading = true;
 
     switch (this.listType) {
       case 'all':
-        // this.listService.getAllLists(this.listPageNum + 1);
         this.listService.getAllLists();
         break;
       case 'user':
-        console.log('loading');
-        // this.listService.getUserLists(this.currentUser!.username, this.listPageNum + 1);
         this.listService.getUserLists(this.currentUser!.username);
         break;
       case 'follow':
-        // this.listService.getFollowedLists(this.currentUser!.username, this.listPageNum + 1);
         this.listService.getFollowedLists(this.currentUser!.username);
         break;
     }
 
-    // this.listPageNum++;
     this.isLoading = false;
   }
 
   loadNextPageTitles() {
-    this.titleService.getTitles(this.listViewingId, this.listViewingUsername, this.titlePageNum + 1);
-    this.titlePageNum++;
+    this.titleService.getTitles(this.listViewingId, this.listViewingUsername);
   }
 
   loadNextPageSearchTitles() {
