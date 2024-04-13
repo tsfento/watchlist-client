@@ -95,7 +95,15 @@ export class ListService {
   followList(username:string, listId:number) {
     this.http.get<WatchList>(`${environment.apiUrl}/users/follow_list/${listId}`).subscribe({
       next: (response:any) => {
-        // this.getFollowedLists(username, pageNum);
+        // const list = this.allLists.find(l => l.id === listId);
+        // if (list !== undefined) {
+        //   if (!this.followedLists.some(l => l.id === listId)) {
+        //     this.followedLists.push(list);
+        //   }
+        //   this.gotFollowedLists.next(this.followedLists.slice());
+        // }
+        this.followedListsPageNum = 1;
+        this.getFollowedLists(username);
       },
       error: (response:any) => {
         console.log(response.error);
@@ -106,7 +114,14 @@ export class ListService {
   unfollowList(username:string, listId:number) {
     this.http.get<WatchList>(`${environment.apiUrl}/users/unfollow_list/${listId}`).subscribe({
       next: (response:any) => {
-        // this.getFollowedLists(username, pageNum);
+        const list = this.followedLists.find(l => l.id === listId);
+        if (list !== undefined) {
+          const index = this.followedLists.indexOf(list);
+          this.followedLists.splice(index, 1);
+          this.gotFollowedLists.next(this.followedLists.slice());
+        }
+        // this.followedListsPageNum = 1;
+        // this.getFollowedLists(username);
       },
       error: (response:any) => {
         console.log(response.error);
@@ -139,7 +154,5 @@ export class ListService {
     this.http.delete(`${environment.apiUrl}/users/${this.currentUserUsername}/lists/${this.listIdToDelete}`).subscribe();
     this.userLists.splice(this.listIndexToDelete, 1);
     this.gotUserLists.next(this.userLists.slice());
-    // this.resetUserLists();
-    // this.resetUserListsSubject.next(true);
   }
 }

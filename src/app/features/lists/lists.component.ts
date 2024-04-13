@@ -84,33 +84,27 @@ export class ListsComponent implements OnInit, OnDestroy {
     });
 
     this.gotAllListsSub = this.listService.gotAllLists.subscribe((gotLists) => {
-      if (gotLists.length !== 0) {
-        this.allLists = gotLists;
+      this.allLists = gotLists;
 
-        if (this.listType === 'all') {
-          this.displayLists = this.allLists;
-        }
+      if (this.listType === 'all') {
+        this.displayLists = this.allLists;
       }
     });
 
     this.gotUserListsSub = this.listService.gotUserLists.subscribe((gotLists) => {
-      if (gotLists.length !== 0) {
-        this.userLists = gotLists;
+      this.userLists = gotLists;
 
-        if (this.listType === 'user') {
-          this.displayLists = this.userLists;
-        }
+      if (this.listType === 'user') {
+        this.displayLists = this.userLists;
       }
     });
 
     this.gotFollowedListsSub = this.listService.gotFollowedLists.subscribe((gotLists) => {
-      if (gotLists.length !== 0) {
-        this.followedLists = gotLists;
+      this.followedLists = gotLists;
 
-        if (this.listType === 'follow') {
-          this.displayLists = this.followedLists;
-        }
-      }
+      // if (this.listType === 'follow') {
+      //   this.displayLists = this.followedLists;
+      // }
     });
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
