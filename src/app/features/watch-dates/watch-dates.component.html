@@ -1,13 +1,21 @@
 <div class="date-search-bar" [class.active]="searchType === 'date'">
   <input #dateInput type="date" value="{{ todaysDate }}" max="{{ todaysDate }}">
-  <button class="search-date" (click)="searchDate(dateInput)">Search</button>
-  <button class="toggle-search" (click)="toggleSearch('title')">By Title</button>
+  <button class="search-date" (click)="searchDate(dateInput)">
+    <span class="material-symbols-outlined">
+      search
+    </span>
+  </button>
+  <button class="toggle-search" (click)="toggleSearch('title')">Title</button>
   <button class="reset-search" (click)="resetDateSearch(dateInput)" [disabled]="!isSearching">Reset</button>
 </div>
 <div class="title-search-bar" [class.active]="searchType === 'title'">
   <input #titleInput type="search" placeholder="Search titles..." (keyup.enter)="searchTitle(titleInput)">
-  <button class="search-date" (click)="searchTitle(titleInput)">Search</button>
-  <button class="toggle-search" (click)="toggleSearch('date')">By Date</button>
+  <button class="search-title" (click)="searchTitle(titleInput)">
+    <span class="material-symbols-outlined">
+      search
+    </span>
+  </button>
+  <button class="toggle-search" (click)="toggleSearch('date')">Date</button>
   <button class="reset-search" (click)="resetTitleSearch(titleInput)" [disabled]="!isSearching">Reset</button>
 </div>
 <div class="history-grid">
