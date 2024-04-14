@@ -1,17 +1,43 @@
-.search-bar {
+.date-search-bar {
   z-index: 5;
   min-height: 40px;
   display: flex;
   width: 60%;
+  gap: 10px;
   overflow: hidden;
   justify-content: center;
   position: fixed;
-  top: 75px;
+  top: -75px;
   transition: top 0.5s ease;
 }
 
-.search-bar input {
+.title-search-bar {
+  z-index: 5;
+  min-height: 40px;
+  display: flex;
+  width: 60%;
+  gap: 10px;
+  overflow: hidden;
+  justify-content: center;
+  position: fixed;
+  top: -75px;
+  transition: top 0.5s ease;
+}
+
+.date-search-bar.active,
+.title-search-bar.active {
+  top: 75px;
+}
+
+.date-search-bar input {
   text-align: center;
+  height: 40px;
+  padding: 0 0.5em;
+  font-size: 1.2rem;
+  width: 25%;
+}
+
+.title-search-bar input {
   height: 40px;
   padding: 0 0.5em;
   font-size: 1.2rem;
@@ -22,7 +48,6 @@
   cursor: pointer;
   background: #3c91f9;
   height: 40px;
-  margin-left: 10px;
   width: 100px;
   border: none;
   font-size: 1.5rem;
@@ -34,8 +59,6 @@
   cursor: pointer;
   background: #3c91f9;
   height: 40px;
-  // margin-top: 10px;
-  margin-left: 10px;
   width: 80px;
   border: none;
   font-size: 1.5rem;
@@ -43,8 +66,20 @@
   transition: color 0.2s ease-in-out;
 }
 
+.toggle-search {
+  cursor: pointer;
+  background: #3c91f9;
+  height: 40px;
+  width: 100px;
+  border: none;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  transition: color 0.2s ease-in-out;
+}
+
 .search-date:hover,
-.reset-search:hover {
+.reset-search:hover,
+.toggle-search:hover {
   background-color: #00b5ff;
 }
 

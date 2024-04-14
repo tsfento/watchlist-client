@@ -32,6 +32,7 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
   };
   todaysDate = new Date(Date.now()).toISOString().split('T')[0];
   isSearching = false;
+  searchType:string = 'date';
 
   constructor(private userService:UserService, public titleService:TitleService) {}
 
@@ -117,13 +118,36 @@ export class WatchDatesComponent implements OnInit, OnDestroy {
       error: (error:any) => {
         console.log(error);
       }
-    })
+    });
   }
 
-  resetSearch(dateInput:HTMLInputElement) {
+  searchTitle(titleInput:HTMLInputElement) {
+    this.isSearching = true;
+    this.userService.searchTitleWatchDates(titleInput.value).subscribe({
+      next: (response:any) => {
+        this.watchDates = response;
+      },
+      error: (error:any) => {
+        console.log(error);
+      }
+    });
+  }
+
+
+  resetDateSearch(dateInput:HTMLInputElement) {
     this.isSearching = false;
     dateInput.value = this.todaysDate;
     this.watchDates = this.datesBeforeSearch;
+  }
+
+  resetTitleSearch(titleInput:HTMLInputElement) {
+    this.isSearching = false;
+    titleInput.value = '';
+    this.watchDates = this.datesBeforeSearch;
+  }
+
+  toggleSearch(type:string) {
+    type === 'date' ? this.searchType = 'date' : this.searchType = 'title';
   }
 
   deleteDate(tmdbId:number, date:string, index:number) {

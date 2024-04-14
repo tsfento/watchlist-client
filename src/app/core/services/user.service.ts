@@ -68,4 +68,10 @@ export class UserService {
       date: dateToSearch
     });
   }
+
+  searchTitleWatchDates(titleToSearch:string) {
+    return this.http.post(`${environment.apiUrl}/users/${this.currentUser?.username}/watch_dates`, {
+      search: titleToSearch
+    });
+  }
 }
