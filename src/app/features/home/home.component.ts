@@ -57,6 +57,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
     if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+      this.isLoading = true;
       this.loadNextPageRecs();
     }
   }
@@ -251,7 +252,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loadNextPageRecs() {
     if (this.ratedPositive.length !== 0) {
-      this.isLoading = true;
+      // this.isLoading = true;
       for (let i = this.recsIndex; i < this.recsIndex + 5; i++) {
         if (this.recsIndex !== this.ratedPositive.length) {
           this.tmdbService.getRecommendations(this.ratedPositive[i].watch_title.content_type, this.ratedPositive[i].watch_title, this.recommendations);

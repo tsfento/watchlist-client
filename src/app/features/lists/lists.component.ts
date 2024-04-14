@@ -58,12 +58,15 @@ export class ListsComponent implements OnInit, OnDestroy {
   onWindowScroll(){
     if (!this.isViewingTitles) {
       if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+        this.isLoading = true;
         this.loadNextPageLists();
       }
     } else if (this.isViewingTitles) {
       if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.noMoreTitles){
+        this.isLoading = true;
         this.loadNextPageTitles();
       } else if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&this.isSearching&&!this.noMoreResults){
+        this.isLoading = true;
         this.loadNextPageSearchTitles();
       }
     }
@@ -320,7 +323,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   loadNextPageLists() {
-    this.isLoading = true;
+    // this.isLoading = true;
 
     switch (this.listType) {
       case 'all':
@@ -339,6 +342,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   loadNextPageTitles() {
     this.titleService.getTitles(this.listViewingId, this.listViewingUsername);
+    this.isLoading = false;
   }
 
   loadNextPageSearchTitles() {
@@ -354,6 +358,7 @@ export class ListsComponent implements OnInit, OnDestroy {
           this.noMoreResults = false;
           this.titles = [...this.titles, ...response];
         }
+        this.isLoading = false;
       },
       error: (error:any) => {
         console.log(error);
