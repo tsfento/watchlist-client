@@ -83,5 +83,10 @@
 
 <div class="mobile-search-bar" [class.is-mobile]="isMobile()" [class.active]="mobileSearchActive">
   <input type="search" class="mobile-nav-search-input" placeholder="Search for a title..." #mobileSearchInput (keyup.enter)="onSearch(mobileSearchInput)">
+  <button class="mobile-search-btn" (click)="onSearch(mobileSearchInput)">
+    <span class="material-symbols-outlined">
+      search
+    </span>
+  </button>
 </div>
 <!-- end mobile nav -->

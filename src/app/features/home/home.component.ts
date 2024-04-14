@@ -72,9 +72,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.ratedPositive = this.currentUser.user_watch_titles.filter(u => u.rating === true);
         this.ratedPositive = this.shuffle(this.ratedPositive);
 
-        if (this.recommendations.length === 0) {
-          this.getInitialRecommendations();
-        }
+        // if (this.recommendations.length === 0) {
+        //   this.getInitialRecommendations();
+        // }
       }
     });
 

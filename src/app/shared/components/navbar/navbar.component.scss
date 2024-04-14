@@ -205,6 +205,26 @@
   input {
     height: 40px;
   }
+
+  .mobile-search-btn {
+    height: 40px;
+  }
+}
+
+.mobile-search-btn {
+  cursor: pointer;
+  background: #3c91f9;
+  max-height: 40px;
+  height: 10px;
+  width: 50px;
+  border: none;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  transition: height 0.4s ease;
+
+  span {
+    vertical-align: text-bottom;
+  }
 }
 
 // toggle mobile
@@ -220,9 +240,14 @@
 .mobile-home.is-mobile,
 .mobile-lists.is-mobile,
 .mobile-search.is-mobile,
-.mobile-history.is-mobile,
-.mobile-search-bar.is-mobile {
+.mobile-history.is-mobile {
   display: block;
+}
+
+.mobile-search-bar.is-mobile {
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  gap: 10px;
 }
 // end toggle mobile
 
