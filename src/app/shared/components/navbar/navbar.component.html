@@ -2,24 +2,16 @@
   <div class="branding">
     <a routerLink="/" (click)="clearSearch()">WeWatch</a>
   </div>
-
-  @if (isLoggedIn()) {
-    <div class="nav-search-bar" [class.is-mobile]="isMobile()">
-      <input type="search" class="nav-search-input" placeholder="Search for a title..." #searchInput (keyup.enter)="onSearch(searchInput)">
-      <!-- <button type="submit" class="nav-search-submit" (click)="onSearch(searchInput)"> -->
-      <button type="submit" class="nav-search-submit">
-        <span class="material-symbols-outlined icon-btn">
-          search
-        </span>
-      </button>
-    </div>
-  }
-
   <div class="btn-container">
     @if (isLoggedIn()) {
       <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
         <span class="material-symbols-outlined icon-btn">
           home
+        </span>
+      </a>
+      <a class="nav-btn hover-btn nav-search-btn" [class.is-mobile]="isMobile()" [class.active]="topSearchActive || this.router.url === '/search'" (click)="clickedTopSearch()">
+        <span class="material-symbols-outlined icon-btn">
+          search
         </span>
       </a>
       <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
@@ -79,6 +71,15 @@
       </span>
     </a>
   </div>
+</div>
+
+<div class="top-search-bar" [class.is-mobile]="isMobile()" [class.active]="topSearchActive">
+  <input type="search" class="top-nav-search-input" placeholder="Search for a title..." #topSearchInput (keyup.enter)="onSearch(topSearchInput)">
+  <button class="top-search-btn" (click)="onSearch(topSearchInput)">
+    <span class="material-symbols-outlined">
+      search
+    </span>
+  </button>
 </div>
 
 <div class="mobile-search-bar" [class.is-mobile]="isMobile()" [class.active]="mobileSearchActive">

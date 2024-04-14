@@ -60,32 +60,53 @@
 }
 
 // new search
-.nav-search-bar {
-  display: flex;
-  margin: 0 20px;
-  height: 40px;
-  width: 40px;
-  padding: 3px;
-  position: relative;
-  transition: width .3s ease-in-out;
-  overflow: hidden;
+.top-search-bar {
+  // display: none;
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  gap: 10px;
+  z-index: 50;
+  min-height: 40px;
+  padding: 0px 10px;
+  width: 60%;
+  position: fixed;
+  top: 10px;
+  transition: top 0.5s ease;
 }
 
-.nav-search-input {
-  flex-grow: 1;
-  font-size: 1.2rem;
+.top-search-bar input {
+  height: 10px;
   padding: 0 0.5em;
-  border: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  line-height: 37px;
-  opacity: 0;
-  cursor: pointer;
+  font-size: 1.2rem;
+  width: 100%;
+  transition: height 0.4s ease;
 }
 
-.nav-search-input:focus {
-  outline: 0;
+.top-search-bar.active {
+  top: 75px;
+  input {
+    height: 40px;
+  }
+
+  .top-search-btn {
+    height: 40px;
+  }
+}
+
+.top-search-btn {
+  cursor: pointer;
+  background: #3c91f9;
+  max-height: 40px;
+  height: 10px;
+  width: 50px;
+  border: none;
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  transition: height 0.4s ease;
+
+  span {
+    vertical-align: text-bottom;
+  }
 }
 
 .icon-btn {
@@ -100,36 +121,8 @@
   color: #3c91f9;
 }
 
-.nav-search-submit {
-  cursor: pointer;
-  border: 0;
-  background: transparent;
-  width: 20px;
-  height: 30px;
-  margin-left: auto;
-}
-
-.nav-search-bar:focus-within {
-  width: 70%;
-
-  .nav-search-input {
-    opacity: 1;
-    cursor: initial;
-    width: calc(100% - 40px);
-  }
-
-  .search-btn {
-    color: #3c91f9;
-  }
-
-  .search-btn:hover {
-    color: #00b5ff;
-  }
-
-  .nav-search-submit:focus,
-  .nav-search-submit:hover {
-    outline: 0;
-  }
+.nav-search-btn.active {
+  color: #3c91f9;
 }
 
 .mobile-navbar {
@@ -138,14 +131,9 @@
   position: fixed;
   min-width: 100%;
   bottom: 0;
-  // display: flex;
-  // flex-direction: row;
-  // justify-content: space-around;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  // grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
   background-color: #252e42;
-  // padding: 10px 0;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
@@ -255,10 +243,18 @@
   .navbar {
     width: 80%;
   }
+
+  .top-search-bar {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 1024px) {
   .navbar {
+    width: 100%;
+  }
+
+  .top-search-bar {
     width: 100%;
   }
 }

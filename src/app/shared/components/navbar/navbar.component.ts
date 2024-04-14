@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentUser:User | null = null;
   currentUserSub = new Subscription;
 
+  topSearchActive:boolean = false;
   mobileSearchActive:boolean = false;
 
   isSearching:boolean = false;
@@ -49,9 +50,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  toggleSearching() {
-    this.isSearching = !this.isSearching;
-  }
+  // toggleSearching() {
+  //   this.isSearching = !this.isSearching;
+  // }
 
   clearSearch() {
     if (this.searchElement !== null) {
@@ -61,6 +62,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onSearch(search:HTMLInputElement) {
     this.searchElement = search;
+    this.topSearchActive = false;
     this.mobileSearchActive = false;
 
     if (search.value) {
@@ -70,6 +72,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.router.navigate(['/search']);
       }
     }
+  }
+
+  clickedTopSearch() {
+    this.topSearchActive = !this.topSearchActive;
   }
 
   clickedMobileSearch() {
