@@ -57,7 +57,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
     if (!this.isViewingTitles) {
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&this.displayLists.length===20&&!this.isLoading){
         this.isLoading = true;
         this.loadNextPageLists();
       }
@@ -73,6 +73,8 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.listService.getAllLists();
+
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
 
@@ -81,7 +83,7 @@ export class ListsComponent implements OnInit, OnDestroy {
         this.listService.getFollowedLists(this.currentUser!.username);
         this.onToggle('user');
       } else {
-        this.listService.getAllLists();
+        // this.listService.getAllLists();
         this.onToggle('all');
       }
     });

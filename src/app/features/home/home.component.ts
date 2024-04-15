@@ -72,9 +72,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.ratedPositive = this.currentUser.user_watch_titles.filter(u => u.rating === true);
         this.ratedPositive = this.shuffle(this.ratedPositive);
 
-        // if (this.recommendations.length === 0) {
-        //   this.getInitialRecommendations();
-        // }
+        if (this.recommendations.length === 0) {
+          this.getInitialRecommendations();
+        }
       }
     });
 
@@ -119,11 +119,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.gotRecommendationsSub = this.tmdbService.gotRecommendations.subscribe((recs) => {
-      if (recs.length !== 0) {
-        this.recommendations = recs;
-      } else {
-        this.getInitialRecommendations();
-      }
+      this.recommendations = recs;
+      // if (recs.length !== 0) {
+      // } else {
+      //   this.getInitialRecommendations();
+      // }
     });
 
     this.gotRecsIndexSub = this.tmdbService.gotRecsIndex.subscribe((index) => {

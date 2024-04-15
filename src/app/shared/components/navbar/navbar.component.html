@@ -4,7 +4,7 @@
   </div>
   <div class="btn-container">
     @if (isLoggedIn()) {
-      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch()">
+      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/" (click)="clearSearch(); clickedAwayFromTopSearch()">
         <span class="material-symbols-outlined icon-btn">
           home
         </span>
@@ -14,12 +14,12 @@
           search
         </span>
       </a>
-      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch()">
+      <a class="nav-btn hover-btn" [class.is-mobile]="isMobile()" title="Lists" routerLinkActive="active" routerLink="/lists" (click)="clearSearch(); clickedAwayFromTopSearch()">
         <span class="material-symbols-outlined icon-btn">
           list_alt
         </span>
       </a>
-      <a class="nav-btn nav-btn-calendar hover-btn" [class.is-mobile]="isMobile()" routerLinkActive="active" title="Watch History" routerLink="/history" (click)="clearSearch()">
+      <a class="nav-btn nav-btn-calendar hover-btn" [class.is-mobile]="isMobile()" routerLinkActive="active" title="Watch History" routerLink="/history" (click)="clearSearch(); clickedAwayFromTopSearch()">
         <span class="material-symbols-outlined icon-btn">
           calendar_month
         </span>
@@ -44,14 +44,14 @@
 <!-- mobile nav -->
 <div class="mobile-navbar" [class.is-mobile]="isMobile()">
   <div class="mobile-home" [class.is-mobile]="isMobile()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-    <a class="mobile-nav-btn mobile-nav-btn-home" routerLinkActive="mobile-active" [routerLinkActiveOptions]="{exact: true}" title="Home" routerLink="/" (click)="clearSearch()">
+    <a class="mobile-nav-btn mobile-nav-btn-home" routerLinkActive="mobile-active" [routerLinkActiveOptions]="{exact: true}" title="Home" routerLink="/" (click)="clearSearch(); clickedAwayFromMobileSearch()">
       <span class="material-symbols-outlined">
         home
       </span>
     </a>
   </div>
   <div class="mobile-lists" [class.is-mobile]="isMobile()" routerLinkActive="active">
-    <a class="mobile-nav-btn mobile-nav-btn-lists" routerLinkActive="mobile-active" title="Lists" routerLink="/lists" (click)="clearSearch()">
+    <a class="mobile-nav-btn mobile-nav-btn-lists" routerLinkActive="mobile-active" title="Lists" routerLink="/lists" (click)="clearSearch(); clickedAwayFromMobileSearch()">
       <span class="material-symbols-outlined">
         list_alt
       </span>
@@ -65,7 +65,7 @@
     </a>
   </div>
   <div class="mobile-history" [class.is-mobile]="isMobile()" routerLinkActive="active">
-    <a class="mobile-nav-btn mobile-nav-btn-calendar" routerLinkActive="mobile-active" title="Watch History" routerLink="/history" (click)="clearSearch()">
+    <a class="mobile-nav-btn mobile-nav-btn-calendar" routerLinkActive="mobile-active" title="Watch History" routerLink="/history" (click)="clearSearch(); clickedAwayFromMobileSearch()">
       <span class="material-symbols-outlined">
         calendar_month
       </span>

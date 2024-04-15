@@ -82,6 +82,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.mobileSearchActive = !this.mobileSearchActive;
   }
 
+  clickedAwayFromTopSearch() {
+    if (this.topSearchActive === true) {
+      this.topSearchActive = false;
+    }
+  }
+
+  clickedAwayFromMobileSearch() {
+    if (this.mobileSearchActive === true) {
+      this.mobileSearchActive = false;
+    }
+  }
+
   onRoute(route:string) {
     return this.router.url.includes(route);
   }
