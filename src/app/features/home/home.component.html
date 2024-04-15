@@ -17,7 +17,7 @@
           <div class="shelf-details-container">
             <div class="shelf-details">
               <div class="details-header">
-                <span class="title">{{ dailyQuote.watch_title.title }} <span class="year">({{ dailyQuote.watch_title.release_date | date:'yyyy' }})</span></span>
+                <a href="https://themoviedb.org/{{ dailyQuote.watch_title.content_type }}/{{ dailyQuote.watch_title.tmdb_id }}" target="_blank" rel="noopener noreferrer"><span class="title">{{ dailyQuote.watch_title.title }} <span class="year">({{ dailyQuote.watch_title.release_date | date:'yyyy' }})</span></span></a>
                 <span class="runtime">{{ !dailyQuote.watch_title.runtime || dailyQuote.watch_title.runtime === 0 ? '' : dailyQuote.watch_title.runtime + ' minutes'  }}</span>
               </div>
               <div class="details-overview">
@@ -30,12 +30,12 @@
         @if (currentUser !== null) {
           <div class="actions-bar">
             <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(dailyQuote.watch_title, dailyQuote.watch_title.content_type)" [class.is-mobile]="isMobile()">Add to List</a>
-            <a class="text-action" (click)="setTitleWatched(dailyQuote.watch_title, dailyQuote.watch_title.content_type)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
+            <a class="text-action" (click)="setTitleWatched(dailyQuote.watch_title, dailyQuote.watch_title.content_type)" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.tmdb_id)?.watched ? 'Watched' : 'Unwatched' }}</a>
             <div class="rating-btn-container">
-              <a (click)="setRating(false, dailyQuote.watch_title, dailyQuote.watch_title.content_type)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === null" [class.is-mobile]="isMobile()">
+              <a (click)="setRating(false, dailyQuote.watch_title, dailyQuote.watch_title.content_type)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.tmdb_id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
                 thumb_down
               </span></a>
-              <a (click)="setRating(true, dailyQuote.watch_title, dailyQuote.watch_title.content_type)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.id)?.rating === null" [class.is-mobile]="isMobile()">
+              <a (click)="setRating(true, dailyQuote.watch_title, dailyQuote.watch_title.content_type)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.tmdb_id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(dailyQuote.watch_title.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
                 thumb_up
               </span></a>
             </div>
@@ -275,7 +275,7 @@
               </div>
               @if (currentUser !== null) {
                 <div class="actions-bar">
-                  <a class="text-action" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(weekTV, 'tv')" [class.is-mobile]="isMobile()">Add to List</a>
+                  <a class="text-action" [class.is-mobile]="isMobile()" data-bs-toggle="modal" data-bs-target="#addTitleModal" (click)="this.titleService.setTitleToAdd(weekTV, 'tv')">Add to List</a>
                   <a class="text-action" (click)="setTitleWatched(weekTV, 'tv')" [class.is-mobile]="isMobile()">{{ this.getTmdbIdFromUserWatchTitles(weekTV.id)?.watched ? 'Watched' : 'Unwatched' }}</a>
                   <div class="rating-btn-container">
                     <a (click)="setRating(false, weekTV, 'tv')"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(weekTV.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(weekTV.id)?.rating === null" [class.is-mobile]="isMobile()">

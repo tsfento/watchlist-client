@@ -107,7 +107,7 @@
         </div>
       }
       <!-- titles -->
-      @for (title of titles; track title.id) {
+      @for (title of titles; track $index) {
         <div class="title-actions-container">
           <div class="title-container">
             <div class="title-poster">
@@ -118,7 +118,7 @@
               }
             </div>
             <div class="title-details">
-              <div class="title-title">{{ title.title }}</div>
+              <div class="title-title"><a href="https://themoviedb.org/{{ title.content_type }}/{{ title.tmdb_id }}" target="_blank" rel="noopener noreferrer">{{ title.title }}</a></div>
               <div class="title-info">
                 <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
                 <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes' }}</div>

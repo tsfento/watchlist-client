@@ -43,7 +43,7 @@
                   }
                 </div>
                 <div class="title-details">
-                  <div class="title-title">{{ title.title }}</div>
+                  <div class="title-title"><a class="text-reset" href="https://themoviedb.org/{{ searchType }}/{{ title.tmdb_id }}" target="_blank" rel="noopener noreferrer">{{ title.title }}</a></div>
                   <div class="title-info">
                     <div class="title-release-date">{{ title.release_date | date:"longDate" }}</div>
                     <div class="title-runtime">{{ !title.runtime || title.runtime === 0 ? '' : title.runtime + ' minutes'  }}</div>

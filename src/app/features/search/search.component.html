@@ -47,7 +47,7 @@
             </div>
           }
         <div class="title-details">
-          <div class="title-title">{{ result.title ? result.title : result.name }}</div>
+          <div class="title-title"><a href="https://themoviedb.org/{{ searchType }}/{{ result.id }}" target="_blank" rel="noopener noreferrer">{{ result.title ? result.title : result.name }}</a></div>
               <div class="title-info">
                 <div class="title-release-date">{{ result.release_date | date:"longDate" }}</div>
                 <div class="title-runtime">{{ !result.runtime || result.runtime === 0 ? '' : result.runtime + ' minutes' }}</div>
@@ -62,7 +62,7 @@
           <a (click)="setRating(false, result, searchType)"><span class="material-symbols-outlined neg-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.id)?.rating === false" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.id)?.rating === null" [class.is-mobile]="isMobile()">
             thumb_down
           </span></a>
-          <a (click)="setRating(true, result, searchType)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.tmdb_id)?.rating === null" [class.is-mobile]="isMobile()">
+          <a (click)="setRating(true, result, searchType)"><span class="material-symbols-outlined pos-rating-btn" [class.active]="this.getTmdbIdFromUserWatchTitles(result.id)?.rating === true" [class.inactive]="this.getTmdbIdFromUserWatchTitles(result.id)?.rating === null" [class.is-mobile]="isMobile()">
             thumb_up
           </span></a>
         </div>
