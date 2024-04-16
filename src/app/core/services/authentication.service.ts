@@ -52,7 +52,9 @@ export class AuthenticationService {
         token: token
       }).subscribe({
         next: (res:any) => {
-          this.setToken(res.token);
+          if (res.token !== 'Token still valid') {
+            this.setToken(res.token);
+          }
         },
         error: (error:any) => {
           if (error.error['error'] === 'Token expired') {

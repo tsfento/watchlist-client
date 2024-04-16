@@ -9,10 +9,6 @@ The main components are **Home** and **Lists**. **Home** is the starting point w
 
 **Lists** is where the user can view their lists of titles. They are also able to view lists they are following, as well as all available lists that are not private.
 
-# Setup
-
-TODO
-
 # Packages Used
 
 [Bootstrap](https://getbootstrap.com/) is used for the carousels on the home component and for some modals.

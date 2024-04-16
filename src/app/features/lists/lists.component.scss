@@ -263,7 +263,6 @@ label.nav:hover {
   margin-bottom: 80px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
-  // TODO move justify center to media query
   justify-items: center;
   gap: 1rem;
   padding: 1rem;
