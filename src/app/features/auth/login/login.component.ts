@@ -78,6 +78,10 @@ export class LoginComponent {
       case 'login':
         this.isLoggingIn = true;
         this.signUpForm.reset();
+        this.emailError ='';
+        this.usernameError ='';
+        this.passwordError ='';
+        this.confirmationError ='';
         break;
       case 'signup':
         this.isLoggingIn = false;

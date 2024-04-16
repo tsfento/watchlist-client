@@ -7,6 +7,7 @@
 }
 
 form {
+  z-index: 101;
   background-color: #4a5369;
   color: white;
   display: flex;
@@ -67,6 +68,7 @@ button:disabled {
 
 // toggle bar
 .toggle-bar {
+  z-index: 101;
   display: grid;
   overflow: hidden;
   grid-template-rows: 50px 1fr;
