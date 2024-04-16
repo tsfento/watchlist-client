@@ -33,19 +33,40 @@ export class AuthenticationService {
   }
 
   setToken(token:string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem('wewatch_token', token);
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('wewatch_token');
   }
 
   isLoggedIn() {
     return !!this.getToken();
   }
 
+  autoLogin() {
+    const token = localStorage.getItem('wewatch_token');
+
+    if (token !== null) {
+      this.http.post(`${environment.apiUrl}/check_token`, {
+        token: token
+      }).subscribe({
+        next: (res:any) => {
+          this.setToken(res.token);
+        },
+        error: (error:any) => {
+          if (error.error['error'] === 'Token expired') {
+            this.logout();
+          }
+        }
+      });
+    } else {
+      this.logout();
+    }
+  }
+
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('wewatch_token');
     this.userService.setCurrentUser(null);
     this.router.navigate(['/welcome']);
   }
