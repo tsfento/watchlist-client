@@ -15,12 +15,19 @@
   <!-- end movie/tv toggle -->
     <label class="info-label" for="language">Language:</label>
     <select #lang_select class="lang-select" name="lang" id="langSelect"(change)="setSearchLang(lang_select.value)">
-      <option value="en" selected>English</option>
+      @for (lang of searchLangs; track $index) {
+        @if (lang['iso_639_1'] === 'en') {
+          <option value="{{ lang['iso_639_1'] }}" selected>{{ lang['english_name'] }}</option>
+        } @else {
+          <option value="{{ lang['iso_639_1'] }}">{{ lang['english_name'] }}</option>
+        }
+      }
+      <!-- <option value="en" selected>English</option>
       <option value="de">German</option>
       <option value="fr">French</option>
       <option value="es">Spanish</option>
       <option value="jp">Japanese</option>
-      <option value="sv">Swedish</option>
+      <option value="sv">Swedish</option> -->
     </select>
     <button type="button" class="btn-filter" (click)="filterResults()">
       <span>Filter</span>
