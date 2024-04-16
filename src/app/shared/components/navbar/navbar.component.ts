@@ -27,12 +27,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(public router:Router, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService) {}
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.authService.autoLogin();
+    }
+
     this.currentUserSub = this.userService.currentUserBehaviorSubject.subscribe((user) => {
       this.currentUser = user;
-
-      if (this.currentUser !== null) {
-        this.authService.autoLogin();
-      }
     });
   }
 
