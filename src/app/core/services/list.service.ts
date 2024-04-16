@@ -155,4 +155,14 @@ export class ListService {
     this.userLists.splice(this.listIndexToDelete, 1);
     this.gotUserLists.next(this.userLists.slice());
   }
+
+  resetAllLists() {
+    this.allLists = [];
+    this.allListsPageNum = 1;
+  }
+
+  resetUserLists() {
+    this.userLists = [];
+    this.userListsPageNum = 1;
+  }
 }

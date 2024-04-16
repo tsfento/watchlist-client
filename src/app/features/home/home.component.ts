@@ -194,39 +194,57 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
       const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
+      // console.log(userWatchTitle);
+
       return userWatchTitle;
     } else {
       return;
     }
   }
 
-  setTitleWatched(title:TmdbMovie, contentType:string) {
+  setTitleWatched(title:TmdbMovie, contentType:string, backend:boolean = false) {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
-      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
+      let tmdbId:number = 0;
+
+      if (backend === true) {
+        tmdbId = title.tmdb_id;
+      } else {
+        tmdbId = title.id;
+      }
+
+      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
       if (userWatchTitle !== undefined) {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, tmdbId);
         userWatchTitle.watched = !userWatchTitle.watched;
       } else {
-        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType);
+        this.titleService.setTitleWatched(this.currentUser!.username, title, contentType, tmdbId);
       }
     }
   }
 
-  setRating(rating:boolean, title:TmdbMovie, contentType:string) {
+  setRating(rating:boolean, title:TmdbMovie, contentType:string, backend:boolean = false) {
     if (this.currentUser !== null && this.currentUser.user_watch_titles.length > 0) {
-      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === title.id);
+      let tmdbId:number = 0;
+
+      if (backend === true) {
+        tmdbId = title.tmdb_id;
+      } else {
+        tmdbId = title.id;
+      }
+
+      const userWatchTitle = this.currentUser.user_watch_titles?.find(u => u.watch_title.tmdb_id === tmdbId);
 
       if (userWatchTitle !== undefined) {
         if (userWatchTitle!.rating === rating) {
-          this.titleService.setTitleRating(this.currentUser!.username, title, null, contentType);
+          this.titleService.setTitleRating(this.currentUser!.username, title, null, contentType, tmdbId);
           userWatchTitle!.rating = null;
         } else {
-          this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType);
+          this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType, tmdbId);
           userWatchTitle!.rating = rating;
         }
       } else {
-        this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType);
+        this.titleService.setTitleRating(this.currentUser!.username, title, rating, contentType, tmdbId);
       }
     }
   }

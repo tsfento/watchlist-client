@@ -54,18 +54,18 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   constructor(private listService:ListService, public titleService:TitleService, private userService:UserService) {}
 
-  @HostListener('window:scroll',['$event'])
-  onWindowScroll(){
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
     if (!this.isViewingTitles) {
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&this.displayLists.length===20&&!this.isLoading){
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading) {
         this.isLoading = true;
         this.loadNextPageLists();
       }
     } else if (this.isViewingTitles) {
-      if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&!this.noMoreTitles){
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading) {
         this.isLoading = true;
         this.loadNextPageTitles();
-      } else if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading&&this.isSearching&&!this.noMoreResults){
+      } else if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading && this.isSearching && !this.noMoreResults) {
         this.isLoading = true;
         this.loadNextPageSearchTitles();
       }
@@ -113,9 +113,8 @@ export class ListsComponent implements OnInit, OnDestroy {
     });
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
-      if (gotTitles.length !== 0) {
-        this.titles = gotTitles;
-      }
+      this.titles = gotTitles;
+      this.isLoading = false;
     });
 
     this.gotListErrorSub = this.listService.listErrorSubject.subscribe((error) => {
@@ -185,6 +184,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   showTitles(listId:number, username:string) {
+    this.isLoading = true;
     this.titles = [];
     this.titleService.getTitles(listId, username);
 
@@ -200,9 +200,17 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.titleService.resetTitles();
     switch (this.listType) {
       case 'all':
+        this.allLists = [];
+        this.listService.resetAllLists();
+        this.listService.getAllLists();
+
         this.onToggle('all');
         break;
       case 'user':
+        this.userLists = [];
+        this.listService.resetUserLists();
+        this.listService.getUserLists(this.currentUser!.username);
+
         this.onToggle('user');
         break;
       case 'follow':

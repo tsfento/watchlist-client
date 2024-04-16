@@ -55,7 +55,9 @@ export class TitleService {
   deleteTitle(username:string, listId:number, tmdbId:number) {
     this.http.delete(`${environment.apiUrl}/users/${username}/lists/${listId}/${tmdbId}`).subscribe();
     const titleIndex = this.listTitles.map(t => t.tmdb_id).indexOf(tmdbId);
+    console.log(this.listTitles);
     this.listTitles.splice(titleIndex, 1);
+    console.log(this.listTitles);
     this.gotListTitles.next(this.listTitles.slice());
   }
 

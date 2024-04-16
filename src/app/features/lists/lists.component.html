@@ -30,7 +30,7 @@
 <div class="new-list-bar" [class.active]="!isViewingTitles && currentUser !== null">
   <form class="new-list-form" [formGroup]="newListForm" (ngSubmit)="createNewList(); user_toggle.checked = true;">
     @if (listTitleError !== '') {
-      <input class="list-error" type="text" formControlName="title" placeholder="List title already exists">
+      <input class="list-error" type="text" formControlName="title" placeholder="Already have list with title">
     } @else {
       <input type="text" formControlName="title" placeholder="Create a new list...">
     }
@@ -103,7 +103,7 @@
     <div class="titles-grid">
       @if (titles.length === 0) {
         <div class="no-results">
-          <span>No Results</span>
+          <span>No Titles</span>
         </div>
       }
       <!-- titles -->
