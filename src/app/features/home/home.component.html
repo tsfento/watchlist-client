@@ -311,7 +311,7 @@
     @if (currentUser !== null) {
       @if (recommendations.length === 0) {
         <div class="recs-empty">
-          <span>Rate some titles to get recommendations!</span>
+          <span>Rate titles to get recommendations!</span>
         </div>
       } @else {
         @for (recommendation of recommendations; track $index) {
@@ -376,11 +376,11 @@
             </div>
             <!-- end carousel -->
           }
-          <!-- @if ($index === recommendations.length - 1) {
+          @if ($index !== 0 && $index === recommendations.length - 1) {
             <div class="recs-empty">
               <span>Rate more titles to get more recommendations!</span>
             </div>
-          } -->
+          }
         }
       }
     }

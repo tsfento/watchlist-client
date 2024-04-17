@@ -2,11 +2,11 @@
 
   <!-- login/signup toggle -->
   <div class="toggle-bar" [class.active]="!isLoggingIn">
-    <input #login_toggle name="nav" type="radio" class="nav login-radio" id="login" value="login" (change)="switchLoginOrSignUp(login_toggle.value)" checked="checked" />
+    <input #login_toggle name="nav" type="radio" class="nav login-radio" id="login" value="login" (change)="switchLoginOrSignUp(login_toggle.value)" checked="{{ isLoggingIn ? 'checked' : '' }}" />
     <label class="nav" for="login">
       <span>Login</span>
     </label>
-    <input #signup_toggle name="nav" type="radio" class="login-radio" id="signup" value="signup" (change)="switchLoginOrSignUp(signup_toggle.value)"/>
+    <input #signup_toggle name="nav" type="radio" class="login-radio" id="signup" value="signup" (change)="switchLoginOrSignUp(signup_toggle.value)" checked="{{ !isLoggingIn ? 'checked' : '' }}"/>
     <label class="nav" for="signup">
       <span>Sign Up</span>
     </label>

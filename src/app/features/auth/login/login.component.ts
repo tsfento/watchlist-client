@@ -58,7 +58,7 @@ export class LoginComponent {
 
       this.authService.signUp(email, username, password, password_confirmation).subscribe({
         next: (response:any) => {
-          this.isLoggingIn = true;
+          this.switchLoginOrSignUp('login');
         },
         error: (error:any) => {
           // if (error.error['email'][0] === 'has already been taken') {
