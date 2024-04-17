@@ -32,6 +32,7 @@ export class LoginComponent {
   constructor(private authService:AuthenticationService, private router:Router) {}
 
   login() {
+    this.resetLoginErrors();
     if (this.loginForm.valid) {
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
@@ -50,6 +51,7 @@ export class LoginComponent {
   }
 
   signUp() {
+    this.resetSignupErrors();
     if (this.signUpForm.valid) {
       const email = this.signUpForm.value.email;
       const username = this.signUpForm.value.username;
@@ -61,13 +63,22 @@ export class LoginComponent {
           this.switchLoginOrSignUp('login');
         },
         error: (error:any) => {
+          console.log(error.error);
           // if (error.error['email'][0] === 'has already been taken') {
           //   this.emailError = 'Email is forbidden';
           // } else {
-          this.emailError = 'Email ' + error.error['email'][0] || '';
-          this.usernameError = 'Username ' + error.error['username'][0] || '';
-          this.passwordError = 'Password ' + error.error['password'][0] || '';
-          this.confirmationError = 'Confirmation ' + error.error['password_confirmation'][0] || '';
+          if (error.error['email']) {
+            this.emailError = 'Email ' + error.error['email'][0];
+          }
+          if (error.error['username']) {
+            this.usernameError = 'Username ' + error.error['username'][0];
+          }
+          if (error.error['password']) {
+            this.passwordError = 'Password ' + error.error['password'][0];
+          }
+          if (error.error['password_confirmation']) {
+            this.confirmationError = 'Confirmation ' + error.error['password_confirmation'];
+          }
         }
       });
     }
@@ -78,16 +89,24 @@ export class LoginComponent {
       case 'login':
         this.isLoggingIn = true;
         this.signUpForm.reset();
-        this.emailError ='';
-        this.usernameError ='';
-        this.passwordError ='';
-        this.confirmationError ='';
+        this.resetSignupErrors();
         break;
       case 'signup':
         this.isLoggingIn = false;
-        this.loginForm.reset()
-        this.loginError = '';
+        this.loginForm.reset();
+        this.resetLoginErrors();
         break;
     }
+  }
+
+  resetLoginErrors() {
+    this.loginError = '';
+  }
+
+  resetSignupErrors() {
+    this.emailError ='';
+    this.usernameError ='';
+    this.passwordError ='';
+    this.confirmationError ='';
   }
 }
