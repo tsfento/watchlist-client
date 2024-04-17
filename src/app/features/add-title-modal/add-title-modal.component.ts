@@ -67,7 +67,7 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
 
     this.http.post<WatchTitleSend>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists/${watchListId}`, this.titleToAdd).subscribe({
       next: (response:any) => {
-        this.listService.resetUserLists();
+        this.getLists();
       },
       error: (error:any) => {
         console.log(error);
