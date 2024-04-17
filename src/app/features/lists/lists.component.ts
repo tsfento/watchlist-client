@@ -260,6 +260,9 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.isSearching = true;
     this.listService.getRandomTitleFromList(this.listViewingId).subscribe({
       next: (response:WatchTitle) => {
+        if (this.titlesBeforeSearching.length === 0) {
+          this.titlesBeforeSearching = this.titles;
+        }
         this.titles = [response];
       },
       error: (error:any) => {
