@@ -85,7 +85,7 @@
               delete
             </span>
           </a>
-        } @else {
+        } @else if (currentUser !== null) {
           @if (checkIfFollowing(list.id)) {
             <a class="list-follow-btn" title="Unfollow List" (click)="unfollowList(list.id); $event.stopPropagation();">
               <span class="material-symbols-outlined icon-btn icon-filled">
