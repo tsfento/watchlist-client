@@ -14,7 +14,7 @@
   </label>
 </div>
 <div class="search-bar" [class.active]="isViewingTitles">
-  <button class="random-title" (click)="randomTitle(searchTitlesInput)"></button>
+  <button class="random-title" (click)="randomTitle(searchTitlesInput)" style="font-family: monospace;">⚄</button>
   <div class="input-btn">
     <input type="search" placeholder="Search..." #searchTitlesInput (keyup.enter)="searchTitles(searchTitlesInput)">
     <button class="submit-search" (click)="searchTitles(searchTitlesInput)">Search</button>
