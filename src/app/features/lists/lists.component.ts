@@ -114,7 +114,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
       this.titles = gotTitles;
-      this.isLoading = false;
+      // this.isLoading = false;
     });
 
     this.gotListErrorSub = this.listService.listErrorSubject.subscribe((error) => {
@@ -195,6 +195,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.displayLists = [];
     this.listViewingId = listId;
     this.listViewingUsername = username;
+    this.isLoading = false;
   }
 
   closeTitles(searchInput:HTMLInputElement) {
