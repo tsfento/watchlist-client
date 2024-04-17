@@ -114,6 +114,7 @@ export class ListsComponent implements OnInit, OnDestroy {
 
     this.gotTitlesSub = this.titleService.gotListTitles.subscribe((gotTitles) => {
       this.titles = gotTitles;
+      console.log(this.titles);
       // this.isLoading = false;
     });
 
