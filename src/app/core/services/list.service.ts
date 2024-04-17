@@ -157,12 +157,20 @@ export class ListService {
   }
 
   resetAllLists() {
-    this.allLists = [];
     this.allListsPageNum = 1;
+    this.allLists = [];
+    this.gotAllLists.next(this.allLists.slice());
   }
 
   resetUserLists() {
-    this.userLists = [];
     this.userListsPageNum = 1;
+    this.userLists = [];
+    this.gotUserLists.next(this.userLists.slice());
+  }
+
+  resetFollowedLists() {
+    this.followedListsPageNum = 1;
+    this.followedLists = [];
+    this.gotFollowedLists.next(this.followedLists.slice());
   }
 }

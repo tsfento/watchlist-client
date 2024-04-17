@@ -5,6 +5,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { UserService } from '../../../core/services/user.service';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { TmdbService } from '../../../core/services/tmdb.service';
+import { ListService } from '../../../core/services/list.service';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   searchElement:HTMLInputElement | null = null;
   searchSubject = new BehaviorSubject<string>('');
 
-  constructor(public router:Router, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService) {}
+  constructor(public router:Router, private authService:AuthenticationService, private userService:UserService, private tmdbService:TmdbService, private listService:ListService) {}
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
@@ -52,6 +53,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+    this.listService.resetAllLists();
+    this.listService.resetUserLists();
   }
 
   // toggleSearching() {
