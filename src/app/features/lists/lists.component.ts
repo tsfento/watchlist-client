@@ -188,6 +188,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   showTitles(listId:number, username:string) {
+    this.isSearching = false;
     this.isLoading = true;
     this.titles = [];
     this.titleService.getTitles(listId, username);
