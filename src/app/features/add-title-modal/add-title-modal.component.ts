@@ -44,6 +44,10 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
 
     this.setTitleToAddSub = this.titleService.titleToAddSubject.subscribe((gotTitle) => {
       this.titleToAdd = gotTitle;
+
+      if (this.currentUser !== null) {
+        this.getLists();
+      }
     });
 
     // auto-open for testing/styling
@@ -65,14 +69,7 @@ export class AddTitleModalComponent implements OnInit, OnDestroy {
   onAddTitle() {
     const watchListId = this.addTitleForm.value.watch_list;
 
-    this.http.post<WatchTitleSend>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists/${watchListId}`, this.titleToAdd).subscribe({
-      next: (response:any) => {
-        this.getLists();
-      },
-      error: (error:any) => {
-        console.log(error);
-      }
-    });
+    this.http.post<WatchTitleSend>(`${environment.apiUrl}/users/${this.currentUser?.username}/lists/${watchListId}`, this.titleToAdd).subscribe();
   }
 
   getLists() {
