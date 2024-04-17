@@ -62,7 +62,7 @@ export class ListsComponent implements OnInit, OnDestroy {
         this.loadNextPageLists();
       }
     } else if (this.isViewingTitles) {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading) {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading && !this.isSearching) {
         this.isLoading = true;
         this.loadNextPageTitles();
       } else if (window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading && this.isSearching && !this.noMoreResults) {
@@ -129,6 +129,9 @@ export class ListsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.titleService.resetTitles();
+    this.listService.resetAllLists();
+    this.listService.resetUserLists();
+    this.listService.resetFollowedLists();
     this.currentUserSub.unsubscribe();
     this.gotAllListsSub.unsubscribe();
     this.gotUserListsSub.unsubscribe();

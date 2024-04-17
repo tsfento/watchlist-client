@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
-    if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading){
       this.isLoading = true;
       this.loadNextPageRecs();
     }

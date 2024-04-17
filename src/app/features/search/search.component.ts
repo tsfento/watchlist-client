@@ -975,8 +975,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll',['$event'])
   onWindowScroll(){
-    if(window.innerHeight+window.scrollY>=document.body.offsetHeight&&!this.isLoading){
-      // console.log(event);
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight && !this.isLoading){
+      this.isLoading = true;
       this.loadNextPage(this.page + 1);
     }
   }
@@ -1080,7 +1080,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   loadNextPage(pageNum:number) {
-    this.isLoading = true;
+    // this.isLoading = true;
     this.tmdbService.getSearchResults(this.searchValue, this.searchType, this.searchLang, pageNum);
     this.page++;
     this.isLoading = false;

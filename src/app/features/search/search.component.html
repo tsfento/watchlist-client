@@ -76,6 +76,11 @@
         <a class="text-action" data-bs-toggle="modal" data-bs-target="#addWatchDateModal" (click)="this.titleService.setTitleToAdd(result, searchType, result.id)" [class.is-mobile]="isMobile()">Add Watch Date</a>
       </div>
     </div>
+    @if ($index !== 0 && $index === searchResults.length - 1) {
+      <div class="no-results">
+        <span>No More Results</span>
+      </div>
+    }
   }
   <!-- end titles -->
 </div>
