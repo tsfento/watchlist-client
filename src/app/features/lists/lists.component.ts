@@ -227,12 +227,15 @@ export class ListsComponent implements OnInit, OnDestroy {
   }
 
   searchTitles(searchInput:HTMLInputElement) {
-    this.titlesBeforeSearching = this.titles;
     this.titles = [];
     this.isSearching = true;
     this.searchValue = searchInput.value;
     this.listService.searchTitlesInList(this.listViewingId, this.searchValue, 1).subscribe({
       next: (response:(WatchTitle[])) => {
+        if (this.titlesBeforeSearching.length === 0) {
+          this.titlesBeforeSearching = this.titles;
+        }
+
         if (response.length === 0) {
           this.noMoreResults = true;
         } else if (response.length < 20) {
@@ -253,6 +256,7 @@ export class ListsComponent implements OnInit, OnDestroy {
     this.isSearching = false;
     searchInput.value = '';
     this.titles = this.titlesBeforeSearching;
+    this.titlesBeforeSearching = [];
   }
 
   randomTitle(searchInput:HTMLInputElement) {
