@@ -58,7 +58,7 @@
               <div class="shelf-details-container">
                 <div class="shelf-details">
                   <div class="details-header">
-                    <a href="https://themoviedb.org/movie/{{ nPMovie.id }}" target="_blank" rel="noopener noreferrer"><span class="title">{{ nPMovie.title }}<span class="year">({{ nPMovie.release_date | date:'yyyy' }})</span></span></a>
+                    <a href="https://themoviedb.org/movie/{{ nPMovie.id }}" target="_blank" rel="noopener noreferrer"><span class="title">{{ nPMovie.title }} <span class="year">({{ nPMovie.release_date | date:'yyyy' }})</span></span></a>
                     <span class="runtime">{{ !nPMovie.runtime || nPMovie.runtime === 0 ? 'No runtime available' : nPMovie.runtime + ' minutes'  }}</span>
                   </div>
                   <div class="details-overview">
