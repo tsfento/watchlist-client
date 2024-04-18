@@ -173,7 +173,7 @@
 .carousel-control-prev,
 .carousel-control-next {
   height: 50%;
-  align-self: center;
+  transform: translateY(50%);
 }
 // end shelf
 
