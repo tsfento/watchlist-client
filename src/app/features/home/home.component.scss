@@ -145,7 +145,8 @@
   }
 }
 
-.details-header a {
+.details-header a,
+.just-watch a {
   text-decoration: none;
 }
 
@@ -155,6 +156,12 @@
     color: rgba(60, 145, 249, 1);
     transition: color 0.2s ease-in-out;
   }
+}
+
+.just-watch a:hover {
+  color: rgba(60, 145, 249, 1) !important;
+  // color: #3c91f9 !important;
+  transition: color 0.2s ease-in-out;
 }
 
 .details-overview {
@@ -167,6 +174,16 @@
   }
   p {
     margin-top: 5px;
+  }
+}
+
+.details-where-to-watch {
+  .where-to-watch-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .just-watch {
+    font-size: 1rem;
   }
 }
 
@@ -395,6 +412,15 @@
     font-size: 2.75vw;
     .overview-header {
       font-size: 3vw;
+    }
+  }
+
+  .details-where-to-watch {
+    .where-to-watch-header {
+      font-size: 3vw;
+    }
+    .just-watch {
+      font-size: 2.5vw;
     }
   }
 
